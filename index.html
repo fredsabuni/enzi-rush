@@ -1,0 +1,32 @@
+<!doctype html>
+<html><head><meta charset="utf-8"><title>Harakati za Enzi: The Safari</title>
+<style>
+@font-face{font-family:Lilita;src:url(fonts/LilitaOne-Regular.ttf)}
+@font-face{font-family:Fraunces;src:url(fonts/Fraunces.ttf);font-weight:100 900}
+@font-face{font-family:Nunito;src:url(fonts/Nunito.ttf);font-weight:200 1000}
+html,body{margin:0;background:#000} canvas{display:block;max-height:100vh;margin:auto}
+</style></head>
+<body><canvas id="c" width="1080" height="1920"></canvas>
+<script src="js/core.js"></script>
+<script src="js/characters.js"></script>
+<script src="js/timeline.js"></script>
+<script src="js/ui.js"></script>
+<script src="js/street.js"></script>
+<script src="js/scenes/01-home.js"></script>
+<script src="js/scenes/02-kariakoo.js"></script>
+<script src="js/scenes/03-baraka.js"></script>
+<script src="js/scenes/04-rush.js"></script>
+<script src="js/scenes/05-coco.js"></script>
+<script src="js/scenes/06-mzee.js"></script>
+<script src="js/scenes/07-victoria.js"></script>
+<script src="js/scenes/08-neema.js"></script>
+<script src="js/scenes/09-arrive.js"></script>
+<script src="js/scenes/10-cafe.js"></script>
+<script src="js/scenes/11-complete.js"></script>
+<script src="js/scenes/12-endcard.js"></script>
+<script src="js/main.js"></script>
+<script>
+// live preview in a browser: ?t=12.3 to freeze, otherwise plays in real time
+(async () => { await window.ready; const q = new URLSearchParams(location.search); if (!navigator.webdriver) { if (q.has('t')) render(+q.get('t')); else { const t0 = performance.now(); const loop = () => { render(((performance.now() - t0) / 1000) % META.DUR); requestAnimationFrame(loop); }; loop(); } } })();
+</script>
+</body></html>

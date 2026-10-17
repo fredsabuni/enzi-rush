@@ -1,0 +1,73 @@
+<!doctype html>
+<html lang="sw"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no,viewport-fit=cover">
+<meta name="theme-color" content="#291810"><meta name="apple-mobile-web-app-capable" content="yes">
+<title>Harakati za Enzi: Delivery Safari</title>
+<link rel="icon" href="assets/logo.svg">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<div id="stage"><canvas id="game"></canvas></div>
+<button id="pauseBtn" aria-label="Pause">II</button>
+<button id="muteBtn" aria-label="Sound">♪</button>
+<div id="safeProbe" style="position:fixed;top:0;height:env(safe-area-inset-top);width:1px;visibility:hidden"></div>
+
+<!-- START -->
+<section class="screen on" id="sStart"><div class="wrap">
+  <img class="logo" src="assets/logo.svg" alt="Harakati za Enzi">
+  <h1 class="title">DELIVERY SAFARI<small>HARAKATI ZA ENZI</small></h1>
+  <p class="lede">Peleka kahawa ya moto Dar nzima kwa skateboard. Kusanya punje, ruka mashimo, usivunje taa nyekundu!</p>
+  <label class="lbl" for="nick">Jina lako · Nickname</label>
+  <input class="name" id="nick" maxlength="16" autocomplete="nickname" autocapitalize="off" spellcheck="false" placeholder="mf. KahawaKing">
+  <div class="hint" id="nickHint">Herufi 3–16: A–Z, 0–9, _</div>
+  <label class="lbl">Chagua mpanda · Pick your skater</label>
+  <div class="picker" id="picker"></div>
+  <button class="btn" id="playBtn">CHEZA!<small>Play</small></button>
+  <div class="row">
+    <button class="btn alt" id="boardBtn" style="font-size:20px">UBAO<small>Leaderboard</small></button>
+    <a class="btn ghost" href="crew.html" style="text-align:center;text-decoration:none">CREW<small>Meet the cast</small></a>
+  </div>
+  <div class="how"><b>Jinsi ya kucheza · How to play</b><br>
+    👆 <b>Gusa</b> kuruka · tap to jump (hold = higher)<br>
+    👆👆 <b>Gusa tena hewani</b> · tap again in the air to kickflip<br>
+    ✋ <b>SIMAMA</b> button = brake. Wait for green at the lights!<br>
+    ☕ Fika na <b>JOTO</b> juu = bonus kubwa · hotter coffee, bigger bonus<br>
+    🐦 Ruka <b>juu</b> ya kunguru na kuku = +50
+  </div>
+</div></section>
+
+<!-- LEADERBOARD -->
+<section class="screen" id="sBoard"><div class="wrap">
+  <h1 class="title" style="font-size:40px">UBAO WA WASHINDI<small>Leaderboard</small></h1>
+  <div class="tabs" id="tabs"><button data-p="today" class="on">LEO</button><button data-p="week">WIKI</button><button data-p="all">ZOTE</button></div>
+  <ul class="board" id="boardList"></ul>
+  <div class="note" id="boardNote"></div>
+  <div class="row"><button class="btn ghost" id="boardBack">← RUDI</button><button class="btn" id="boardPlay">CHEZA</button></div>
+</div></section>
+
+<!-- RESULT -->
+<section class="screen" id="sResult"><div class="wrap">
+  <h1 class="title" id="resTitle" style="margin-top:20px">SAFARI COMPLETE!</h1>
+  <p class="big" id="resScore">0</p>
+  <div class="rankline" id="resRank">Inatuma alama…</div>
+  <div class="stats" id="resStats"></div>
+  <button class="btn" id="againBtn">CHEZA TENA<small>Play again</small></button>
+  <div class="row"><button class="btn alt" id="resBoard" style="font-size:20px">UBAO<small>Leaderboard</small></button><button class="btn ghost" id="resHome">NYUMBANI</button></div>
+  <p class="note">Onyesha skrini hii kwa barista wako ☕ · Show this screen at the counter</p>
+</div></section>
+
+<!-- PAUSE -->
+<section class="screen glass" id="sPause"><div class="wrap" style="margin-top:30vh">
+  <h1 class="title">PUMZIKO</h1>
+  <button class="btn" id="resumeBtn">ENDELEA<small>Resume</small></button>
+  <button class="btn ghost" id="quitBtn">ACHA MCHEZO · Quit</button>
+</div></section>
+
+<script src="js/art.js"></script>
+<script src="js/sfx.js"></script>
+<script src="js/world.js"></script>
+<script src="js/levels.js"></script>
+<script src="js/game.js"></script>
+<script src="js/api.js"></script>
+<script src="js/app.js"></script>
+</body></html>

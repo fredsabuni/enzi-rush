@@ -1,0 +1,70 @@
+<!doctype html>
+<html lang="sw"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>HZE Crew</title>
+<link rel="stylesheet" href="style.css">
+<style>
+body{overflow:auto;height:auto}
+.crew{max-width:560px;margin:0 auto;padding:20px 16px 60px}
+.crew h2{font-family:Lilita;color:var(--gold-l);font-size:30px;margin:34px 0 4px;letter-spacing:.5px}
+.crew h2 small{display:block;font-family:Nunito;font-weight:700;font-size:14px;color:#cdb9a6;letter-spacing:0}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(160px,1fr));gap:12px;margin-top:14px}
+.card{background:#3a2216;border:3px solid #5b3826;border-radius:22px;overflow:hidden}
+.card canvas{width:100%;display:block;background:linear-gradient(#f6c98a,#f3e2c4)}
+.card .info{padding:10px 12px 14px}
+.card b{font-family:Lilita;font-size:22px;color:#fff;font-weight:400}
+.card i{display:block;font-family:Nunito;font-weight:800;font-style:normal;color:var(--gold-l);font-size:13px}
+.card p{margin:6px 0 0;font-family:Nunito;font-size:13px;line-height:1.35;color:#e7d6c4}
+.card .fx{display:inline-block;margin-top:8px;padding:3px 9px;border-radius:99px;font:800 12px Nunito;background:#B83528;color:#fff}
+.card .fx.good{background:#2B7A6E}
+</style></head>
+<body>
+<div class="crew">
+  <a href="./" class="back">← Rudi kwenye mchezo</a>
+  <h1 class="crew-title">The HZE Crew</h1>
+  <h2>Wapanda Skateboard<small>Playable skaters — pick one on the start screen</small></h2>
+  <div class="grid" id="skaters"></div>
+  <h2>Wateja<small>Your customers across Dar — deliver before the coffee goes cold</small></h2>
+  <div class="grid" id="customers"></div>
+  <h2>Wala Pointi<small>The point-eaters — dodge them, or stomp them</small></h2>
+  <div class="grid" id="hazards"></div>
+  <h2>Vitu Vizuri<small>Good stuff to grab</small></h2>
+  <div class="grid" id="pickups"></div>
+</div>
+<script src="js/art.js"></script>
+<script>
+const cards = [];
+function card(where, name, sub, bio, fx, good, draw, h = 520) {
+  const el = document.createElement('div'); el.className = 'card';
+  const cv = document.createElement('canvas'); cv.width = 520; cv.height = h; el.appendChild(cv);
+  el.insertAdjacentHTML('beforeend', `<div class="info"><b>${name}</b><i>${sub}</i><p>${bio}</p>${fx ? `<span class="fx ${good ? 'good' : ''}">${fx}</span>` : ''}</div>`);
+  document.getElementById(where).appendChild(el); cards.push({ cv, c2: cv.getContext('2d'), draw });
+}
+for (const id in CREW) { const c = CREW[id];
+  card('skaters', c.name, `${c.tag} · ${c.en}`, c.bio, '', false, t => {
+    const P = poseRide(basePose(), t, Math.floor(t / 2.5) % 3 !== 2); P.x = 270; P.y = 480; P.scale = .92;
+    if (Math.floor(t / 2.5) % 3 === 2) { const k = (t % 2.5) / 2.5, q = Math.sin(Math.PI * k); P.y -= q * 70; poseAir(P, k < .5, k > .2 && k < .7 ? (k - .2) / .5 : null); P.groundOff = q * 70; }
+    drawSkater(P, t, id); });
+}
+for (const id in CUSTOMERS) { const c = CUSTOMERS[id];
+  card('customers', c.name, c.place, `“${c.order}” <br><em style="opacity:.7">${c.orderEn}</em>`, '', false, t => customer(id, 290, 500, .88, t, { gesture: (t % 4) < 2 ? .9 : .2, talk: (t % 4) < 2 ? 1 : 0 }));
+}
+card('hazards', 'Afande Trafiki', 'Traffic cop', 'Stands at every crossing. Ride through on a red light and he blows the whistle.', 'FAINI −250', false, t => { const ph = ['green', 'yellow', 'red'][Math.floor(t / 1.5) % 3]; trafficLight(120, 500, .58, ph); afande(330, 500, .82, t, { stop: ph === 'red', angry: ph === 'red', whistle: ph === 'red' ? Math.abs(Math.sin(t * 12)) : 0.0001 }); });
+card('hazards', 'Kunguru Gang', 'The house crows', 'Dar\'s most famous thieves. Touch one and it flies off with your beans. Land on it for a bonus.', '−100 · stomp +50', false, t => { kunguru(300, 260 + Math.sin(t * 3) * 30, 1.5, t, { carry: true }); kunguru(120, 360 + Math.sin(t * 3 + 2) * 20, .9, t, { seed: 3 }); });
+card('hazards', 'Kuku Kiburi', 'The stubborn chicken', 'Owns the Kariakoo pavement and moves for no one. Jump on its head.', '−100 · stomp +50', false, t => { kuku(270 + Math.sin(t) * 60, 470, 1.6, t); });
+card('hazards', 'Shimo', 'The pothole', 'Watches you with hungry eyes. Ride into it and you spill coffee all over the street.', '−100 · Joto −12', false, t => { ctx.fillStyle = '#cdbb9c'; ctx.fillRect(0, 380, 520, 200); shimo(260, 400, 300, t); });
+card('hazards', 'Boda Boda', 'Wrong-way rider', 'Comes straight at you, horn first. Hop over him.', '−100', false, t => { bodaRider(300 + Math.sin(t * 2) * 30, 480, .9, t); });
+card('hazards', 'Mtaro', 'The open drain', 'Fall in and you lose a whole cup (a life). Jump early!', '−1 kikombe', false, t => { ctx.fillStyle = '#cdbb9c'; ctx.fillRect(0, 300, 520, 300); const g = ctx.createLinearGradient(0, 300, 0, 520); g.addColorStop(0, '#2b2420'); g.addColorStop(1, '#0d0a08'); ctx.fillStyle = g; ctx.fillRect(150, 300, 220, 220); ctx.fillStyle = '#4a6a5a'; ctx.fillRect(150, 470, 220, 50); ctx.fillStyle = '#8a8478'; ctx.fillRect(140, 290, 20, 230); ctx.fillRect(360, 290, 20, 230); }, 520);
+card('hazards', 'Dimbwi', 'Rain puddle', 'Slows you down and cools your coffee.', 'Joto −5', false, t => { ctx.fillStyle = '#cdbb9c'; ctx.fillRect(0, 380, 520, 200); dimbwi(260, 400, 320, t); });
+card('hazards', 'Kaa', 'Coco Beach crab', 'Sideways menace of the beach. Stompable.', '−100 · stomp +50', false, t => kaa(260, 470, 2, t));
+card('pickups', 'Punje', 'Coffee bean', 'Collect them everywhere.', '+10', true, t => { for (let i = 0; i < 5; i++) bean(80 + i * 90, 260 + Math.sin(t * 4 + i) * 40, 34, t * 4 + i); });
+card('pickups', 'Punje ya Dhahabu', 'Golden bean', 'Hidden up high. Worth ten.', '+100', true, t => bean(260, 260, 70, t * 3, 1, true));
+card('pickups', 'NGUVU Espresso', 'Power-up', 'Five seconds of speed, magnet beans and no damage.', 'NGUVU!', true, t => espresso(260, 340, 1.8, t));
+card('pickups', 'Delivery', 'Fika na moto', 'The hotter your coffee when you arrive, the bigger the bonus.', '+300 to +1300', true, t => { takeawayCup(260, 420, 2.2); ctx.save(); ctx.translate(260, 120); ctx.scale(.9, .9); steamWisps(0, 1.2, 0, t); ctx.restore(); });
+async function go() {
+  await Promise.all(['60px Lilita', '800 60px Fraunces', '900 60px Nunito'].map(f => document.fonts.load(f)));
+  const loop = now => { const t = now / 1000; for (const c of cards) { useCtx(c.c2); c.c2.clearRect(0, 0, c.cv.width, c.cv.height); c.draw(t); } requestAnimationFrame(loop); };
+  requestAnimationFrame(loop);
+}
+go();
+</script>
+</body></html>

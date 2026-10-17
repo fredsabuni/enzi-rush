@@ -1,0 +1,7 @@
+server/data/
+node_modules/
+out/
+.DS_Store
+*.mp4
+*.wav
+events.json

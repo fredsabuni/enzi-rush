@@ -1,0 +1,47 @@
+<!doctype html>
+<html lang="sw"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>HZE Table QR</title>
+<link rel="stylesheet" href="style.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/qrcode-generator/1.4.4/qrcode.min.js"></script>
+<style>
+html,body{overflow:auto;height:auto;background:#efe6d8}
+.tools{max-width:560px;margin:16px auto;padding:0 16px;display:flex;gap:8px;flex-wrap:wrap;font:800 14px Nunito;color:#291810}
+.tools input{flex:1;min-width:140px;padding:10px 12px;border-radius:12px;border:2px solid #c9b394;font:800 15px Nunito}
+.tools button{padding:10px 16px;border-radius:12px;border:0;background:#C4510E;color:#fff;font:400 18px Lilita;cursor:pointer}
+.poster{width:148mm;min-height:210mm;margin:0 auto 30px;background:#291810;color:#FFFBF5;border-radius:10mm;padding:12mm 10mm;text-align:center;box-sizing:border-box}
+.poster img.logo{width:30mm}
+.poster h1{font:400 15mm/1 Lilita;margin:4mm 0 0;color:#fff}
+.poster h2{font:800 5mm Nunito;color:#E8C27A;margin:2mm 0 6mm;letter-spacing:.5mm}
+.qr{background:#fff;border-radius:6mm;padding:5mm;display:inline-block}
+.qr svg{width:80mm;height:80mm;display:block}
+.poster p{font:800 5mm/1.35 Nunito;margin:6mm 0 0}
+.poster small{display:block;font:700 3.6mm Nunito;color:#cdb9a6;margin-top:3mm}
+@media print{.tools{display:none}body{background:#fff}.poster{margin:0 auto}}
+</style></head>
+<body>
+<div class="tools">
+  <input id="url" placeholder="Game URL, e.g. https://play.hze.co.tz">
+  <input id="loc" placeholder="Branch, e.g. victoria" value="victoria">
+  <button onclick="draw()">Update</button><button onclick="print()">Print</button>
+</div>
+<div class="poster">
+  <img class="logo" src="assets/logo.svg" alt="">
+  <h1>DELIVERY SAFARI</h1>
+  <h2>SCAN · CHEZA · SHINDA</h2>
+  <div class="qr" id="qr"></div>
+  <p>Peleka kahawa Dar nzima kwa skateboard.<br>Kuwa namba 1 kwenye ubao wa leo!</p>
+  <small>Scan to play while your coffee brews. Top of today's board wins.</small>
+</div>
+<script>
+const q = new URLSearchParams(location.search);
+document.getElementById('url').value = q.get('url') || location.origin + location.pathname.replace(/qr\.html$/, '');
+if (q.get('loc')) document.getElementById('loc').value = q.get('loc');
+function draw() {
+  const base = document.getElementById('url').value.trim(), loc = document.getElementById('loc').value.trim().toLowerCase();
+  const u = base + (loc ? (base.includes('?') ? '&' : '?') + 'loc=' + encodeURIComponent(loc) : '');
+  const qr = qrcode(0, 'M'); qr.addData(u); qr.make();
+  document.getElementById('qr').innerHTML = qr.createSvgTag({ cellSize: 8, margin: 0, scalable: true });
+}
+draw();
+</script>
+</body></html>
