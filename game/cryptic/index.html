@@ -1,0 +1,103 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover,interactive-widget=resizes-content">
+<meta name="theme-color" content="#f7f3ea" media="(prefers-color-scheme: light)"><meta name="theme-color" content="#15130f" media="(prefers-color-scheme: dark)">
+<title>Enzi Cryptic</title>
+<link rel="icon" href="icon.svg">
+<link rel="stylesheet" href="cryptic.css">
+</head>
+<body>
+
+<!-- HOME: pick a puzzle -->
+<section class="screen" id="sHome"><div class="page">
+  <header class="mast">
+    <div class="top"><a href="../">← Michezo yote</a><span id="who"></span></div>
+    <h1>The Enzi Cryptic</h1>
+    <div class="date" id="today"></div>
+  </header>
+  <div class="cards">
+    <button class="mode" id="mQuick"><img class="ico" src="quick.svg" alt=""><div><b>Quick</b><span id="qInfo">A small cryptic, about 3 minutes</span><div class="bar"><i id="qBar" style="width:0"></i></div></div><span class="go" id="qGo">Play</span></button>
+    <button class="mode" id="mClassic"><img class="ico" src="icon.svg" alt=""><div><b>Weekly Classic</b><span id="cInfo">The full 15×15, play over several visits</span><div class="bar"><i id="cBar" style="width:0"></i></div></div><span class="go" id="cGo">Play</span></button>
+  </div>
+  <div class="links">
+    <button class="link" data-go="learn">How cryptic clues work<small>60-second intro</small></button>
+    <button class="link" data-go="board">Leaderboard<small>Today · this week</small></button>
+    <button class="link" data-go="solution" id="solLink">Last week's solution<small id="solInfo">Weekly Classic answers</small></button>
+    <button class="link" data-go="howto">How to play<small>Tap, type, hints</small></button>
+  </div>
+  <p class="note" id="homeNote"></p>
+</div></section>
+
+<!-- PLAY -->
+<section class="screen" id="sPlay">
+  <div class="pbar">
+    <button class="ib" id="backBtn" aria-label="Back">←</button>
+    <div class="t" id="pTitle"></div>
+    <span class="pen" id="pPen"></span>
+    <span class="timer" id="pTime" aria-label="Time">0:00</span>
+    <button class="ib" id="cluesBtn">Clues</button>
+    <button class="ib hint" id="hintBtn">Hints</button>
+  </div>
+  <div class="body">
+    <div class="left">
+      <div class="board-wrap" id="boardWrap"><div class="grid" id="grid" role="grid" aria-label="Crossword grid"></div></div>
+      <div class="cluebar"><button id="prevClue" aria-label="Previous clue">‹</button><div class="txt" id="clueText" aria-live="polite"></div><button id="nextClue" aria-label="Next clue">›</button></div>
+    </div>
+    <div class="right lists" id="listsSide"></div>
+  </div>
+  <div class="kbd" id="kbd"></div>
+</section>
+
+<!-- LEADERBOARD -->
+<section class="screen" id="sBoard"><div class="page">
+  <header class="mast"><div class="top"><a href="#">← Back</a><span></span></div><h1>Leaderboard</h1><div class="date" id="bTitle"></div></header>
+  <div class="tabs" id="bTabs"><button data-m="quick" class="on">Today · Quick</button><button data-m="classic">This week · Classic</button></div>
+  <table class="lb"><thead><tr><th>#</th><th>Name</th><th class="r">Time</th><th class="r">Score</th></tr></thead><tbody id="bRows"></tbody></table>
+  <p class="note" id="bNote"></p>
+</div></section>
+
+<!-- LAST WEEK'S SOLUTION -->
+<section class="screen sol" id="sSolution"><div class="page">
+  <header class="mast"><div class="top"><a href="#">← Back</a><span></span></div><h1>Last week's solution</h1><div class="date" id="solTitle"></div></header>
+  <div id="solGrid"></div>
+  <div class="lists" id="solLists"></div>
+</div></section>
+
+<!-- LEARN -->
+<section class="screen" id="sLearn"><div class="page">
+  <header class="mast"><div class="top"><a href="#">← Back</a><span></span></div><h1>How cryptic clues work</h1><div class="date">Sixty seconds, three clues</div></header>
+  <ol class="rules">
+    <li>Every clue has two parts: a <b>definition</b> (a plain meaning of the answer) at the <b>start or end</b>, and <b>wordplay</b> that builds the same answer another way.</li>
+    <li>Common tricks: <b>anagrams</b> (“unusual”, “broken”, “wild”), <b>hidden words</b> (“in”, “part of”, “some”), <b>reversals</b> (“back”, “returned”), <b>initials</b> (“initially”, “at first”) and <b>charades</b> (A + B side by side).</li>
+    <li>The number in brackets is the letter count. (3,5) means two words.</li>
+  </ol>
+  <div id="lessons"></div>
+  <a class="btn" href="#play/quick">Try today's Quick</a>
+</div></section>
+
+<!-- HOW TO PLAY -->
+<section class="screen" id="sHowto"><div class="page">
+  <header class="mast"><div class="top"><a href="#">← Back</a><span></span></div><h1>How to play</h1><div class="date">Scores are worked out when you finish</div></header>
+  <ol class="rules">
+    <li><b>Tap a square</b> to pick a word. Tap it again to switch between Across and Down.</li>
+    <li><b>Type</b> to fill in letters. ⌫ deletes. ‹ › in the clue bar move between clues. On a keyboard: arrows move, Tab jumps to the next clue.</li>
+    <li><b>Hints</b> help when you're stuck: check a letter or word, show which part of the clue is the definition, explain the clue, or reveal letters. Each one costs points.</li>
+    <li>Fill every square correctly to finish. Faster solves and fewer hints score more; no hints at all earns a 20% bonus.</li>
+    <li>The Quick is new every day at 05:00. The Weekly Classic is new every Monday, and the timer only runs while you're playing, so you can come back to it on another visit, even on another phone.</li>
+  </ol>
+  <a class="btn" href="#">Got it</a>
+</div></section>
+
+<!-- sheets -->
+<div class="sheet" id="hintSheet"><div class="in">
+  <h3>Hints</h3><p class="sub" id="hintSub">Each hint costs points.</p>
+  <div class="hints" id="hintList"></div>
+  <button class="close" data-close>Close</button>
+</div></div>
+<div class="sheet" id="clueSheet"><div class="in"><div class="lists" id="listsSheet"></div><button class="close" data-close>Close</button></div></div>
+<div class="sheet" id="doneSheet"><div class="in done" id="doneBody"></div></div>
+<div class="toast" id="toast"></div>
+
+<script src="../shared/api.js" data-game="cryptic"></script>
+<script src="app.js"></script>
+</body></html>

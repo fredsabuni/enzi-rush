@@ -1,0 +1,154 @@
+{
+  "id": "quick-2026-10-27",
+  "mode": "quick",
+  "title": "Quick #4",
+  "author": "EnziGames",
+  "date": "2026-10-27",
+  "par_seconds": 240,
+  "difficulty": 1,
+  "grid": [
+    ".......",
+    ".#.#.#.",
+    ".......",
+    ".#####.",
+    ".......",
+    ".#.#.#.",
+    "......."
+  ],
+  "clues": {
+    "across": [
+      {
+        "num": 1,
+        "row": 0,
+        "col": 0,
+        "text": "I'm a Celt, troubled by the usual weather",
+        "enumeration": "7",
+        "answer": "CLIMATE",
+        "definition_span": [
+          24,
+          41
+        ],
+        "explanation": "Anagram (troubled) of I'M A CELT"
+      },
+      {
+        "num": 5,
+        "row": 2,
+        "col": 0,
+        "text": "Gift that's here",
+        "enumeration": "7",
+        "answer": "PRESENT",
+        "definition_span": [
+          0,
+          4
+        ],
+        "explanation": "Double definition: a PRESENT is a gift, and present means here"
+      },
+      {
+        "num": 6,
+        "row": 4,
+        "col": 0,
+        "text": "Group and era make a wound dressing",
+        "enumeration": "7",
+        "answer": "BANDAGE",
+        "definition_span": [
+          19,
+          35
+        ],
+        "explanation": "BAND (group) + AGE (era)"
+      },
+      {
+        "num": 9,
+        "row": 6,
+        "col": 0,
+        "text": "Investigate old flame, quiet, and traditional knowledge",
+        "enumeration": "7",
+        "answer": "EXPLORE",
+        "definition_span": [
+          0,
+          11
+        ],
+        "explanation": "EX (old flame) + P (quiet, in music) + LORE (traditional knowledge)"
+      }
+    ],
+    "down": [
+      {
+        "num": 1,
+        "row": 0,
+        "col": 0,
+        "text": "Hat and fit – that's competent",
+        "enumeration": "7",
+        "answer": "CAPABLE",
+        "definition_span": [
+          21,
+          30
+        ],
+        "explanation": "CAP (hat) + ABLE (fit)"
+      },
+      {
+        "num": 2,
+        "row": 0,
+        "col": 2,
+        "text": "Anger hidden in fire",
+        "enumeration": "3",
+        "answer": "IRE",
+        "definition_span": [
+          0,
+          5
+        ],
+        "explanation": "Hidden in fIRE"
+      },
+      {
+        "num": 3,
+        "row": 0,
+        "col": 4,
+        "text": "Expert playing card",
+        "enumeration": "3",
+        "answer": "ACE",
+        "definition_span": [
+          0,
+          6
+        ],
+        "explanation": "Double definition: an ACE is an expert, and a playing card"
+      },
+      {
+        "num": 4,
+        "row": 0,
+        "col": 6,
+        "text": "Part of next remedy is drastic",
+        "enumeration": "7",
+        "answer": "EXTREME",
+        "definition_span": [
+          23,
+          30
+        ],
+        "explanation": "Hidden in nEXT REMEdy (\"part of\")"
+      },
+      {
+        "num": 7,
+        "row": 4,
+        "col": 2,
+        "text": "Pan returned for a short sleep",
+        "enumeration": "3",
+        "answer": "NAP",
+        "definition_span": [
+          17,
+          30
+        ],
+        "explanation": "PAN returned (reversed)"
+      },
+      {
+        "num": 8,
+        "row": 4,
+        "col": 4,
+        "text": "Part of dragon in the past",
+        "enumeration": "3",
+        "answer": "AGO",
+        "definition_span": [
+          15,
+          26
+        ],
+        "explanation": "Hidden in drAGOn (\"part of\")"
+      }
+    ]
+  }
+}

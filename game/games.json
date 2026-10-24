@@ -1,0 +1,26 @@
+[
+  {
+    "id": "safari",
+    "name": "Delivery Safari",
+    "tagline": "Peleka kahawa ya moto Dar nzima kwa skateboard",
+    "href": "safari/",
+    "icon": "safari/icon.svg",
+    "status": "live"
+  },
+  {
+    "id": "cryptic",
+    "name": "Cryptic Crossword",
+    "tagline": "Fumbo la maneno · Quick daily, Classic weekly",
+    "href": "cryptic/",
+    "icon": "cryptic/icon.svg",
+    "status": "live",
+    "teaser": "api/cryptic/teaser"
+  },
+  {
+    "id": "next",
+    "name": "Mchezo Mpya",
+    "tagline": "Inakuja hivi karibuni · Coming soon",
+    "icon": "assets/soon.svg",
+    "status": "soon"
+  }
+]

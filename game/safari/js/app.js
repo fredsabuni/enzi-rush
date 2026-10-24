@@ -38,19 +38,11 @@ function drawPickers(t) {
 }
 
 // ---------- start ----------
-$('nick').value = API.name;
-$('playBtn').onclick = async () => {
-  SFX.unlock();
-  const name = $('nick').value.trim(), hint = $('nickHint');
-  if (!API.NAME_RE.test(name)) { hint.textContent = 'Jina: herufi 3–16, A–Z, 0–9 au _ tu'; hint.className = 'hint err'; $('nick').focus(); return; }
-  hint.textContent = 'Inaangalia jina…'; hint.className = 'hint'; $('playBtn').disabled = true;
-  const r = await API.claim(name); $('playBtn').disabled = false;
-  if (r.taken) { hint.textContent = `“${name}” limeshachukuliwa — chagua jingine · name taken`; hint.className = 'hint err'; return; }
-  if (r.bad) { hint.textContent = 'Jina hilo haliruhusiwi · try another name'; hint.className = 'hint err'; return; }
-  hint.textContent = r.offline ? 'Hakuna mtandao — alama zitatumwa baadaye' : ''; hint.className = 'hint';
-  startGame();
-};
-$('nick').addEventListener('keydown', e => { if (e.key === 'Enter') $('playBtn').click(); });
+// Sign-in lives on the hub (../). Arriving here without a name sends you there first.
+const autoplay = new URLSearchParams(location.search).has('autoplay');
+if (!API.name && !autoplay) location.replace('../?next=safari/');
+$('whoName').textContent = API.name;
+$('playBtn').onclick = () => { SFX.unlock(); startGame(); };
 function startGame() { playing = true; show(null); useCtx(gctx); resize(); newRun(picked); G.paused = false; }
 
 // ---------- end of run ----------
@@ -116,7 +108,7 @@ cv.addEventListener('pointerup', release); cv.addEventListener('pointercancel', 
 cv.addEventListener('contextmenu', e => e.preventDefault());
 const JUMP_KEYS = ['Space', 'ArrowUp', 'KeyW', 'Enter'], BRAKE_KEYS = ['ArrowLeft', 'ArrowDown', 'KeyS', 'KeyB', 'ShiftLeft'];
 window.addEventListener('keydown', e => {
-  if (!playing || document.activeElement === $('nick')) return;
+  if (!playing) return;
   if (e.code === 'Escape' || e.code === 'KeyP') { pause(!G.paused); return; }
   if (JUMP_KEYS.includes(e.code)) { e.preventDefault(); if (!e.repeat) G.input.jump = true; G.input.held = true; }
   if (BRAKE_KEYS.includes(e.code)) { e.preventDefault(); G.input.brake = true; }
@@ -135,6 +127,6 @@ function frame(now) {
   await Promise.all(['60px Lilita', '800 60px Fraunces', '900 60px Nunito', 'italic 700 60px Nunito'].map(f => document.fonts.load(f).catch(() => { })));
   API.flush();
   // ?autoplay=1 skips the menu (handy for testing on a laptop)
-  if (new URLSearchParams(location.search).has('autoplay')) startGame();
+  if (autoplay) startGame();
   requestAnimationFrame(frame);
 })();

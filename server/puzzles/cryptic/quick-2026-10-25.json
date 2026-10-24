@@ -1,0 +1,154 @@
+{
+  "id": "quick-2026-10-25",
+  "mode": "quick",
+  "title": "Quick #2",
+  "author": "EnziGames",
+  "date": "2026-10-25",
+  "par_seconds": 240,
+  "difficulty": 1,
+  "grid": [
+    "...#...",
+    ".#.#.#.",
+    ".......",
+    ".#.#.#.",
+    ".......",
+    ".#.#.#.",
+    "...#..."
+  ],
+  "clues": {
+    "across": [
+      {
+        "num": 1,
+        "row": 0,
+        "col": 0,
+        "text": "Healthy outburst of temper",
+        "enumeration": "3",
+        "answer": "FIT",
+        "definition_span": [
+          0,
+          7
+        ],
+        "explanation": "Double definition: FIT means healthy, and a fit is an outburst of temper"
+      },
+      {
+        "num": 3,
+        "row": 0,
+        "col": 4,
+        "text": "Turn back tap for a gentle touch",
+        "enumeration": "3",
+        "answer": "PAT",
+        "definition_span": [
+          18,
+          32
+        ],
+        "explanation": "TAP turned back (reversed)"
+      },
+      {
+        "num": 5,
+        "row": 2,
+        "col": 0,
+        "text": "Daily habit: route in changed",
+        "enumeration": "7",
+        "answer": "ROUTINE",
+        "definition_span": [
+          0,
+          11
+        ],
+        "explanation": "Anagram (changed) of ROUTE IN"
+      },
+      {
+        "num": 6,
+        "row": 4,
+        "col": 0,
+        "text": "Awake and out of fashion, but modernised",
+        "enumeration": "7",
+        "answer": "UPDATED",
+        "definition_span": [
+          30,
+          40
+        ],
+        "explanation": "UP (awake) + DATED (out of fashion)"
+      },
+      {
+        "num": 7,
+        "row": 6,
+        "col": 0,
+        "text": "Hearing organ hidden in years",
+        "enumeration": "3",
+        "answer": "EAR",
+        "definition_span": [
+          0,
+          13
+        ],
+        "explanation": "Hidden in yEARs"
+      },
+      {
+        "num": 8,
+        "row": 6,
+        "col": 4,
+        "text": "Beam of light, or a fish",
+        "enumeration": "3",
+        "answer": "RAY",
+        "definition_span": [
+          0,
+          13
+        ],
+        "explanation": "Double definition: a RAY is a beam of light, and also a flat sea fish"
+      }
+    ],
+    "down": [
+      {
+        "num": 1,
+        "row": 0,
+        "col": 0,
+        "text": "Supporting a melody makes a lot of money",
+        "enumeration": "7",
+        "answer": "FORTUNE",
+        "definition_span": [
+          26,
+          40
+        ],
+        "explanation": "FOR (supporting) + TUNE (melody)"
+      },
+      {
+        "num": 2,
+        "row": 0,
+        "col": 2,
+        "text": "Rumble in south underpass",
+        "enumeration": "7",
+        "answer": "THUNDER",
+        "definition_span": [
+          0,
+          6
+        ],
+        "explanation": "Hidden in souTH UNDERpass"
+      },
+      {
+        "num": 3,
+        "row": 0,
+        "col": 4,
+        "text": "Colour, er, for an artist",
+        "enumeration": "7",
+        "answer": "PAINTER",
+        "definition_span": [
+          16,
+          25
+        ],
+        "explanation": "PAINT (colour) + ER (a hesitation)"
+      },
+      {
+        "num": 4,
+        "row": 0,
+        "col": 6,
+        "text": "Weekday stay due, rearranged",
+        "enumeration": "7",
+        "answer": "TUESDAY",
+        "definition_span": [
+          0,
+          7
+        ],
+        "explanation": "Anagram (rearranged) of STAY DUE"
+      }
+    ]
+  }
+}

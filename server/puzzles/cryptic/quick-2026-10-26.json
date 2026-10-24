@@ -1,0 +1,154 @@
+{
+  "id": "quick-2026-10-26",
+  "mode": "quick",
+  "title": "Quick #3",
+  "author": "EnziGames",
+  "date": "2026-10-26",
+  "par_seconds": 240,
+  "difficulty": 1,
+  "grid": [
+    ".......",
+    ".#.#.#.",
+    "...#...",
+    ".#.#.#.",
+    "...#...",
+    ".#.#.#.",
+    "......."
+  ],
+  "clues": {
+    "across": [
+      {
+        "num": 1,
+        "row": 0,
+        "col": 0,
+        "text": "Cobra at play is a circus performer",
+        "enumeration": "7",
+        "answer": "ACROBAT",
+        "definition_span": [
+          17,
+          35
+        ],
+        "explanation": "Anagram (play) of COBRA AT"
+      },
+      {
+        "num": 5,
+        "row": 2,
+        "col": 0,
+        "text": "Make a hole, or a sly jibe",
+        "enumeration": "3",
+        "answer": "DIG",
+        "definition_span": [
+          0,
+          11
+        ],
+        "explanation": "Double definition: to DIG is to make a hole, and a dig is a sly jibe"
+      },
+      {
+        "num": 6,
+        "row": 2,
+        "col": 4,
+        "text": "Part of foot seen in photo exhibition",
+        "enumeration": "3",
+        "answer": "TOE",
+        "definition_span": [
+          0,
+          12
+        ],
+        "explanation": "Hidden in phoTO Exhibition"
+      },
+      {
+        "num": 7,
+        "row": 4,
+        "col": 0,
+        "text": "Slippery fish hidden in steel",
+        "enumeration": "3",
+        "answer": "EEL",
+        "definition_span": [
+          0,
+          13
+        ],
+        "explanation": "Hidden in stEEL"
+      },
+      {
+        "num": 8,
+        "row": 4,
+        "col": 4,
+        "text": "Have a meal – tea, stirred",
+        "enumeration": "3",
+        "answer": "EAT",
+        "definition_span": [
+          0,
+          11
+        ],
+        "explanation": "Anagram (stirred) of TEA"
+      },
+      {
+        "num": 9,
+        "row": 6,
+        "col": 0,
+        "text": "Street cooker is odd",
+        "enumeration": "7",
+        "answer": "STRANGE",
+        "definition_span": [
+          17,
+          20
+        ],
+        "explanation": "ST (street) + RANGE (cooker)"
+      }
+    ],
+    "down": [
+      {
+        "num": 1,
+        "row": 0,
+        "col": 0,
+        "text": "Notice dress showing where you live",
+        "enumeration": "7",
+        "answer": "ADDRESS",
+        "definition_span": [
+          21,
+          35
+        ],
+        "explanation": "AD (notice, an advert) + DRESS"
+      },
+      {
+        "num": 2,
+        "row": 0,
+        "col": 2,
+        "text": "Normal frequent customer",
+        "enumeration": "7",
+        "answer": "REGULAR",
+        "definition_span": [
+          0,
+          6
+        ],
+        "explanation": "Double definition: REGULAR means normal, and a regular is a frequent customer"
+      },
+      {
+        "num": 3,
+        "row": 0,
+        "col": 4,
+        "text": "Exist as a pre-teen, in the middle",
+        "enumeration": "7",
+        "answer": "BETWEEN",
+        "definition_span": [
+          21,
+          34
+        ],
+        "explanation": "BE (exist) + TWEEN (pre-teen)"
+      },
+      {
+        "num": 4,
+        "row": 0,
+        "col": 6,
+        "text": "Repaired the tear in the playhouse",
+        "enumeration": "7",
+        "answer": "THEATRE",
+        "definition_span": [
+          21,
+          34
+        ],
+        "explanation": "Anagram (repaired) of THE TEAR"
+      }
+    ]
+  }
+}

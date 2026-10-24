@@ -1,0 +1,128 @@
+{
+  "id": "quick-2026-10-28",
+  "mode": "quick",
+  "title": "Quick #5",
+  "author": "EnziGames",
+  "date": "2026-10-28",
+  "par_seconds": 240,
+  "difficulty": 1,
+  "grid": [
+    ".......",
+    ".#.#.#.",
+    ".......",
+    ".#.#.#.",
+    ".......",
+    ".#.#.#.",
+    "......."
+  ],
+  "clues": {
+    "across": [
+      {
+        "num": 1,
+        "row": 0,
+        "col": 0,
+        "text": "Steals parts of trousers",
+        "enumeration": "7",
+        "answer": "POCKETS",
+        "definition_span": [
+          0,
+          6
+        ],
+        "explanation": "Double definition: to POCKET is to steal, and POCKETS are parts of trousers"
+      },
+      {
+        "num": 5,
+        "row": 2,
+        "col": 0,
+        "text": "Fast train to put into words",
+        "enumeration": "7",
+        "answer": "EXPRESS",
+        "definition_span": [
+          14,
+          28
+        ],
+        "explanation": "Double definition: an EXPRESS is a fast train; to EXPRESS is to put into words"
+      },
+      {
+        "num": 6,
+        "row": 4,
+        "col": 0,
+        "text": "Test in East to inspect",
+        "enumeration": "7",
+        "answer": "EXAMINE",
+        "definition_span": [
+          16,
+          23
+        ],
+        "explanation": "EXAM (test) + IN + E (East)"
+      },
+      {
+        "num": 7,
+        "row": 6,
+        "col": 0,
+        "text": "Thing to sort out this evening",
+        "enumeration": "7",
+        "answer": "TONIGHT",
+        "definition_span": [
+          18,
+          30
+        ],
+        "explanation": "Anagram (sort out) of THING TO"
+      }
+    ],
+    "down": [
+      {
+        "num": 1,
+        "row": 0,
+        "col": 0,
+        "text": "Block public relations occasion",
+        "enumeration": "7",
+        "answer": "PREVENT",
+        "definition_span": [
+          0,
+          5
+        ],
+        "explanation": "PR (public relations) + EVENT (occasion)"
+      },
+      {
+        "num": 2,
+        "row": 0,
+        "col": 2,
+        "text": "Panic at sea for skipper",
+        "enumeration": "7",
+        "answer": "CAPTAIN",
+        "definition_span": [
+          17,
+          24
+        ],
+        "explanation": "Anagram (at sea) of PANIC AT"
+      },
+      {
+        "num": 3,
+        "row": 0,
+        "col": 4,
+        "text": "Levelling time after sunset",
+        "enumeration": "7",
+        "answer": "EVENING",
+        "definition_span": [
+          10,
+          27
+        ],
+        "explanation": "Double definition: EVEN-ING (levelling) and the time after sunset"
+      },
+      {
+        "num": 4,
+        "row": 0,
+        "col": 6,
+        "text": "Cups set out for one the police question",
+        "enumeration": "7",
+        "answer": "SUSPECT",
+        "definition_span": [
+          17,
+          40
+        ],
+        "explanation": "Anagram (out) of CUPS SET"
+      }
+    ]
+  }
+}

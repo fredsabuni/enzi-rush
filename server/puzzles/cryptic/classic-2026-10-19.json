@@ -1,0 +1,396 @@
+{
+  "id": "classic-2026-10-19",
+  "mode": "classic",
+  "title": "Weekly Classic #2",
+  "author": "EnziGames",
+  "date": "2026-10-19",
+  "par_seconds": 3600,
+  "difficulty": 3,
+  "grid": [
+    "#.#.#.###.#.#.#",
+    ".......#.......",
+    "#.#.#.#.#.#.#.#",
+    "........#......",
+    "#.#.#.#.#.###.#",
+    "....#.....#....",
+    "###.#.#.###.#.#",
+    "...............",
+    "#.#.###.#.#.###",
+    "....#.....#....",
+    "#.###.#.#.#.#.#",
+    "......#........",
+    "#.#.#.#.#.#.#.#",
+    ".......#.......",
+    "#.#.#.###.#.#.#"
+  ],
+  "clues": {
+    "across": [
+      {
+        "num": 7,
+        "row": 1,
+        "col": 0,
+        "text": "Boredom stirred where you sleep",
+        "enumeration": "7",
+        "answer": "BEDROOM",
+        "definition_span": [
+          16,
+          31
+        ],
+        "explanation": "Anagram (stirred) of BOREDOM"
+      },
+      {
+        "num": 8,
+        "row": 1,
+        "col": 8,
+        "text": "Snub support for a reduction",
+        "enumeration": "7",
+        "answer": "CUTBACK",
+        "definition_span": [
+          17,
+          28
+        ],
+        "explanation": "CUT (snub) + BACK (support)"
+      },
+      {
+        "num": 10,
+        "row": 3,
+        "col": 0,
+        "text": "Fashion price that's reasonable",
+        "enumeration": "8",
+        "answer": "MODERATE",
+        "definition_span": [
+          21,
+          31
+        ],
+        "explanation": "MODE (fashion) + RATE (price)"
+      },
+      {
+        "num": 11,
+        "row": 3,
+        "col": 9,
+        "text": "Firm cagey about new",
+        "enumeration": "6",
+        "answer": "AGENCY",
+        "definition_span": [
+          0,
+          4
+        ],
+        "explanation": "Anagram (about) of CAGEY + N (new)"
+      },
+      {
+        "num": 12,
+        "row": 5,
+        "col": 0,
+        "text": "Dispatch, and transport with delight",
+        "enumeration": "4",
+        "answer": "SEND",
+        "definition_span": [
+          0,
+          8
+        ],
+        "explanation": "Double definition: to dispatch, and to transport with delight (\"that music really sends me\")"
+      },
+      {
+        "num": 13,
+        "row": 5,
+        "col": 5,
+        "text": "Islands found in this lesson",
+        "enumeration": "5",
+        "answer": "ISLES",
+        "definition_span": [
+          0,
+          7
+        ],
+        "explanation": "Hidden in thIS LESson"
+      },
+      {
+        "num": 14,
+        "row": 5,
+        "col": 11,
+        "text": "Stagger or dance, Scottish style",
+        "enumeration": "4",
+        "answer": "REEL",
+        "definition_span": [
+          0,
+          7
+        ],
+        "explanation": "Double definition: to stagger, and a Scottish dance"
+      },
+      {
+        "num": 15,
+        "row": 7,
+        "col": 0,
+        "text": "Just soon enough, if no kitchen time is wasted",
+        "enumeration": "2,3,4,2,4",
+        "answer": "INTHENICKOFTIME",
+        "definition_span": [
+          0,
+          16
+        ],
+        "explanation": "Anagram (is wasted) of IF NO KITCHEN TIME"
+      },
+      {
+        "num": 18,
+        "row": 9,
+        "col": 0,
+        "text": "Halt when pots are knocked back",
+        "enumeration": "4",
+        "answer": "STOP",
+        "definition_span": [
+          0,
+          4
+        ],
+        "explanation": "POTS reversed (knocked back)"
+      },
+      {
+        "num": 19,
+        "row": 9,
+        "col": 5,
+        "text": "Drunk keeping note — that's the maximum",
+        "enumeration": "5",
+        "answer": "LIMIT",
+        "definition_span": [
+          32,
+          39
+        ],
+        "explanation": "LIT (drunk) around (keeping) MI (musical note) → LI(MI)T"
+      },
+      {
+        "num": 20,
+        "row": 9,
+        "col": 11,
+        "text": "Part bun, by the sound of it",
+        "enumeration": "4",
+        "answer": "ROLE",
+        "definition_span": [
+          0,
+          4
+        ],
+        "explanation": "Sounds like (by the sound of it) ROLL (bun)"
+      },
+      {
+        "num": 22,
+        "row": 11,
+        "col": 0,
+        "text": "Pursue chap, swapping English for love",
+        "enumeration": "6",
+        "answer": "FOLLOW",
+        "definition_span": [
+          0,
+          6
+        ],
+        "explanation": "FELLOW (chap) with E (English) swapped for O (love, zero) → FOLLOW"
+      },
+      {
+        "num": 24,
+        "row": 11,
+        "col": 7,
+        "text": "Close call as seminars break up",
+        "enumeration": "4,4",
+        "answer": "NEARMISS",
+        "definition_span": [
+          0,
+          10
+        ],
+        "explanation": "Anagram (break up) of SEMINARS → NEAR MISS, a close call"
+      },
+      {
+        "num": 25,
+        "row": 13,
+        "col": 0,
+        "text": "Spoiled, taking one in, wed",
+        "enumeration": "7",
+        "answer": "MARRIED",
+        "definition_span": [
+          24,
+          27
+        ],
+        "explanation": "MARRED (spoiled) taking in I (one) → MARR(I)ED"
+      },
+      {
+        "num": 26,
+        "row": 13,
+        "col": 8,
+        "text": "Unkind in good sense",
+        "enumeration": "7",
+        "answer": "MEANING",
+        "definition_span": [
+          15,
+          20
+        ],
+        "explanation": "MEAN (unkind) + IN + G (good)"
+      }
+    ],
+    "down": [
+      {
+        "num": 1,
+        "row": 0,
+        "col": 1,
+        "text": "Exist, then turn up to suit",
+        "enumeration": "6",
+        "answer": "BECOME",
+        "definition_span": [
+          23,
+          27
+        ],
+        "explanation": "BE (exist) + COME (turn up)"
+      },
+      {
+        "num": 2,
+        "row": 0,
+        "col": 3,
+        "text": "Mates in fashion showing close bond",
+        "enumeration": "10",
+        "answer": "FRIENDSHIP",
+        "definition_span": [
+          25,
+          35
+        ],
+        "explanation": "FRIENDS (mates) + HIP (in fashion)"
+      },
+      {
+        "num": 3,
+        "row": 0,
+        "col": 5,
+        "text": "Shifting coal into position",
+        "enumeration": "8",
+        "answer": "LOCATION",
+        "definition_span": [
+          19,
+          27
+        ],
+        "explanation": "Anagram (shifting) of COAL INTO"
+      },
+      {
+        "num": 4,
+        "row": 0,
+        "col": 9,
+        "text": "Hospital and university staffs are mortals",
+        "enumeration": "6",
+        "answer": "HUMANS",
+        "definition_span": [
+          35,
+          42
+        ],
+        "explanation": "H (hospital) + U (university) + MANS (staffs, as a verb)"
+      },
+      {
+        "num": 5,
+        "row": 0,
+        "col": 11,
+        "text": "Competent cable has lost its head",
+        "enumeration": "4",
+        "answer": "ABLE",
+        "definition_span": [
+          0,
+          9
+        ],
+        "explanation": "CABLE without its first letter (has lost its head) → ABLE"
+      },
+      {
+        "num": 6,
+        "row": 0,
+        "col": 13,
+        "text": "I shriek, reportedly, for a cold dessert",
+        "enumeration": "3,5",
+        "answer": "ICECREAM",
+        "definition_span": [
+          26,
+          40
+        ],
+        "explanation": "Sounds like (reportedly) \"I SCREAM\" (I shriek)"
+      },
+      {
+        "num": 9,
+        "row": 2,
+        "col": 7,
+        "text": "Concerning work experience, a substitute",
+        "enumeration": "11",
+        "answer": "REPLACEMENT",
+        "definition_span": [
+          28,
+          40
+        ],
+        "explanation": "RE (concerning) + PLACEMENT (work experience)"
+      },
+      {
+        "num": 14,
+        "row": 5,
+        "col": 11,
+        "text": "Withdraw troops, time for life after work",
+        "enumeration": "10",
+        "answer": "RETIREMENT",
+        "definition_span": [
+          26,
+          41
+        ],
+        "explanation": "RETIRE (withdraw) + MEN (troops) + T (time)"
+      },
+      {
+        "num": 16,
+        "row": 7,
+        "col": 1,
+        "text": "Country, a learner, becoming a citizen",
+        "enumeration": "8",
+        "answer": "NATIONAL",
+        "definition_span": [
+          29,
+          38
+        ],
+        "explanation": "NATION (country) + A + L (learner)"
+      },
+      {
+        "num": 17,
+        "row": 7,
+        "col": 9,
+        "text": "Toad duet, badly performed, is old hat",
+        "enumeration": "8",
+        "answer": "OUTDATED",
+        "definition_span": [
+          31,
+          38
+        ],
+        "explanation": "Anagram (badly performed) of TOAD DUET"
+      },
+      {
+        "num": 19,
+        "row": 9,
+        "col": 5,
+        "text": "Down and essential, yet understated",
+        "enumeration": "3-3",
+        "answer": "LOWKEY",
+        "definition_span": [
+          24,
+          35
+        ],
+        "explanation": "LOW (down) + KEY (essential)"
+      },
+      {
+        "num": 21,
+        "row": 9,
+        "col": 13,
+        "text": "See Carol failing to win",
+        "enumeration": "6",
+        "answer": "LOSING",
+        "definition_span": [
+          10,
+          24
+        ],
+        "explanation": "LO (see!) + SING (carol)"
+      },
+      {
+        "num": 23,
+        "row": 11,
+        "col": 3,
+        "text": "Initially, learned old rabbis explain tradition",
+        "enumeration": "4",
+        "answer": "LORE",
+        "definition_span": [
+          38,
+          47
+        ],
+        "explanation": "First letters (initially) of Learned Old Rabbis Explain"
+      }
+    ]
+  }
+}

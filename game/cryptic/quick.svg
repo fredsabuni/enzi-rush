@@ -1,0 +1,19 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256">
+  <rect width="256" height="256" rx="56" fill="#f7f3ea"/>
+  <rect x="42" y="66" width="152" height="152" rx="6" fill="#1d1a16"/>
+  <rect x="48.0" y="72.0" width="44.0" height="44.0" fill="#fffefb"/>
+  <text x="70.0" y="104.6" font-family="Georgia,serif" font-weight="700" font-size="27.3" text-anchor="middle" fill="#1d1a16">Q</text>
+  <rect x="96.0" y="72.0" width="44.0" height="44.0" fill="#fffefb"/>
+  <text x="118.0" y="104.6" font-family="Georgia,serif" font-weight="700" font-size="27.3" text-anchor="middle" fill="#1d1a16">U</text>
+  <rect x="144.0" y="72.0" width="44.0" height="44.0" fill="#fffefb"/>
+  <text x="166.0" y="104.6" font-family="Georgia,serif" font-weight="700" font-size="27.3" text-anchor="middle" fill="#1d1a16">I</text>
+  <rect x="48.0" y="120.0" width="44.0" height="44.0" fill="#fffefb"/>
+  <rect x="96.0" y="120.0" width="44.0" height="44.0" fill="#fffefb"/>
+  <rect x="144.0" y="120.0" width="44.0" height="44.0" fill="#fffefb"/>
+  <rect x="48.0" y="168.0" width="44.0" height="44.0" fill="#fffefb"/>
+  <rect x="96.0" y="168.0" width="44.0" height="44.0" fill="#fffefb"/>
+  <rect x="144.0" y="168.0" width="44.0" height="44.0" fill="#fffefb"/>
+  <circle cx="190" cy="72" r="44" fill="#c4510e"/><circle cx="190" cy="72" r="34" fill="#fffefb"/>
+  <rect x="180" y="18" width="20" height="12" rx="3" fill="#c4510e"/>
+  <path d="M190 72V50M190 72l14 10" stroke="#1d1a16" stroke-width="7" stroke-linecap="round"/>
+</svg>

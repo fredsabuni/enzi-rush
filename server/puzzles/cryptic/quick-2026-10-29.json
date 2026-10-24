@@ -1,0 +1,154 @@
+{
+  "id": "quick-2026-10-29",
+  "mode": "quick",
+  "title": "Quick #6",
+  "author": "EnziGames",
+  "date": "2026-10-29",
+  "par_seconds": 240,
+  "difficulty": 1,
+  "grid": [
+    "...#...",
+    ".#.#.#.",
+    ".......",
+    ".#.#.#.",
+    ".......",
+    ".#.#.#.",
+    "...#..."
+  ],
+  "clues": {
+    "across": [
+      {
+        "num": 1,
+        "row": 0,
+        "col": 0,
+        "text": "Boat hidden in dark corner",
+        "enumeration": "3",
+        "answer": "ARK",
+        "definition_span": [
+          0,
+          4
+        ],
+        "explanation": "Hidden in dARK"
+      },
+      {
+        "num": 3,
+        "row": 0,
+        "col": 4,
+        "text": "Take a seat during visit",
+        "enumeration": "3",
+        "answer": "SIT",
+        "definition_span": [
+          0,
+          11
+        ],
+        "explanation": "Hidden in viSIT"
+      },
+      {
+        "num": 5,
+        "row": 2,
+        "col": 0,
+        "text": "Fellow with a date gets official authority",
+        "enumeration": "7",
+        "answer": "MANDATE",
+        "definition_span": [
+          24,
+          42
+        ],
+        "explanation": "MAN (fellow) + DATE"
+      },
+      {
+        "num": 6,
+        "row": 4,
+        "col": 0,
+        "text": "Formal speech, or where you live",
+        "enumeration": "7",
+        "answer": "ADDRESS",
+        "definition_span": [
+          0,
+          13
+        ],
+        "explanation": "Double definition: a formal speech, and where you live"
+      },
+      {
+        "num": 7,
+        "row": 6,
+        "col": 0,
+        "text": "Some candid images are not bright",
+        "enumeration": "3",
+        "answer": "DIM",
+        "definition_span": [
+          23,
+          33
+        ],
+        "explanation": "Hidden in candiD IMages"
+      },
+      {
+        "num": 8,
+        "row": 6,
+        "col": 4,
+        "text": "Lair in the garden",
+        "enumeration": "3",
+        "answer": "DEN",
+        "definition_span": [
+          0,
+          4
+        ],
+        "explanation": "Hidden in garDEN"
+      }
+    ],
+    "down": [
+      {
+        "num": 1,
+        "row": 0,
+        "col": 0,
+        "text": "Limb with a group of musicians makes a swimming aid",
+        "enumeration": "7",
+        "answer": "ARMBAND",
+        "definition_span": [
+          37,
+          51
+        ],
+        "explanation": "ARM (limb) + BAND (group of musicians)"
+      },
+      {
+        "num": 2,
+        "row": 0,
+        "col": 2,
+        "text": "Monarch with half a domain has a realm",
+        "enumeration": "7",
+        "answer": "KINGDOM",
+        "definition_span": [
+          31,
+          38
+        ],
+        "explanation": "KING (monarch) + DOM (half of DOMAIN)"
+      },
+      {
+        "num": 3,
+        "row": 0,
+        "col": 4,
+        "text": "Ocean and unwanted plant: kelp, for example",
+        "enumeration": "7",
+        "answer": "SEAWEED",
+        "definition_span": [
+          26,
+          43
+        ],
+        "explanation": "SEA (ocean) + WEED (unwanted plant)"
+      },
+      {
+        "num": 4,
+        "row": 0,
+        "col": 6,
+        "text": "Betrayal by mixed-up senator",
+        "enumeration": "7",
+        "answer": "TREASON",
+        "definition_span": [
+          0,
+          8
+        ],
+        "explanation": "Anagram (mixed-up) of SENATOR"
+      }
+    ]
+  }
+}

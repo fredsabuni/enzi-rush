@@ -1,0 +1,128 @@
+{
+  "id": "quick-2026-10-24",
+  "mode": "quick",
+  "title": "Quick #1",
+  "author": "EnziGames",
+  "date": "2026-10-24",
+  "par_seconds": 240,
+  "difficulty": 1,
+  "grid": [
+    ".......",
+    ".#.#.#.",
+    ".......",
+    ".#.#.#.",
+    ".......",
+    ".#.#.#.",
+    "......."
+  ],
+  "clues": {
+    "across": [
+      {
+        "num": 1,
+        "row": 0,
+        "col": 0,
+        "text": "Vehicles on the road deal illegally",
+        "enumeration": "7",
+        "answer": "TRAFFIC",
+        "definition_span": [
+          0,
+          20
+        ],
+        "explanation": "Double definition: TRAFFIC is vehicles on the road, and to traffic is to deal illegally"
+      },
+      {
+        "num": 5,
+        "row": 2,
+        "col": 0,
+        "text": "Lesson one hundred is timeless",
+        "enumeration": "7",
+        "answer": "CLASSIC",
+        "definition_span": [
+          22,
+          30
+        ],
+        "explanation": "CLASS (lesson) + I (one, Roman numeral) + C (hundred, Roman numeral)"
+      },
+      {
+        "num": 6,
+        "row": 4,
+        "col": 0,
+        "text": "Issue I tied on loosely",
+        "enumeration": "7",
+        "answer": "EDITION",
+        "definition_span": [
+          0,
+          5
+        ],
+        "explanation": "Anagram (loosely) of I TIED ON"
+      },
+      {
+        "num": 7,
+        "row": 6,
+        "col": 0,
+        "text": "Meg sent out a portion",
+        "enumeration": "7",
+        "answer": "SEGMENT",
+        "definition_span": [
+          13,
+          22
+        ],
+        "explanation": "Anagram (out) of MEG SENT"
+      }
+    ],
+    "down": [
+      {
+        "num": 1,
+        "row": 0,
+        "col": 0,
+        "text": "Travel passes, or parking fines",
+        "enumeration": "7",
+        "answer": "TICKETS",
+        "definition_span": [
+          0,
+          13
+        ],
+        "explanation": "Double definition: TICKETS are travel passes, and parking fines"
+      },
+      {
+        "num": 2,
+        "row": 0,
+        "col": 2,
+        "text": "Fantastic part of drama zings",
+        "enumeration": "7",
+        "answer": "AMAZING",
+        "definition_span": [
+          0,
+          9
+        ],
+        "explanation": "Hidden in drAMA ZINGs (\"part of\")"
+      },
+      {
+        "num": 3,
+        "row": 0,
+        "col": 4,
+        "text": "Jolly five set off",
+        "enumeration": "7",
+        "answer": "FESTIVE",
+        "definition_span": [
+          0,
+          5
+        ],
+        "explanation": "Anagram (off) of FIVE SET"
+      },
+      {
+        "num": 4,
+        "row": 0,
+        "col": 6,
+        "text": "Two companies and a fan make a tropical fruit",
+        "enumeration": "7",
+        "answer": "COCONUT",
+        "definition_span": [
+          29,
+          45
+        ],
+        "explanation": "CO + CO (two companies) + NUT (fan, as in \"football nut\")"
+      }
+    ]
+  }
+}

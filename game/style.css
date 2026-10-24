@@ -58,3 +58,6 @@ input.name:focus{border-color:var(--orange-l)}
 .rankline{text-align:center;font:400 24px Lilita;color:var(--gold-l)}
 #pauseBtn{position:fixed;z-index:4;top:max(12px,env(safe-area-inset-top));left:12px;width:52px;height:52px;border-radius:16px;border:0;background:rgba(30,20,40,.5);color:#fff;font:400 22px Lilita;display:none}
 #muteBtn{position:fixed;z-index:4;top:max(12px,env(safe-area-inset-top));left:72px;width:52px;height:52px;border-radius:16px;border:0;background:rgba(30,20,40,.5);color:#fff;font:400 18px Lilita;display:none}
+.who{display:flex;align-items:center;justify-content:space-between;gap:10px;background:#3a2216;border-radius:16px;padding:10px 14px;font:800 13px Nunito;color:#cdb9a6}
+.who b{display:block;font:400 24px Lilita;color:#fff}
+.who a{font:800 13px Nunito;text-decoration:none;white-space:nowrap}

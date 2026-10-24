@@ -1,73 +1,148 @@
 <!doctype html>
 <html lang="sw"><head><meta charset="utf-8">
-<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no,viewport-fit=cover">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <meta name="theme-color" content="#291810"><meta name="apple-mobile-web-app-capable" content="yes">
-<title>Harakati za Enzi: Delivery Safari</title>
+<title>HZE Games</title>
 <link rel="icon" href="assets/logo.svg">
 <link rel="stylesheet" href="style.css">
+<style>
+html,body{overflow:auto;height:auto;min-height:100%}
+body{background:radial-gradient(120% 60% at 50% 0%,#5b2a17 0%,#291810 60%,#160c08 100%) fixed #160c08}
+.hub{max-width:480px;margin:0 auto;padding:max(18px,env(safe-area-inset-top)) 16px max(32px,env(safe-area-inset-bottom));display:flex;flex-direction:column;gap:14px}
+.card{background:#3a2216;border-radius:20px;padding:16px;display:flex;flex-direction:column;gap:12px}
+.card[hidden],[hidden]{display:none!important}
+.hello{font:400 30px Lilita;color:#fff;margin:0;line-height:1}
+.hello small{display:block;font:800 13px Nunito;color:#cdb9a6;margin-top:6px}
+.linkbtn{background:none;border:0;padding:0;font:800 13px Nunito;color:var(--gold-l);cursor:pointer;text-align:left}
+input.pin{letter-spacing:12px;text-align:center}
+.games{display:grid;grid-template-columns:repeat(2,1fr);gap:12px}
+.game{display:flex;flex-direction:column;gap:6px;text-decoration:none;color:#fff;background:#3a2216;border:3px solid #5b3826;border-radius:22px;padding:10px 10px 12px;cursor:pointer;text-align:left;font:inherit}
+.game img{width:100%;aspect-ratio:1;display:block;border-radius:16px}
+.game b{font:400 21px Lilita;line-height:1.05}
+.game span{font:700 12px/1.3 Nunito;color:#cdb9a6}
+.game i{font:800 12px Nunito;font-style:normal;color:var(--gold-l)}
+.game.live:active{transform:translateY(2px)}
+.game.live:hover{border-color:var(--orange-l)}
+.game.soon{opacity:.7;cursor:default}
+.section{font:900 13px Nunito;letter-spacing:1.5px;color:var(--gold-l);text-transform:uppercase;margin:6px 0 -4px}
+</style>
 </head>
 <body>
-<div id="stage"><canvas id="game"></canvas></div>
-<button id="pauseBtn" aria-label="Pause">II</button>
-<button id="muteBtn" aria-label="Sound">♪</button>
-<div id="safeProbe" style="position:fixed;top:0;height:env(safe-area-inset-top);width:1px;visibility:hidden"></div>
-
-<!-- START -->
-<section class="screen on" id="sStart"><div class="wrap">
+<main class="hub">
   <img class="logo" src="assets/logo.svg" alt="Harakati za Enzi">
-  <h1 class="title">DELIVERY SAFARI<small>HARAKATI ZA ENZI</small></h1>
-  <p class="lede">Peleka kahawa ya moto Dar nzima kwa skateboard. Kusanya punje, ruka mashimo, usivunje taa nyekundu!</p>
-  <label class="lbl" for="nick">Jina lako · Nickname</label>
-  <input class="name" id="nick" maxlength="16" autocomplete="nickname" autocapitalize="off" spellcheck="false" placeholder="mf. KahawaKing">
-  <div class="hint" id="nickHint">Herufi 3–16: A–Z, 0–9, _</div>
-  <label class="lbl">Chagua mpanda · Pick your skater</label>
-  <div class="picker" id="picker"></div>
-  <button class="btn" id="playBtn">CHEZA!<small>Play</small></button>
-  <div class="row">
-    <button class="btn alt" id="boardBtn" style="font-size:20px">UBAO<small>Leaderboard</small></button>
-    <a class="btn ghost" href="crew.html" style="text-align:center;text-decoration:none">CREW<small>Meet the cast</small></a>
-  </div>
-  <div class="how"><b>Jinsi ya kucheza · How to play</b><br>
-    👆 <b>Gusa</b> kuruka · tap to jump (hold = higher)<br>
-    👆👆 <b>Gusa tena hewani</b> · tap again in the air to kickflip<br>
-    ✋ <b>SIMAMA</b> button = brake. Wait for green at the lights!<br>
-    ☕ Fika na <b>JOTO</b> juu = bonus kubwa · hotter coffee, bigger bonus<br>
-    🐦 Ruka <b>juu</b> ya kunguru na kuku = +50
-  </div>
-</div></section>
+  <h1 class="title">MICHEZO YA ENZI<small>HZE GAMES</small></h1>
 
-<!-- LEADERBOARD -->
-<section class="screen" id="sBoard"><div class="wrap">
-  <h1 class="title" style="font-size:40px">UBAO WA WASHINDI<small>Leaderboard</small></h1>
-  <div class="tabs" id="tabs"><button data-p="today" class="on">LEO</button><button data-p="week">WIKI</button><button data-p="all">ZOTE</button></div>
-  <ul class="board" id="boardList"></ul>
-  <div class="note" id="boardNote"></div>
-  <div class="row"><button class="btn ghost" id="boardBack">← RUDI</button><button class="btn" id="boardPlay">CHEZA</button></div>
-</div></section>
+  <!-- signed in -->
+  <section class="card" id="welcome" hidden>
+    <p class="hello">Karibu tena, <span id="helloName"></span>!<small>Chagua mchezo hapa chini · Pick a game below</small></p>
+    <button class="linkbtn" id="notMe">Si wewe? Badilisha jina · Not you?</button>
+  </section>
 
-<!-- RESULT -->
-<section class="screen" id="sResult"><div class="wrap">
-  <h1 class="title" id="resTitle" style="margin-top:20px">SAFARI COMPLETE!</h1>
-  <p class="big" id="resScore">0</p>
-  <div class="rankline" id="resRank">Inatuma alama…</div>
-  <div class="stats" id="resStats"></div>
-  <button class="btn" id="againBtn">CHEZA TENA<small>Play again</small></button>
-  <div class="row"><button class="btn alt" id="resBoard" style="font-size:20px">UBAO<small>Leaderboard</small></button><button class="btn ghost" id="resHome">NYUMBANI</button></div>
-  <p class="note">Onyesha skrini hii kwa barista wako ☕ · Show this screen at the counter</p>
-</div></section>
+  <!-- players from before PINs: ask once -->
+  <section class="card" id="setPin" hidden>
+    <label class="lbl" for="newPin">Weka PIN yako · Set a PIN</label>
+    <div class="hint" style="margin:0">Tarakimu 4. Utaitumia kurudisha jina lako ukibadilisha simu. · Use it to get your name back on a new phone.</div>
+    <input class="name pin" id="newPin" type="password" inputmode="numeric" pattern="[0-9]*" maxlength="4" autocomplete="off" placeholder="••••">
+    <div class="hint" id="setPinHint"></div>
+    <button class="btn alt" id="setPinBtn" style="font-size:20px">HIFADHI PIN<small>Save</small></button>
+  </section>
 
-<!-- PAUSE -->
-<section class="screen glass" id="sPause"><div class="wrap" style="margin-top:30vh">
-  <h1 class="title">PUMZIKO</h1>
-  <button class="btn" id="resumeBtn">ENDELEA<small>Resume</small></button>
-  <button class="btn ghost" id="quitBtn">ACHA MCHEZO · Quit</button>
-</div></section>
+  <!-- sign in / sign up -->
+  <section class="card" id="signIn" hidden>
+    <label class="lbl" for="nick">Jina lako · Nickname</label>
+    <input class="name" id="nick" maxlength="16" autocomplete="nickname" autocapitalize="off" spellcheck="false" placeholder="mf. KahawaKing">
+    <label class="lbl" for="pin">PIN (tarakimu 4)</label>
+    <input class="name pin" id="pin" type="password" inputmode="numeric" pattern="[0-9]*" maxlength="4" autocomplete="off" placeholder="••••">
+    <div class="hint" id="signHint">Mpya? Chagua jina na PIN. Umerudi? Weka jina na PIN yako.<br>New here? Pick a name and PIN. Back again? Enter yours.</div>
+    <button class="btn" id="signBtn">INGIA<small>Continue</small></button>
+    <button class="linkbtn" id="cancelSwitch" hidden>← Ghairi · Cancel</button>
+  </section>
 
-<script src="js/art.js"></script>
-<script src="js/sfx.js"></script>
-<script src="js/world.js"></script>
-<script src="js/levels.js"></script>
-<script src="js/game.js"></script>
-<script src="js/api.js"></script>
-<script src="js/app.js"></script>
+  <div class="section">Michezo · Games</div>
+  <div class="games" id="games"></div>
+  <a class="back" href="qr.html" style="text-align:center;font-size:12px;opacity:.6;margin-top:10px">QR za meza · Table posters</a>
+</main>
+
+<script src="shared/api.js"></script>
+<script>
+const $ = id => document.getElementById(id);
+const q = new URLSearchParams(location.search);
+// old links: /?autoplay=1 used to open the game straight away
+if (q.has('autoplay')) location.replace('safari/?autoplay=1');
+// where to go after signing in (only a game folder on this site, e.g. "safari/")
+let next = /^[a-z0-9_-]+\/$/.test(q.get('next') || '') ? q.get('next') : '';
+const esc = s => String(s).replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
+const hint = (el, text, err) => { el.innerHTML = text; el.className = 'hint' + (err ? ' err' : ''); };
+
+function view(mode) { // 'welcome' | 'signIn'
+  $('welcome').hidden = mode !== 'welcome';
+  $('signIn').hidden = mode !== 'signIn';
+  if (mode !== 'welcome') $('setPin').hidden = true;
+  $('cancelSwitch').hidden = !(mode === 'signIn' && API.signedIn);
+  if (mode === 'welcome') $('helloName').textContent = API.name;
+}
+function signInView(name = '') { view('signIn'); $('nick').value = name; $('pin').value = ''; (name ? $('pin') : $('nick')).focus(); }
+
+$('notMe').onclick = () => signInView();
+$('cancelSwitch').onclick = () => view('welcome');
+$('signBtn').onclick = async () => {
+  const name = $('nick').value.trim(), pin = $('pin').value.trim(), h = $('signHint');
+  if (!API.NAME_RE.test(name)) { hint(h, 'Jina: herufi 3–16, A–Z, 0–9 au _ tu', true); $('nick').focus(); return; }
+  if (!API.PIN_RE.test(pin)) { hint(h, 'PIN ni tarakimu 4 · PIN must be 4 digits', true); $('pin').focus(); return; }
+  hint(h, 'Inaangalia…'); $('signBtn').disabled = true;
+  const r = await API.signIn(name, pin); $('signBtn').disabled = false;
+  if (r.ok) {
+    if (next) { location.href = next; return; }
+    view('welcome');
+    if (r.offline) $('helloName').textContent = name + ' (offline)';
+    return;
+  }
+  if (r.taken) hint(h, `“${esc(name)}” limeshachukuliwa — chagua jingine · name taken`, true);
+  else if (r.wrongPin) hint(h, `PIN si sahihi · wrong PIN (${r.triesLeft} zimebaki · tries left)`, true);
+  else if (r.locked) hint(h, `Majaribio mengi. Jaribu tena baada ya dakika ${r.retryIn} · too many tries, wait ${r.retryIn} min`, true);
+  else hint(h, 'Jina hilo haliruhusiwi · try another name', true);
+};
+for (const id of ['nick', 'pin']) $(id).addEventListener('keydown', e => { if (e.key === 'Enter') $('signBtn').click(); });
+
+$('setPinBtn').onclick = async () => {
+  const pin = $('newPin').value.trim(), h = $('setPinHint');
+  if (!API.PIN_RE.test(pin)) { hint(h, 'PIN ni tarakimu 4 · 4 digits', true); return; }
+  const r = await API.setPin(pin);
+  if (r.ok) { hint(h, 'Imehifadhiwa ✓ · Saved'); setTimeout(() => { $('setPin').hidden = true; }, 1200); }
+  else hint(h, 'Imeshindwa, jaribu tena · try again', true);
+};
+
+// ---------- games grid ----------
+async function loadGames() {
+  let games = [];
+  try { games = await (await fetch('games.json', { cache: 'no-cache' })).json(); } catch (e) { }
+  const best = id => { try { return +(localStorage.getItem('hze_best_' + id) || (id === 'safari' && localStorage.getItem('hze_best')) || 0); } catch (e) { return 0; } };
+  $('games').innerHTML = games.map(g => {
+    const live = g.status === 'live', b = live && best(g.id);
+    const inner = `<img src="${esc(g.icon)}" alt=""><b>${esc(g.name)}</b><span>${esc(g.tagline)}</span>${g.teaser ? `<i data-teaser="${esc(g.teaser)}"></i>` : ''}${b ? `<i>Rekodi yako · best ${b.toLocaleString()}</i>` : ''}`;
+    return live ? `<a class="game live" href="${esc(g.href)}" data-href="${esc(g.href)}">${inner}</a>` : `<div class="game soon">${inner}</div>`;
+  }).join('');
+  // live line from the game, e.g. today's top score
+  for (const el of document.querySelectorAll('[data-teaser]')) fetch(el.dataset.teaser).then(r => r.json()).then(j => { el.textContent = j.text || ''; }).catch(() => { });
+  // a game needs a name first: remember where they were going and show the form
+  for (const a of document.querySelectorAll('.game.live')) a.onclick = e => {
+    if (API.name) return;
+    e.preventDefault(); next = a.dataset.href; signInView();
+    hint($('signHint'), 'Weka jina na PIN kwanza · Sign in first, then we start the game');
+  };
+}
+
+// ---------- start ----------
+(async () => {
+  loadGames();
+  await API.flush();
+  if (q.has('switch') || !API.name) { signInView(); return; }
+  view('welcome');
+  const c = await API.check();
+  if (c.lost) { // the server doesn't know this phone any more
+    const old = API.name; API.signOut(); signInView(old);
+    hint($('signHint'), 'Ingia tena kwa PIN yako · Please sign in again with your PIN');
+  } else if (c.ok && !c.hasPin) $('setPin').hidden = false;
+})();
+</script>
 </body></html>

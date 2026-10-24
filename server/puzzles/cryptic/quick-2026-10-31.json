@@ -1,0 +1,154 @@
+{
+  "id": "quick-2026-10-31",
+  "mode": "quick",
+  "title": "Quick #8",
+  "author": "EnziGames",
+  "date": "2026-10-31",
+  "par_seconds": 240,
+  "difficulty": 1,
+  "grid": [
+    ".......",
+    ".#.#.#.",
+    "...#...",
+    ".#.#.#.",
+    "...#...",
+    ".#.#.#.",
+    "......."
+  ],
+  "clues": {
+    "across": [
+      {
+        "num": 1,
+        "row": 0,
+        "col": 0,
+        "text": "To hospital rooms, in the direction of",
+        "enumeration": "7",
+        "answer": "TOWARDS",
+        "definition_span": [
+          19,
+          38
+        ],
+        "explanation": "TO + WARDS (hospital rooms)"
+      },
+      {
+        "num": 5,
+        "row": 2,
+        "col": 0,
+        "text": "Joke hidden in spun yarn",
+        "enumeration": "3",
+        "answer": "PUN",
+        "definition_span": [
+          0,
+          4
+        ],
+        "explanation": "Hidden in sPUN"
+      },
+      {
+        "num": 6,
+        "row": 2,
+        "col": 4,
+        "text": "Scarf partly hides vehicle",
+        "enumeration": "3",
+        "answer": "CAR",
+        "definition_span": [
+          19,
+          26
+        ],
+        "explanation": "Hidden in sCARf"
+      },
+      {
+        "num": 7,
+        "row": 4,
+        "col": 0,
+        "text": "Some more rock containing metal",
+        "enumeration": "3",
+        "answer": "ORE",
+        "definition_span": [
+          10,
+          31
+        ],
+        "explanation": "Hidden in mORE"
+      },
+      {
+        "num": 8,
+        "row": 4,
+        "col": 4,
+        "text": "Unwell in the hills",
+        "enumeration": "3",
+        "answer": "ILL",
+        "definition_span": [
+          0,
+          6
+        ],
+        "explanation": "Hidden in hILLs"
+      },
+      {
+        "num": 9,
+        "row": 6,
+        "col": 0,
+        "text": "Tinsel's tangled, so pays attention",
+        "enumeration": "7",
+        "answer": "LISTENS",
+        "definition_span": [
+          21,
+          35
+        ],
+        "explanation": "Anagram (tangled) of TINSELS"
+      }
+    ],
+    "down": [
+      {
+        "num": 1,
+        "row": 0,
+        "col": 0,
+        "text": "First-class dirt makes the ground's upper layer",
+        "enumeration": "7",
+        "answer": "TOPSOIL",
+        "definition_span": [
+          23,
+          47
+        ],
+        "explanation": "TOP (first-class) + SOIL (dirt)"
+      },
+      {
+        "num": 2,
+        "row": 0,
+        "col": 2,
+        "text": "Roams as wardens scatter",
+        "enumeration": "7",
+        "answer": "WANDERS",
+        "definition_span": [
+          0,
+          5
+        ],
+        "explanation": "Anagram (scatter) of WARDENS"
+      },
+      {
+        "num": 3,
+        "row": 0,
+        "col": 4,
+        "text": "Welcome ice, ever melting",
+        "enumeration": "7",
+        "answer": "RECEIVE",
+        "definition_span": [
+          0,
+          7
+        ],
+        "explanation": "Anagram (melting) of ICE EVER"
+      },
+      {
+        "num": 4,
+        "row": 0,
+        "col": 6,
+        "text": "Not quite sure, plus extra",
+        "enumeration": "7",
+        "answer": "SURPLUS",
+        "definition_span": [
+          21,
+          26
+        ],
+        "explanation": "SUR(e) (not quite SURE) + PLUS"
+      }
+    ]
+  }
+}

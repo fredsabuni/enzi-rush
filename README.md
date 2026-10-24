@@ -1,16 +1,43 @@
-# Harakati za Enzi: Delivery Safari (mobile game)
+# Harakati za Enzi: HZE Games (mobile games hub)
 
-A phone-first skateboard runner for the HZE cafés. Customers scan a QR code at the table, pick a nickname and skater, and deliver hot coffee across Dar (Kariakoo → Posta → Coco Beach → Victoria) while collecting beans. Scores go to a shared leaderboard (today / this week / all time).
+Phone-first games for the HZE cafés. Customers scan a QR code at the table, land on the games hub, sign in once with a nickname and a 4-digit PIN, and pick a game. Scores go to a shared leaderboard per game (today / this week / all time).
 
 ## Run it
 ```
 npm start                 # node server/server.js → http://localhost:8080 (no npm install needed, Node 18+)
 PORT=3000 DATA_DIR=/var/hze npm start
 ```
-- `/` is the game, `/crew.html` shows the cast, and `/qr.html?loc=victoria` makes a printable table poster. The `loc` tag is saved with each score so you can tell which branch a player came from.
-- `/?autoplay=1` skips the menu (handy on a laptop). Keys: Space/↑ jump, ←/↓ brake, P pause.
+- `/` is the hub, `/safari/` is Delivery Safari, `/safari/crew.html` shows the cast, and `/qr.html?loc=victoria` makes a printable table poster. The `loc` tag is saved with each score so you can tell which branch a player came from.
+- `/safari/?autoplay=1` skips the menu (handy on a laptop). Keys: Space/↑ jump, ←/↓ brake, P pause.
 
-## How it plays
+## Players
+- **Sign in on the hub:** nickname + 4-digit PIN. A new name creates the player; a known name + the right PIN signs them in on this phone.
+- **Same phone:** the name and a secret token are kept in the browser, so returning players see "Karibu tena, NAME!" and go straight to the games. "Si wewe?" switches name.
+- **New phone:** enter the same nickname and PIN. Up to 5 phones can be signed in to one name.
+- **Safety:** 5 wrong PINs lock the name for 15 minutes. PINs are stored hashed (scrypt).
+- **Players from before PINs** are asked once on the hub to set one. Until they do, their name can't be recovered on another phone.
+
+## Adding a game
+1. Make a folder `game/<id>/` with its own `index.html`. Load the shared player code with `<script src="../shared/api.js" data-game="<id>"></script>` and link `../style.css` / `../assets/` as Safari does.
+2. In the game, send players without a name to the hub: `if (!API.name) location.replace('../?next=<id>/')`. Then use `API.submit(run)` and `API.board(period)`; they are tagged with the game id automatically.
+3. Add an entry to `game/games.json` (`status: "live"` or `"soon"`) with an icon (square SVG/PNG).
+4. Add the game's score limit to `GAMES` in `server/server.js`. Scores for games not listed there are rejected.
+
+## Cryptic Crossword (`/cryptic/`)
+A standard general cryptic, like the magazine's. **Quick** (small grid, about 3 min) is new every day at 05:00 EAT, and the **Weekly Classic** (15×15) is new every Monday at 05:00. Last week's Classic, with answers and explanations, appears under "Last week's solution".
+
+- **Answers never reach the phone.** It gets the grid and clue text only. Checks, reveals, the "show definition" and "explain" hints, timing and scoring all happen on the server (`server/cryptic/api.js`).
+- **Progress is saved on the server** every 10 s, per player, so a Classic started on a café tablet can be finished on a phone (same nickname + PIN).
+- **Timer** only runs while the page is open and the player has touched it in the last minute.
+- **Score** (spec §6.1): base 1000 / 10000, plus a time bonus under par (×2 Quick, ×1 Classic), minus hint costs (×1 Quick, ×5 Classic), plus 20% if no hints. Solves faster than 20 s (Quick) or 2 min (Classic) are kept off the board.
+
+**Adding puzzles:** drop a JSON file into `server/puzzles/cryptic/` (format at the top of `server/cryptic/validate.js`). Check it first:
+```
+node server/cryptic/validate.js server/puzzles/cryptic/*.json
+```
+The checker prints the filled grid and catches clashing letters, wrong numbering, enumerations that don't add up, a definition that isn't at the start or end of the clue, and grids that aren't symmetric or have too many unchecked letters. The server picks up new files within 30 s, no restart needed, and skips (and logs) any file that fails the check. A puzzle goes live on its `date`. If no new Quick is dated for today, yesterday's stays up, so keep a week or two queued.
+
+## How Delivery Safari plays
 - **Tap** to jump (hold for higher), **tap again in the air** to kickflip (double jump). **Hold SIMAMA** to brake.
 - Each level is one order. **JOTO** (heat) drains as you ride, and a hotter cup earns a bigger delivery bonus (300 + heat × 10, plus 500 for no hits or fines).
 - Point-eaters: red lights (Afande Trafiki fines 250), potholes, bodas, crows and chickens (100 each, or land on crows and chickens for +50), puddles (cool your coffee), open drains (lose a cup/life).
@@ -19,18 +46,33 @@ PORT=3000 DATA_DIR=/var/hze npm start
 ## Code map (`game/`)
 | file | what |
 |---|---|
-| `js/art.js` | All drawing: skater rig + the crew (Enzi, Zuri, Jabali), customers, hazards, pickups |
-| `js/world.js` | Zone backdrops (sky, buildings, traffic, sidewalk) |
-| `js/levels.js` | `LEVELS` (zone, customer, length, speed, light positions, hazard mix) + `SCORE` values + course generator |
-| `js/game.js` | Physics, collisions, scoring, HUD, order/delivery cards |
-| `js/app.js` | Screens, input, canvas sizing, main loop |
-| `js/api.js` / `server/server.js` | Leaderboard client / server (JSON file in `server/data/`) |
+| `index.html` | Games hub: sign-in, welcome back, set PIN, games grid |
+| `games.json` | List of games shown on the hub |
+| `shared/api.js` | Player sign-in + leaderboard client used by the hub and every game |
+| `style.css`, `assets/` | Shared look, fonts, logo |
+| `safari/js/art.js` | All drawing: skater rig + the crew (Enzi, Zuri, Jabali), customers, hazards, pickups |
+| `safari/js/world.js` | Zone backdrops (sky, buildings, traffic, sidewalk) |
+| `safari/js/levels.js` | `LEVELS` (zone, customer, length, speed, light positions, hazard mix) + `SCORE` values + course generator |
+| `safari/js/game.js` | Physics, collisions, scoring, HUD, order/delivery cards |
+| `safari/js/app.js` | Screens, input, canvas sizing, main loop |
+| `server/server.js` | Static files + player/leaderboard API (JSON file in `server/data/`) |
+| `cryptic/` | Cryptic Crossword: `app.js` (grid, typing, hints, screens), `cryptic.css` |
+| `server/cryptic/` | Crossword API (`api.js`) and puzzle checker (`validate.js`) |
+| `server/puzzles/cryptic/` | Crossword puzzles, one JSON file each |
 
 **Tuning:** physics feel is `PHYS` in `game.js`. Point values are `SCORE` in `levels.js`. Difficulty is per-level `speed`, `len` and `mix`.
 
-**Leaderboard API:** `POST /api/register {name}` returns a token (a name is locked to the phone that claimed it), `POST /api/scores`, `GET /api/leaderboard?period=today|week|all&name=`. "Today" and "week" use East Africa Time. The server rejects implausible scores, but it's a browser game, so treat prizes as for fun. Check the top scores before handing anything out.
+**API:** `POST /api/register {name, pin}` or `{name, token}` returns a token (409 taken, 403 wrong PIN, 423 locked). `POST /api/scores {name, token, game, score, duration, …}`. `GET /api/leaderboard?game=safari&period=today|week|all&name=`. "Today" and "week" use East Africa Time. The server rejects implausible scores, but these are browser games, so treat prizes as for fun. Check the top scores before handing anything out.
 
 ---
+
+# Cryptic Crossword ad (`promo/cryptic/`)
+A 23-second vertical ad (1080×1920, 30fps) for WhatsApp Status, Instagram and TikTok. Every frame is drawn on a canvas in `index.html`; the soundtrack (music + UI sounds) is made in code by `sound.mjs` from the cue list in the page.
+```
+node promo/cryptic/render.mjs                # → promo/cryptic/out/cryptic-promo.mp4
+node promo/cryptic/render.mjs stills 5 12.5  # spot-check frames → promo/cryptic/out/stills/
+```
+Open `promo/cryptic/index.html` in a browser for a live preview with a scrubber (`?t=12.5` freezes a frame). Copy and timings live at the top of each scene function; scene start/end times are in `SC`. Needs ffmpeg and Playwright's Chromium (set `PLAYWRIGHT` and `CHROMIUM` if they're installed somewhere else).
 
 # The Safari (marketing video, original project)
 

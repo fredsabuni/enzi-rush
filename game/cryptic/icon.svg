@@ -1,0 +1,40 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256">
+  <rect width="256" height="256" rx="56" fill="#f7f3ea"/>
+  <rect x="34" y="34" width="188" height="188" rx="6" fill="#1d1a16"/>
+  <rect x="40.0" y="40.0" width="32.8" height="32.8" fill="#fffefb"/>
+  <text x="56.4" y="64.3" font-family="Georgia,serif" font-weight="700" font-size="20.3" text-anchor="middle" fill="#1d1a16">E</text>
+  <rect x="75.8" y="40.0" width="32.8" height="32.8" fill="#fffefb"/>
+  <text x="92.2" y="64.3" font-family="Georgia,serif" font-weight="700" font-size="20.3" text-anchor="middle" fill="#1d1a16">N</text>
+  <rect x="111.6" y="40.0" width="32.8" height="32.8" fill="#fffefb"/>
+  <text x="128.0" y="64.3" font-family="Georgia,serif" font-weight="700" font-size="20.3" text-anchor="middle" fill="#1d1a16">Z</text>
+  <rect x="147.4" y="40.0" width="32.8" height="32.8" fill="#fffefb"/>
+  <text x="163.8" y="64.3" font-family="Georgia,serif" font-weight="700" font-size="20.3" text-anchor="middle" fill="#1d1a16">I</text>
+  <rect x="183.2" y="40.0" width="32.8" height="32.8" fill="#fffefb"/>
+  <rect x="40.0" y="75.8" width="32.8" height="32.8" fill="#fffefb"/>
+  <text x="56.4" y="100.1" font-family="Georgia,serif" font-weight="700" font-size="20.3" text-anchor="middle" fill="#1d1a16">?</text>
+  <rect x="75.8" y="75.8" width="32.8" height="32.8" fill="#1d1a16"/>
+  <rect x="111.6" y="75.8" width="32.8" height="32.8" fill="#fffefb"/>
+  <rect x="147.4" y="75.8" width="32.8" height="32.8" fill="#1d1a16"/>
+  <rect x="183.2" y="75.8" width="32.8" height="32.8" fill="#fffefb"/>
+  <rect x="40.0" y="111.6" width="32.8" height="32.8" fill="#fffefb"/>
+  <text x="56.4" y="135.9" font-family="Georgia,serif" font-weight="700" font-size="20.3" text-anchor="middle" fill="#1d1a16">C</text>
+  <rect x="75.8" y="111.6" width="32.8" height="32.8" fill="#fffefb"/>
+  <text x="92.2" y="135.9" font-family="Georgia,serif" font-weight="700" font-size="20.3" text-anchor="middle" fill="#1d1a16">L</text>
+  <rect x="111.6" y="111.6" width="32.8" height="32.8" fill="#fffefb"/>
+  <text x="128.0" y="135.9" font-family="Georgia,serif" font-weight="700" font-size="20.3" text-anchor="middle" fill="#1d1a16">U</text>
+  <rect x="147.4" y="111.6" width="32.8" height="32.8" fill="#fffefb"/>
+  <text x="163.8" y="135.9" font-family="Georgia,serif" font-weight="700" font-size="20.3" text-anchor="middle" fill="#1d1a16">E</text>
+  <rect x="183.2" y="111.6" width="32.8" height="32.8" fill="#fffefb"/>
+  <rect x="40.0" y="147.4" width="32.8" height="32.8" fill="#fffefb"/>
+  <rect x="75.8" y="147.4" width="32.8" height="32.8" fill="#1d1a16"/>
+  <rect x="111.6" y="147.4" width="32.8" height="32.8" fill="#fffefb"/>
+  <rect x="147.4" y="147.4" width="32.8" height="32.8" fill="#1d1a16"/>
+  <rect x="183.2" y="147.4" width="32.8" height="32.8" fill="#fffefb"/>
+  <rect x="40.0" y="183.2" width="32.8" height="32.8" fill="#fffefb"/>
+  <rect x="75.8" y="183.2" width="32.8" height="32.8" fill="#fffefb"/>
+  <rect x="111.6" y="183.2" width="32.8" height="32.8" fill="#fffefb"/>
+  <rect x="147.4" y="183.2" width="32.8" height="32.8" fill="#fffefb"/>
+  <rect x="183.2" y="183.2" width="32.8" height="32.8" fill="#fffefb"/>
+  <rect x="40" y="40" width="33" height="33" fill="#f5c842" opacity=".55"/>
+  <path d="M206 150l26-26 14 14-26 26-18 4z" fill="#c4510e"/><path d="M232 124l6-6 14 14-6 6z" fill="#1d1a16"/>
+</svg>

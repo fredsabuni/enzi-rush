@@ -1,0 +1,396 @@
+{
+  "id": "classic-2026-10-26",
+  "mode": "classic",
+  "title": "Weekly Classic #3",
+  "author": "EnziGames",
+  "date": "2026-10-26",
+  "par_seconds": 3600,
+  "difficulty": 3,
+  "grid": [
+    "#.#.#.#.#.#.#.#",
+    "......#........",
+    "#.#.#.#.#.#.#.#",
+    "..........#....",
+    "#.#.#.###.###.#",
+    "........#......",
+    "###.###.#.#.#.#",
+    "...............",
+    "#.#.#.#.###.###",
+    "......#........",
+    "#.###.###.#.#.#",
+    "....#..........",
+    "#.#.#.#.#.#.#.#",
+    "........#......",
+    "#.#.#.#.#.#.#.#"
+  ],
+  "clues": {
+    "across": [
+      {
+        "num": 8,
+        "row": 1,
+        "col": 0,
+        "text": "Set off with a packed lunch",
+        "enumeration": "6",
+        "answer": "LAUNCH",
+        "definition_span": [
+          0,
+          7
+        ],
+        "explanation": "A packed into LUNCH → L(A)UNCH"
+      },
+      {
+        "num": 9,
+        "row": 1,
+        "col": 7,
+        "text": "New matador running wild, haphazardly",
+        "enumeration": "2,6",
+        "answer": "ATRANDOM",
+        "definition_span": [
+          26,
+          37
+        ],
+        "explanation": "Anagram (running wild) of N(ew) + MATADOR"
+      },
+      {
+        "num": 10,
+        "row": 3,
+        "col": 0,
+        "text": "Smile at mob awkwardly, showing body chemistry",
+        "enumeration": "10",
+        "answer": "METABOLISM",
+        "definition_span": [
+          32,
+          46
+        ],
+        "explanation": "Anagram (awkwardly) of SMILE AT MOB"
+      },
+      {
+        "num": 11,
+        "row": 3,
+        "col": 11,
+        "text": "Level seven loses its head",
+        "enumeration": "4",
+        "answer": "EVEN",
+        "definition_span": [
+          0,
+          5
+        ],
+        "explanation": "(S)EVEN with its first letter (head) removed"
+      },
+      {
+        "num": 12,
+        "row": 5,
+        "col": 0,
+        "text": "Countrywide donation allowed in part",
+        "enumeration": "8",
+        "answer": "NATIONAL",
+        "definition_span": [
+          0,
+          11
+        ],
+        "explanation": "Hidden in (in part) \"doNATION ALlowed\""
+      },
+      {
+        "num": 14,
+        "row": 5,
+        "col": 9,
+        "text": "Rowing crew with husband, just ahead of ninth",
+        "enumeration": "6",
+        "answer": "EIGHTH",
+        "definition_span": [
+          26,
+          45
+        ],
+        "explanation": "EIGHT (rowing crew) + H (husband)"
+      },
+      {
+        "num": 16,
+        "row": 7,
+        "col": 0,
+        "text": "Racing to finish, leaning on the timepiece",
+        "enumeration": "7,3,5",
+        "answer": "AGAINSTTHECLOCK",
+        "definition_span": [
+          0,
+          16
+        ],
+        "explanation": "AGAINST (leaning on) + THE + CLOCK (timepiece)"
+      },
+      {
+        "num": 19,
+        "row": 9,
+        "col": 0,
+        "text": "English join together to come out",
+        "enumeration": "6",
+        "answer": "EMERGE",
+        "definition_span": [
+          25,
+          33
+        ],
+        "explanation": "E (English) + MERGE (join together)"
+      },
+      {
+        "num": 20,
+        "row": 9,
+        "col": 7,
+        "text": "Copy terrace by lane's end, redeveloped",
+        "enumeration": "8",
+        "answer": "RECREATE",
+        "definition_span": [
+          0,
+          4
+        ],
+        "explanation": "Anagram (redeveloped) of TERRACE + (lan)E (lane's end)"
+      },
+      {
+        "num": 23,
+        "row": 11,
+        "col": 0,
+        "text": "Frank golf championship",
+        "enumeration": "4",
+        "answer": "OPEN",
+        "definition_span": [
+          0,
+          5
+        ],
+        "explanation": "Double definition: OPEN = frank; the Open = golf championship"
+      },
+      {
+        "num": 25,
+        "row": 11,
+        "col": 5,
+        "text": "Asian river test concerning factories",
+        "enumeration": "10",
+        "answer": "INDUSTRIAL",
+        "definition_span": [
+          17,
+          37
+        ],
+        "explanation": "INDUS (Asian river) + TRIAL (test)"
+      },
+      {
+        "num": 27,
+        "row": 13,
+        "col": 0,
+        "text": "Mail rate somehow relevant",
+        "enumeration": "8",
+        "answer": "MATERIAL",
+        "definition_span": [
+          18,
+          26
+        ],
+        "explanation": "Anagram (somehow) of MAIL RATE"
+      },
+      {
+        "num": 28,
+        "row": 13,
+        "col": 9,
+        "text": "Dead to the world, please turn over",
+        "enumeration": "6",
+        "answer": "ASLEEP",
+        "definition_span": [
+          0,
+          17
+        ],
+        "explanation": "Anagram (turn over) of PLEASE"
+      }
+    ],
+    "down": [
+      {
+        "num": 1,
+        "row": 0,
+        "col": 1,
+        "text": "Turned up with artist, equipment for shooting",
+        "enumeration": "6",
+        "answer": "CAMERA",
+        "definition_span": [
+          23,
+          45
+        ],
+        "explanation": "CAME (turned up) + RA (artist, Royal Academician)"
+      },
+      {
+        "num": 2,
+        "row": 0,
+        "col": 3,
+        "text": "Strange French one, well known",
+        "enumeration": "10",
+        "answer": "UNFAMILIAR",
+        "definition_span": [
+          0,
+          7
+        ],
+        "explanation": "UN (French for \"one\") + FAMILIAR (well known)"
+      },
+      {
+        "num": 3,
+        "row": 0,
+        "col": 5,
+        "text": "Disconcerted, we hear, by king's seat",
+        "enumeration": "6",
+        "answer": "THROWN",
+        "definition_span": [
+          0,
+          12
+        ],
+        "explanation": "Sounds like (we hear) THRONE (king's seat)"
+      },
+      {
+        "num": 4,
+        "row": 0,
+        "col": 7,
+        "text": "Charge one for a cab",
+        "enumeration": "4",
+        "answer": "TAXI",
+        "definition_span": [
+          17,
+          20
+        ],
+        "explanation": "TAX (charge) + I (one)"
+      },
+      {
+        "num": 5,
+        "row": 0,
+        "col": 9,
+        "text": "Prime Minister with English opening night",
+        "enumeration": "8",
+        "answer": "PREMIERE",
+        "definition_span": [
+          28,
+          41
+        ],
+        "explanation": "PREMIER (Prime Minister) + E (English)"
+      },
+      {
+        "num": 6,
+        "row": 0,
+        "col": 11,
+        "text": "At one time our newsagent closed early, initially",
+        "enumeration": "4",
+        "answer": "ONCE",
+        "definition_span": [
+          0,
+          11
+        ],
+        "explanation": "First letters (initially) of Our Newsagent Closed Early"
+      },
+      {
+        "num": 7,
+        "row": 0,
+        "col": 13,
+        "text": "Household roofs with a twitch",
+        "enumeration": "8",
+        "answer": "DOMESTIC",
+        "definition_span": [
+          0,
+          9
+        ],
+        "explanation": "DOMES (roofs) + TIC (a twitch)"
+      },
+      {
+        "num": 13,
+        "row": 5,
+        "col": 7,
+        "text": "Afterwards, dead right",
+        "enumeration": "5",
+        "answer": "LATER",
+        "definition_span": [
+          0,
+          10
+        ],
+        "explanation": "LATE (dead) + R (right)"
+      },
+      {
+        "num": 15,
+        "row": 5,
+        "col": 11,
+        "text": "Fundamental principle of gilded reign",
+        "enumeration": "6,4",
+        "answer": "GOLDENRULE",
+        "definition_span": [
+          0,
+          21
+        ],
+        "explanation": "GOLDEN (gilded) + RULE (reign)"
+      },
+      {
+        "num": 17,
+        "row": 7,
+        "col": 1,
+        "text": "Strategy for sport and design",
+        "enumeration": "4,4",
+        "answer": "GAMEPLAN",
+        "definition_span": [
+          0,
+          8
+        ],
+        "explanation": "GAME (sport) + PLAN (design)"
+      },
+      {
+        "num": 18,
+        "row": 7,
+        "col": 5,
+        "text": "Precise gamble if in charge",
+        "enumeration": "8",
+        "answer": "SPECIFIC",
+        "definition_span": [
+          0,
+          7
+        ],
+        "explanation": "SPEC (gamble, as in \"on spec\") + IF + IC (in charge)"
+      },
+      {
+        "num": 21,
+        "row": 9,
+        "col": 9,
+        "text": "Informal temporary worker",
+        "enumeration": "6",
+        "answer": "CASUAL",
+        "definition_span": [
+          0,
+          8
+        ],
+        "explanation": "Double definition: CASUAL = informal; a casual = a temporary worker"
+      },
+      {
+        "num": 22,
+        "row": 9,
+        "col": 13,
+        "text": "Time for Bolero composer to tour",
+        "enumeration": "6",
+        "answer": "TRAVEL",
+        "definition_span": [
+          28,
+          32
+        ],
+        "explanation": "T (time) + RAVEL (composer of Bolero)"
+      },
+      {
+        "num": 24,
+        "row": 11,
+        "col": 3,
+        "text": "Require work on dough, by the sound of it",
+        "enumeration": "4",
+        "answer": "NEED",
+        "definition_span": [
+          0,
+          7
+        ],
+        "explanation": "Sounds like (by the sound of it) KNEAD (work on dough)"
+      },
+      {
+        "num": 26,
+        "row": 11,
+        "col": 7,
+        "text": "Part of camel advanced up valley",
+        "enumeration": "4",
+        "answer": "DALE",
+        "definition_span": [
+          26,
+          32
+        ],
+        "explanation": "Hidden (part of) reversed (up) in \"camEL ADvanced\" → ELAD backwards"
+      }
+    ]
+  }
+}

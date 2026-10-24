@@ -1,0 +1,154 @@
+{
+  "id": "quick-2026-10-30",
+  "mode": "quick",
+  "title": "Quick #7",
+  "author": "EnziGames",
+  "date": "2026-10-30",
+  "par_seconds": 240,
+  "difficulty": 1,
+  "grid": [
+    ".......",
+    ".#.#.#.",
+    ".......",
+    "##.#.##",
+    ".......",
+    ".#.#.#.",
+    "......."
+  ],
+  "clues": {
+    "across": [
+      {
+        "num": 1,
+        "row": 0,
+        "col": 0,
+        "text": "Crazy yellow fruit",
+        "enumeration": "7",
+        "answer": "BANANAS",
+        "definition_span": [
+          6,
+          18
+        ],
+        "explanation": "Double definition: BANANAS means crazy, and they're yellow fruit"
+      },
+      {
+        "num": 5,
+        "row": 2,
+        "col": 0,
+        "text": "Barrier, then path, forming an entrance",
+        "enumeration": "7",
+        "answer": "GATEWAY",
+        "definition_span": [
+          28,
+          39
+        ],
+        "explanation": "GATE (barrier) + WAY (path)"
+      },
+      {
+        "num": 6,
+        "row": 4,
+        "col": 0,
+        "text": "Topic, or one ruled by a king",
+        "enumeration": "7",
+        "answer": "SUBJECT",
+        "definition_span": [
+          0,
+          5
+        ],
+        "explanation": "Double definition: a topic, and a person ruled by a monarch"
+      },
+      {
+        "num": 8,
+        "row": 6,
+        "col": 0,
+        "text": "Lettuce that sank the Titanic",
+        "enumeration": "7",
+        "answer": "ICEBERG",
+        "definition_span": [
+          0,
+          7
+        ],
+        "explanation": "Double definition: ICEBERG is a kind of lettuce, and an iceberg sank the Titanic"
+      }
+    ],
+    "down": [
+      {
+        "num": 1,
+        "row": 0,
+        "col": 0,
+        "text": "Some cabbage in a sack",
+        "enumeration": "3",
+        "answer": "BAG",
+        "definition_span": [
+          16,
+          22
+        ],
+        "explanation": "Hidden in cabBAGe"
+      },
+      {
+        "num": 2,
+        "row": 0,
+        "col": 2,
+        "text": "Not capable, yet remarkable",
+        "enumeration": "7",
+        "answer": "NOTABLE",
+        "definition_span": [
+          17,
+          27
+        ],
+        "explanation": "NOT + ABLE (capable)"
+      },
+      {
+        "num": 3,
+        "row": 0,
+        "col": 4,
+        "text": "Currently in this place? Not anywhere",
+        "enumeration": "7",
+        "answer": "NOWHERE",
+        "definition_span": [
+          25,
+          37
+        ],
+        "explanation": "NOW (currently) + HERE (in this place)"
+      },
+      {
+        "num": 4,
+        "row": 0,
+        "col": 6,
+        "text": "Crafty part of his lyrics",
+        "enumeration": "3",
+        "answer": "SLY",
+        "definition_span": [
+          0,
+          6
+        ],
+        "explanation": "Hidden in hiS LYrics"
+      },
+      {
+        "num": 6,
+        "row": 4,
+        "col": 0,
+        "text": "Glide over snow in some skirts",
+        "enumeration": "3",
+        "answer": "SKI",
+        "definition_span": [
+          0,
+          15
+        ],
+        "explanation": "Hidden in SKIrts"
+      },
+      {
+        "num": 7,
+        "row": 4,
+        "col": 6,
+        "text": "Pull belly back",
+        "enumeration": "3",
+        "answer": "TUG",
+        "definition_span": [
+          0,
+          4
+        ],
+        "explanation": "GUT (belly) reversed (back)"
+      }
+    ]
+  }
+}

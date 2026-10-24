@@ -1,0 +1,422 @@
+{
+  "id": "classic-2026-10-12",
+  "mode": "classic",
+  "title": "Weekly Classic #1",
+  "author": "EnziGames",
+  "date": "2026-10-12",
+  "par_seconds": 3600,
+  "difficulty": 3,
+  "grid": [
+    "#.#.#.###.#.#.#",
+    "........#......",
+    "#.#.#.#.#.#.#.#",
+    "....#.....#....",
+    "#.###.#.#.###.#",
+    "......#........",
+    "#.#.#.#.###.###",
+    "...............",
+    "###.###.#.#.#.#",
+    "........#......",
+    "#.###.#.#.###.#",
+    "....#.....#....",
+    "#.#.#.#.#.#.#.#",
+    "......#........",
+    "#.#.#.###.#.#.#"
+  ],
+  "clues": {
+    "across": [
+      {
+        "num": 7,
+        "row": 1,
+        "col": 0,
+        "text": "Normal, all English and Latin running side by side",
+        "enumeration": "8",
+        "answer": "PARALLEL",
+        "definition_span": [
+          30,
+          50
+        ],
+        "explanation": "PAR (normal) + ALL + E (English) + L (Latin)"
+      },
+      {
+        "num": 9,
+        "row": 1,
+        "col": 9,
+        "text": "Anybody seen in company one evening",
+        "enumeration": "6",
+        "answer": "ANYONE",
+        "definition_span": [
+          0,
+          7
+        ],
+        "explanation": "Hidden in compANY ONE evening"
+      },
+      {
+        "num": 10,
+        "row": 3,
+        "col": 0,
+        "text": "Period with daughter getting on",
+        "enumeration": "4",
+        "answer": "AGED",
+        "definition_span": [
+          21,
+          31
+        ],
+        "explanation": "AGE (period) + D (daughter)"
+      },
+      {
+        "num": 11,
+        "row": 3,
+        "col": 5,
+        "text": "Intended to be tight with time",
+        "enumeration": "5",
+        "answer": "MEANT",
+        "definition_span": [
+          0,
+          8
+        ],
+        "explanation": "MEAN (tight, stingy) + T (time)"
+      },
+      {
+        "num": 12,
+        "row": 3,
+        "col": 11,
+        "text": "Always clever, but losing the first couple",
+        "enumeration": "4",
+        "answer": "EVER",
+        "definition_span": [
+          0,
+          6
+        ],
+        "explanation": "CLEVER without its first two letters (CL)"
+      },
+      {
+        "num": 13,
+        "row": 5,
+        "col": 0,
+        "text": "Dull sprint for practice",
+        "enumeration": "3,3",
+        "answer": "DRYRUN",
+        "definition_span": [
+          16,
+          24
+        ],
+        "explanation": "DRY (dull) + RUN (sprint)"
+      },
+      {
+        "num": 15,
+        "row": 5,
+        "col": 7,
+        "text": "Close shave for mean young lady",
+        "enumeration": "4,4",
+        "answer": "NEARMISS",
+        "definition_span": [
+          0,
+          11
+        ],
+        "explanation": "NEAR (mean, stingy) + MISS (young lady)"
+      },
+      {
+        "num": 17,
+        "row": 7,
+        "col": 0,
+        "text": "Critical stage: purpose of getting nothing back?",
+        "enumeration": "5,2,2,6",
+        "answer": "POINTOFNORETURN",
+        "definition_span": [
+          0,
+          14
+        ],
+        "explanation": "POINT (purpose) + OF + NO RETURN (getting nothing back)"
+      },
+      {
+        "num": 20,
+        "row": 9,
+        "col": 0,
+        "text": "Most dice rolled in family row",
+        "enumeration": "8",
+        "answer": "DOMESTIC",
+        "definition_span": [
+          20,
+          30
+        ],
+        "explanation": "Anagram (rolled) of MOST DICE; a \"domestic\" is a family quarrel"
+      },
+      {
+        "num": 23,
+        "row": 9,
+        "col": 9,
+        "text": "Shout and cry with pain, being chicken",
+        "enumeration": "6",
+        "answer": "YELLOW",
+        "definition_span": [
+          31,
+          38
+        ],
+        "explanation": "YELL (shout) + OW (cry of pain)"
+      },
+      {
+        "num": 24,
+        "row": 11,
+        "col": 0,
+        "text": "I don't expect anything at first: a thought",
+        "enumeration": "4",
+        "answer": "IDEA",
+        "definition_span": [
+          34,
+          43
+        ],
+        "explanation": "First letters of I Don't Expect Anything"
+      },
+      {
+        "num": 26,
+        "row": 11,
+        "col": 5,
+        "text": "Listener gets most of the dirt",
+        "enumeration": "5",
+        "answer": "EARTH",
+        "definition_span": [
+          26,
+          30
+        ],
+        "explanation": "EAR (listener) + TH(e) (most of THE)"
+      },
+      {
+        "num": 27,
+        "row": 11,
+        "col": 11,
+        "text": "Release without charge",
+        "enumeration": "4",
+        "answer": "FREE",
+        "definition_span": [
+          0,
+          7
+        ],
+        "explanation": "Double definition: release / without charge"
+      },
+      {
+        "num": 28,
+        "row": 13,
+        "col": 0,
+        "text": "Visit editor, then rang",
+        "enumeration": "6",
+        "answer": "CALLED",
+        "definition_span": [
+          19,
+          23
+        ],
+        "explanation": "CALL (visit) + ED (editor) → CALLED, which means \"rang\""
+      },
+      {
+        "num": 29,
+        "row": 13,
+        "col": 7,
+        "text": "Does pies, cooked in instalments",
+        "enumeration": "8",
+        "answer": "EPISODES",
+        "definition_span": [
+          21,
+          32
+        ],
+        "explanation": "Anagram (cooked) of DOES PIES"
+      }
+    ],
+    "down": [
+      {
+        "num": 1,
+        "row": 0,
+        "col": 1,
+        "text": "Jumper knitted from oak? Groan!",
+        "enumeration": "8",
+        "answer": "KANGAROO",
+        "definition_span": [
+          0,
+          6
+        ],
+        "explanation": "Anagram (knitted) of OAK GROAN"
+      },
+      {
+        "num": 2,
+        "row": 0,
+        "col": 3,
+        "text": "Ace, perhaps, motor with daughter",
+        "enumeration": "4",
+        "answer": "CARD",
+        "definition_span": [
+          0,
+          12
+        ],
+        "explanation": "CAR (motor) + D (daughter)"
+      },
+      {
+        "num": 3,
+        "row": 0,
+        "col": 5,
+        "text": "Burning love for a pink wader",
+        "enumeration": "8",
+        "answer": "FLAMINGO",
+        "definition_span": [
+          19,
+          29
+        ],
+        "explanation": "FLAMING (burning) + O (love, zero)"
+      },
+      {
+        "num": 4,
+        "row": 0,
+        "col": 9,
+        "text": "Chap putting up art for a meditative chant",
+        "enumeration": "6",
+        "answer": "MANTRA",
+        "definition_span": [
+          26,
+          42
+        ],
+        "explanation": "MAN (chap) + ART reversed (putting up, in a down clue) → TRA"
+      },
+      {
+        "num": 5,
+        "row": 0,
+        "col": 11,
+        "text": "Sort to key in",
+        "enumeration": "4",
+        "answer": "TYPE",
+        "definition_span": [
+          0,
+          4
+        ],
+        "explanation": "Double definition: sort / key in"
+      },
+      {
+        "num": 6,
+        "row": 0,
+        "col": 13,
+        "text": "Except when one in Paris has fewer",
+        "enumeration": "6",
+        "answer": "UNLESS",
+        "definition_span": [
+          0,
+          11
+        ],
+        "explanation": "UN (one in Paris, French) + LESS (fewer)"
+      },
+      {
+        "num": 8,
+        "row": 1,
+        "col": 7,
+        "text": "Study bend? It's often steep for a beginner",
+        "enumeration": "8,5",
+        "answer": "LEARNINGCURVE",
+        "definition_span": [
+          12,
+          43
+        ],
+        "explanation": "LEARNING (study) + CURVE (bend)"
+      },
+      {
+        "num": 14,
+        "row": 5,
+        "col": 3,
+        "text": "Scope for cooking stove",
+        "enumeration": "5",
+        "answer": "RANGE",
+        "definition_span": [
+          0,
+          5
+        ],
+        "explanation": "Double definition: scope / cooking stove"
+      },
+      {
+        "num": 16,
+        "row": 5,
+        "col": 11,
+        "text": "Iron, say, sounds like courage",
+        "enumeration": "5",
+        "answer": "METAL",
+        "definition_span": [
+          0,
+          9
+        ],
+        "explanation": "Sounds like METTLE (courage)"
+      },
+      {
+        "num": 18,
+        "row": 7,
+        "col": 9,
+        "text": "Regular beat in charge",
+        "enumeration": "8",
+        "answer": "RHYTHMIC",
+        "definition_span": [
+          0,
+          7
+        ],
+        "explanation": "RHYTHM (beat) + IC (in charge)"
+      },
+      {
+        "num": 19,
+        "row": 7,
+        "col": 13,
+        "text": "Frank, stuck in reed, is back in business",
+        "enumeration": "8",
+        "answer": "REOPENED",
+        "definition_span": [
+          25,
+          41
+        ],
+        "explanation": "OPEN (frank) inside REED"
+      },
+      {
+        "num": 21,
+        "row": 9,
+        "col": 1,
+        "text": "Ancient bowler, perhaps, now passé",
+        "enumeration": "3,3",
+        "answer": "OLDHAT",
+        "definition_span": [
+          29,
+          34
+        ],
+        "explanation": "OLD (ancient) + HAT (bowler, perhaps)"
+      },
+      {
+        "num": 22,
+        "row": 9,
+        "col": 5,
+        "text": "Tailor's first tears over latest fashions",
+        "enumeration": "6",
+        "answer": "TRENDS",
+        "definition_span": [
+          26,
+          41
+        ],
+        "explanation": "T (tailor's first letter) + RENDS (tears), placed over it in a down clue"
+      },
+      {
+        "num": 25,
+        "row": 11,
+        "col": 3,
+        "text": "Capable of clearing top of table",
+        "enumeration": "4",
+        "answer": "ABLE",
+        "definition_span": [
+          0,
+          7
+        ],
+        "explanation": "TABLE with its top letter (T) cleared away"
+      },
+      {
+        "num": 27,
+        "row": 11,
+        "col": 11,
+        "text": "Grub: fool with daughter replacing learner",
+        "enumeration": "4",
+        "answer": "FOOD",
+        "definition_span": [
+          0,
+          4
+        ],
+        "explanation": "FOOL with D (daughter) replacing L (learner)"
+      }
+    ]
+  }
+}

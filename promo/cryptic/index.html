@@ -1,0 +1,301 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Cryptic Promo</title>
+<style>
+  html,body{margin:0;height:100%;background:#2a2620;display:flex;align-items:center;justify-content:center}
+  canvas{height:96vh;width:auto;aspect-ratio:9/16;box-shadow:0 10px 40px rgba(0,0,0,.4)}
+  .bar{position:fixed;left:0;right:0;bottom:0;display:flex;gap:8px;align-items:center;padding:8px 12px;background:#15130f;color:#efe9de;font:600 13px system-ui}
+  .bar input{flex:1}
+</style>
+</head>
+<body>
+<canvas id="c" width="1080" height="1920"></canvas>
+<div class="bar" id="bar"><button id="pp">Pause</button><input type="range" id="scrub" min="0" max="23" step="0.01"><span id="tl">0.00</span></div>
+<script>
+// Cryptic Crossword ad: 1080×1920, 23 s. Everything is drawn here; render.mjs grabs frames with window.frame(t)
+// and builds the soundtrack from window.CUES. Open this file in a browser for a live preview (?t=12.5 freezes a frame).
+const W = 1080, H = 1920, DUR = 23;
+const C = { paper: '#f7f3ea', card: '#fffdf8', ink: '#1d1a16', muted: '#6f675c', rule: '#d9d1c2', word: '#fbefc0', sel: '#f5c842', accent: '#c4510e', good: '#2b7a4b', coffee: '#291810' };
+const cv = document.getElementById('c'), main = cv.getContext('2d');
+// scenes that are fading out are drawn on this layer first, so they fade as one flat picture
+const layer = document.createElement('canvas'); layer.width = W; layer.height = H; const lctx = layer.getContext('2d');
+let ctx = main;
+const clamp = (v, a = 0, b = 1) => Math.max(a, Math.min(b, v));
+const prog = (t, a, b) => clamp((t - a) / (b - a));
+const eo = x => 1 - Math.pow(1 - x, 3);
+const eio = x => x < .5 ? 4 * x * x * x : 1 - Math.pow(-2 * x + 2, 3) / 2;
+const back = x => { const c1 = 1.70158, c3 = c1 + 1; return 1 + c3 * Math.pow(x - 1, 3) + c1 * Math.pow(x - 1, 2); };
+const lerp = (a, b, k) => a + (b - a) * k;
+const fmt = s => Math.floor(s / 60) + ':' + String(Math.floor(s % 60)).padStart(2, '0');
+
+// scenes (absolute seconds)
+const SC = { hook: [0, 3.2], trick: [3.2, 9.6], play: [9.6, 15.4], board: [15.4, 18.8], end: [18.8, 23] };
+
+// ---------- drawing helpers
+function rr(x, y, w, h, r) { ctx.beginPath(); ctx.roundRect(x, y, w, h, r); }
+function text(s, x, y, font, color, align = 'center', ls = 0) { ctx.font = font; ctx.fillStyle = color; ctx.textAlign = align; ctx.textBaseline = 'alphabetic'; ctx.letterSpacing = ls + 'px'; ctx.fillText(s, x, y); ctx.letterSpacing = '0px'; }
+// fade + rise in, starting at t0 (scene-local time T)
+function enter(T, t0, d = .45, rise = 34) { const k = eo(prog(T, t0, t0 + d)); return { a: k, dy: (1 - k) * rise }; }
+function withAlpha(a, fn) { if (a <= 0) return; ctx.save(); ctx.globalAlpha *= a; fn(); ctx.restore(); }
+function label(s, y, T, t0) { const e = enter(T, t0); withAlpha(e.a, () => text(s, W / 2, y + e.dy, '800 34px Nunito', C.muted, 'center', 6)); }
+function rule(y, w, k) { if (k <= 0) return; ctx.fillStyle = C.ink; const x = W / 2 - w * k / 2; ctx.fillRect(x, y, w * k, 3); ctx.fillRect(x, y + 9, w * k, 3); }
+
+// ---------- 1. hook: "Waiting for your coffee?"
+function hook(T) {
+  label('THE ENZI CRYPTIC', 330, T, .05);
+  rule(370, 520, eo(prog(T, .1, .6)));
+  for (const [s, y, t0] of [['Waiting for', 820, .25], ['your coffee?', 965, .55]]) { const e = enter(T, t0, .5, 50); withAlpha(e.a, () => text(s, W / 2, y + e.dy, '800 132px Fraunces', C.ink)); }
+  // cup + steam
+  const e = enter(T, .9, .5, 40);
+  withAlpha(e.a, () => {
+    ctx.save(); ctx.translate(0, e.dy);
+    ctx.lineWidth = 12; ctx.strokeStyle = C.ink; ctx.lineJoin = 'round'; ctx.lineCap = 'round';
+    ctx.beginPath(); ctx.moveTo(420, 1190); ctx.lineTo(660, 1190); ctx.lineTo(630, 1370); ctx.quadraticCurveTo(625, 1390, 605, 1390); ctx.lineTo(475, 1390); ctx.quadraticCurveTo(455, 1390, 450, 1370); ctx.closePath(); ctx.stroke();
+    ctx.beginPath(); ctx.arc(668, 1255, 40, -Math.PI / 2.2, Math.PI / 2.2); ctx.stroke();
+    ctx.beginPath(); ctx.moveTo(380, 1430); ctx.lineTo(700, 1430); ctx.stroke();
+    ctx.strokeStyle = C.accent; ctx.lineWidth = 9;
+    for (let i = 0; i < 3; i++) {
+      const x0 = 480 + i * 60, ph = T * 3 + i * 1.7;
+      ctx.beginPath(); for (let k = 0; k <= 20; k++) { const y = 1160 - k * 6, x = x0 + Math.sin(ph + k * .45) * 12; k ? ctx.lineTo(x, y) : ctx.moveTo(x, y); } ctx.globalAlpha *= .9; ctx.stroke();
+    }
+    ctx.restore();
+  });
+  const f = enter(T, 1.7, .45);
+  withAlpha(f.a, () => {
+    text('Solve a cryptic before it’s ready.', W / 2, 1580 + f.dy, '800 56px Nunito', C.accent);
+    const k = eo(prog(T, 1.95, 2.4)); ctx.fillStyle = C.accent; ctx.fillRect(W / 2 - 420, 1606 + f.dy, 840 * k, 6);
+  });
+}
+
+// ---------- 2. how a clue works: "Listen, unusually quiet (6)"
+const CLUE = ['Listen, ', 'unusually', ' ', 'quiet', ' (6)'];
+function trick(T) {
+  label('EVERY CLUE HIDES A TRICK', 300, T, .1);
+  const ce = enter(T, .2, .45, 40);
+  withAlpha(ce.a, () => {
+    ctx.save(); ctx.translate(0, ce.dy);
+    ctx.shadowColor = 'rgba(60,40,10,.12)'; ctx.shadowBlur = 40; ctx.shadowOffsetY = 12;
+    rr(70, 500, 940, 300, 32); ctx.fillStyle = C.card; ctx.fill(); ctx.shadowColor = 'transparent';
+    ctx.lineWidth = 2; ctx.strokeStyle = C.rule; ctx.stroke();
+    text('1 ACROSS', 120, 575, '800 30px Nunito', C.accent, 'left', 3);
+    // the clue, piece by piece, so we know where each word sits
+    ctx.font = '500 80px Fraunces';
+    const widths = CLUE.map(s => ctx.measureText(s).width), total = widths.reduce((a, b) => a + b, 0);
+    let x = W / 2 - total / 2; const pos = {};
+    CLUE.forEach((s, i) => { pos[s] = [x, widths[i]]; x += widths[i]; });
+    const y = 715;
+    // "unusually" highlighted = the anagram signal
+    const hk = eo(prog(T, 2.1, 2.45)); if (hk > 0) { const [ux, uw] = pos.unusually; ctx.fillStyle = C.sel; ctx.globalAlpha = .55; ctx.fillRect(ux - 6, y - 62, (uw + 12) * hk, 80); ctx.globalAlpha = 1; }
+    let xx = W / 2 - total / 2; CLUE.forEach((s, i) => { text(s, xx, y, '500 80px Fraunces', C.ink, 'left'); xx += widths[i]; });
+    // "quiet" underlined = the definition
+    const uk = eo(prog(T, 1.2, 1.55)); if (uk > 0) { const [qx, qw] = pos.quiet; ctx.fillStyle = C.accent; ctx.fillRect(qx, y + 18, qw * uk, 8); }
+    ctx.restore();
+    // tags under the card
+    // pill label pointing at a word: above the card (up = false) or below it
+    const tag = (s, cx, t0, bg, fg, above) => { const e = enter(T, t0, .35, above ? -20 : 20); withAlpha(e.a, () => {
+      ctx.font = '800 36px Nunito'; const w = ctx.measureText(s).width + 56, x0 = clamp(cx - w / 2, 60, W - 60 - w), y = (above ? 392 : 850) + e.dy;
+      rr(x0, y, w, 72, 36); ctx.fillStyle = bg; ctx.fill(); text(s, x0 + w / 2, y + 48, '800 36px Nunito', fg);
+      ctx.beginPath(); if (above) { ctx.moveTo(cx - 14, y + 70); ctx.lineTo(cx, y + 92); ctx.lineTo(cx + 14, y + 70); } else { ctx.moveTo(cx - 14, y + 2); ctx.lineTo(cx, y - 20); ctx.lineTo(cx + 14, y + 2); } ctx.fill(); }); };
+    tag('definition', pos.quiet[0] + pos.quiet[1] / 2, 1.4, C.accent, '#fff', true);
+    tag('= mix up the letters', pos.unusually[0] + pos.unusually[1] / 2, 2.35, C.ink, C.paper, false);
+  });
+  // LISTEN → SILENT tiles
+  const from = 'LISTEN', to = [2, 1, 0, 5, 3, 4]; // where each letter of LISTEN goes in SILENT
+  const S = 136, G = 14, x0 = (W - (6 * S + 5 * G)) / 2, y0 = 1110;
+  const solved = prog(T, 4.85, 5.15);
+  for (let i = 0; i < 6; i++) {
+    const a = eo(prog(T, 2.9 + i * .06, 3.25 + i * .06)); if (a <= 0) continue;
+    const m = eio(prog(T, 3.6 + i * .08, 4.5 + i * .08));
+    const x = lerp(x0 + i * (S + G), x0 + to[i] * (S + G), m), lift = Math.sin(Math.PI * m) * (i % 2 ? 150 : -150);
+    const sc = .6 + .4 * back(a);
+    ctx.save(); ctx.translate(x + S / 2, y0 + S / 2 + lift); ctx.scale(sc, sc); ctx.globalAlpha = a;
+    rr(-S / 2, -S / 2, S, S, 18); ctx.fillStyle = solved > .5 ? C.ink : C.card; ctx.fill(); ctx.lineWidth = 4; ctx.strokeStyle = C.ink; ctx.stroke();
+    text(from[i], 0, 30, '800 84px Nunito', solved > .5 ? C.paper : C.ink);
+    ctx.restore();
+  }
+  const r = enter(T, 5.05, .45);
+  withAlpha(r.a, () => {
+    ctx.font = '800 96px Fraunces'; const a = 'SILENT', b = ' = quiet', wa = ctx.measureText(a).width, wb = ctx.measureText(b).width, sx = W / 2 - (wa + wb) / 2;
+    text(a, sx, 1440 + r.dy, '800 96px Fraunces', C.accent, 'left'); text(b, sx + wa, 1440 + r.dy, '800 96px Fraunces', C.ink, 'left');
+  });
+  const c2 = enter(T, 5.45, .45);
+  withAlpha(c2.a, () => { text('Definition + wordplay.', W / 2, 1600 + c2.dy, '700 50px Nunito', C.muted); text('That’s the whole trick.', W / 2, 1670 + c2.dy, '700 50px Nunito', C.muted); });
+}
+
+// ---------- 3. playing a Quick on a phone
+const GRID = ['ABOUT', 'W#F#H', 'ACTOR', 'R#E#E', 'DANCE'];
+const ENT = {
+  '1A': { cells: [0, 1, 2, 3, 4], clue: 'A fight concerning', en: 5 },
+  '4A': { cells: [10, 11, 12, 13, 14], clue: 'Player in part of tractor', en: 5 },
+  '5A': { cells: [20, 21, 22, 23, 24], clue: 'Caned wildly for a ball', en: 5 },
+  '1D': { cells: [0, 5, 10, 15, 20], clue: 'Prize a ward is given', en: 5 },
+  '2D': { cells: [2, 7, 12, 17, 22], clue: 'Frequently of ten', en: 5 },
+  '3D': { cells: [4, 9, 14, 19, 24], clue: 'There, moving, a number', en: 5 },
+};
+const NUMS = { 0: 1, 2: 2, 4: 3, 10: 4, 20: 5 };
+const TYPE = [['1A', [0, 1, 2, 3, 4]], ['4A', [10, 11, 12, 13, 14]], ['5A', [20, 21, 22, 23, 24]], ['1D', [5, 15]], ['2D', [7, 17]], ['3D', [9, 19]]]
+  .flatMap(([k, cells]) => cells.map(i => ({ k, i, ch: GRID[Math.floor(i / 5)][i % 5] })));
+const T0 = .8, DT = 3.2 / TYPE.length, SOLVED = 4.3; // scene-local times
+const KEYS = ['QWERTYUIOP', 'ASDFGHJKL', 'ZXCVBNM'];
+function play(T) {
+  const h = enter(T, .1, .45);
+  withAlpha(h.a, () => { text('A new Quick every day', W / 2, 210 + h.dy, '800 84px Fraunces', C.ink); text('about 3 minutes, start to finish', W / 2, 282 + h.dy, '700 42px Nunito', C.muted); });
+  const py = (1 - eo(prog(T, 0, .55))) * 1100;
+  ctx.save(); ctx.translate(0, py);
+  // phone
+  const px = 170, pY = 350, pw = 740, ph = 1510;
+  ctx.shadowColor = 'rgba(0,0,0,.25)'; ctx.shadowBlur = 60; ctx.shadowOffsetY = 20;
+  rr(px, pY, pw, ph, 96); ctx.fillStyle = C.ink; ctx.fill(); ctx.shadowColor = 'transparent';
+  const sx = px + 22, sy = pY + 22, sw = pw - 44, sh = ph - 44;
+  ctx.save(); rr(sx, sy, sw, sh, 76); ctx.clip(); ctx.fillStyle = C.paper; ctx.fillRect(sx, sy, sw, sh);
+  // top bar
+  const k = clamp(Math.floor((T - T0) / DT) + 1, 0, TYPE.length);
+  const secs = T < T0 ? 0 : Math.round(167 * eo(prog(T, T0, T0 + 3.4)));
+  text('Quick', sx + 50, sy + 120, '700 50px Fraunces', C.ink, 'left');
+  text('5×5', sx + 205, sy + 120, '600 30px Nunito', C.muted, 'left');
+  text(fmt(secs), sx + sw - 220, sy + 120, '800 42px Nunito', C.ink, 'right');
+  rr(sx + sw - 190, sy + 72, 140, 66, 18); ctx.fillStyle = C.accent; ctx.fill(); text('Hints', sx + sw - 120, sy + 118, '800 32px Nunito', '#fff');
+  ctx.fillStyle = C.rule; ctx.fillRect(sx, sy + 165, sw, 2);
+  // grid
+  const g = 600, gap = 4, cs = (g - 4 * gap) / 5, gx = sx + (sw - g) / 2, gy = sy + 220;
+  const cur = TYPE[Math.min(k, TYPE.length - 1)], ent = ENT[cur.k], done = T >= SOLVED;
+  const flash = prog(T, SOLVED, SOLVED + .25) * (1 - prog(T, SOLVED + .45, SOLVED + .9));
+  ctx.fillStyle = C.ink; ctx.fillRect(gx - 6, gy - 6, g + 12, g + 12);
+  const typed = new Set(TYPE.slice(0, k).map(x => x.i));
+  for (let i = 0; i < 25; i++) {
+    const r = Math.floor(i / 5), c = i % 5, x = gx + c * (cs + gap), y = gy + r * (cs + gap);
+    if (GRID[r][c] === '#') continue;
+    let bg = C.card;
+    if (!done) { if (ent.cells.includes(i)) bg = C.word; if (k < TYPE.length && i === cur.i) bg = C.sel; }
+    ctx.fillStyle = bg; ctx.fillRect(x, y, cs, cs);
+    if (flash > 0) { ctx.fillStyle = `rgba(43,122,75,${.35 * flash})`; ctx.fillRect(x, y, cs, cs); }
+    if (NUMS[i]) text(String(NUMS[i]), x + 10, y + 34, '700 28px Nunito', C.ink, 'left');
+    if (typed.has(i)) { const born = T0 + (TYPE.findIndex(t => t.i === i)) * DT, pop = back(prog(T, born, born + .14)); ctx.save(); ctx.translate(x + cs / 2, y + cs / 2 + 26); ctx.scale(pop, pop); text(GRID[r][c], 0, 0, '700 76px Nunito', C.ink); ctx.restore(); }
+  }
+  // clue bar
+  const cy = gy + g + 50;
+  rr(sx + 34, cy, sw - 68, 140, 26); ctx.fillStyle = C.card; ctx.fill(); ctx.lineWidth = 2; ctx.strokeStyle = C.rule; ctx.stroke();
+  text(cur.k, sx + 70, cy + 84, '800 32px Nunito', C.accent, 'left');
+  text(`${ent.clue} (${ent.en})`, sx + 140, cy + 84, '500 40px Fraunces', C.ink, 'left');
+  // keyboard
+  const ky = cy + 190, kw = 56, kh = 86, kg = 8;
+  const pressed = k > 0 && k <= TYPE.length && T - (T0 + (k - 1) * DT) < .11 ? TYPE[k - 1].ch : null;
+  KEYS.forEach((row, ri) => {
+    const rw = row.length * kw + (row.length - 1) * kg, kx = sx + (sw - rw) / 2;
+    [...row].forEach((ch, ci) => { const x = kx + ci * (kw + kg), y = ky + ri * (kh + 14); rr(x, y, kw, kh, 12); ctx.fillStyle = ch === pressed ? C.sel : C.card; ctx.fill(); ctx.lineWidth = 2; ctx.strokeStyle = C.rule; ctx.stroke(); text(ch, x + kw / 2, y + 58, '800 34px Nunito', C.ink); });
+  });
+  // solved sheet
+  const sk = eo(prog(T, SOLVED + .15, SOLVED + .55));
+  if (sk > 0) {
+    ctx.fillStyle = `rgba(0,0,0,${.3 * sk})`; ctx.fillRect(sx, sy, sw, sh);
+    const top = lerp(sy + sh, sy + sh * .42, sk);
+    rr(sx, top, sw, sh, 50); ctx.fillStyle = C.paper; ctx.fill();
+    text('Solved!', W / 2, top + 130, '800 72px Fraunces', C.ink);
+    const score = Math.round(1634 * eo(prog(T, SOLVED + .4, SOLVED + 1.1)));
+    text(score.toLocaleString('en'), W / 2, top + 300, '800 160px Fraunces', C.ink);
+    text('Solved before your', W / 2, top + 400, 'italic 500 44px Fraunces', C.accent);
+    text('cappuccino was ready', W / 2, top + 456, 'italic 500 44px Fraunces', C.accent);
+    rr(sx + 60, top + 520, sw - 120, 110, 22); ctx.fillStyle = C.accent; ctx.fill(); text('See the leaderboard', W / 2, top + 590, '800 38px Nunito', '#fff');
+  }
+  ctx.restore(); ctx.restore();
+}
+
+// ---------- 4. leaderboard: "You" climb to #1
+const OTHERS = [['KahawaKing', 1580], ['Zawadi_77', 1512], ['MamaNtilie', 1470], ['Juma_Dar', 1402]];
+function board(T) {
+  label('TODAY’S BOARD · LEO', 300, T, .05);
+  const h = enter(T, .15, .45, 40);
+  withAlpha(h.a, () => text('Beat the regulars.', W / 2, 450 + h.dy, '800 108px Fraunces', C.ink));
+  const you = 4 - 4 * eio(prog(T, 1.0, 1.9)), y0 = 600, rh = 150;
+  const row = (pos, rank, name, score, me, t0) => {
+    const e = enter(T, t0, .4, 30); withAlpha(e.a, () => {
+      const y = y0 + pos * rh + e.dy;
+      rr(90, y, 900, 124, 24); ctx.fillStyle = me ? C.sel : C.card; ctx.fill(); if (!me) { ctx.lineWidth = 2; ctx.strokeStyle = C.rule; ctx.stroke(); }
+      text(String(rank), 160, y + 82, '700 60px Fraunces', me ? C.ink : C.accent);
+      text(name, 230, y + 80, '800 48px Nunito', C.ink, 'left');
+      text(score.toLocaleString('en'), 950, y + 80, '800 48px Nunito', C.ink, 'right');
+    });
+  };
+  OTHERS.forEach(([n, s], i) => { const pos = i + clamp(i + 1 - you, 0, 1); row(pos, Math.round(pos) + 1, n, s, false, .3 + i * .07); });
+  row(you, Math.round(you) + 1, 'You', 1634, true, .58);
+  const s = enter(T, 2.0, .45);
+  withAlpha(s.a, () => { text('New Quick every day', W / 2, 1490 + s.dy, '800 54px Nunito', C.ink); text('Weekly Classic 15×15 every Monday', W / 2, 1565 + s.dy, '700 46px Nunito', C.muted); });
+}
+
+// ---------- 5. end card
+const logo = new Image(); logo.src = '../../game/assets/logo.svg';
+function icon(cx, cy, size) {
+  const s = size / 256; ctx.save(); ctx.translate(cx - size / 2, cy - size / 2); ctx.scale(s, s);
+  ctx.shadowColor = 'rgba(60,40,10,.18)'; ctx.shadowBlur = 50; ctx.shadowOffsetY = 16;
+  rr(0, 0, 256, 256, 56); ctx.fillStyle = C.card; ctx.fill(); ctx.shadowColor = 'transparent';
+  ctx.fillStyle = C.ink; ctx.fillRect(34, 34, 188, 188);
+  const blocks = new Set(['1,1', '1,3', '3,1', '3,3']), L = { '0,0': 'E', '0,1': 'N', '0,2': 'Z', '0,3': 'I', '2,0': 'C', '2,1': 'L', '2,2': 'U', '2,3': 'E', '1,0': '?' };
+  const c = (176 - 12) / 5;
+  for (let r = 0; r < 5; r++) for (let k = 0; k < 5; k++) {
+    const x = 40 + k * (c + 3), y = 40 + r * (c + 3);
+    ctx.fillStyle = blocks.has(r + ',' + k) ? C.ink : (r === 0 && k === 0 ? '#f8dc8a' : C.card); ctx.fillRect(x, y, c, c);
+    if (L[r + ',' + k]) text(L[r + ',' + k], x + c / 2, y + c * .74, '700 22px Fraunces', C.ink);
+  }
+  ctx.fillStyle = C.accent; ctx.beginPath(); ctx.moveTo(206, 150); ctx.lineTo(232, 124); ctx.lineTo(246, 138); ctx.lineTo(220, 164); ctx.lineTo(202, 168); ctx.closePath(); ctx.fill();
+  ctx.restore();
+}
+function end(T) {
+  const p = back(prog(T, .1, .6)); if (p > 0) { ctx.save(); ctx.globalAlpha = clamp(p); icon(W / 2, 640, 400 * p); ctx.restore(); }
+  const t1 = enter(T, .5, .45); withAlpha(t1.a, () => text('The Enzi Cryptic', W / 2, 1010 + t1.dy, '800 116px Fraunces', C.ink));
+  const t2 = enter(T, .7, .45); withAlpha(t2.a, () => text('Cryptic Crossword · Fumbo la Maneno', W / 2, 1090 + t2.dy, '700 44px Nunito', C.muted));
+  rule(1150, 640, eo(prog(T, .8, 1.25)));
+  const t3 = enter(T, 1.1, .45); withAlpha(t3.a, () => { text('Scan the QR at your table', W / 2, 1290 + t3.dy, '800 60px Nunito', C.accent); text('Free to play · Michezo ya Enzi', W / 2, 1360 + t3.dy, '700 42px Nunito', C.muted); });
+  const lp = back(prog(T, 1.4, 1.85));
+  if (lp > 0) { ctx.save(); ctx.translate(W / 2, 1610); ctx.scale(lp, lp); ctx.globalAlpha = clamp(lp); ctx.beginPath(); ctx.arc(0, 0, 130, 0, Math.PI * 2); ctx.fillStyle = C.coffee; ctx.fill(); if (logo.complete) ctx.drawImage(logo, -95, -95 * logo.height / logo.width, 190, 190 * logo.height / logo.width); ctx.restore(); }
+}
+
+// ---------- frame
+const SCENES = [['hook', hook], ['trick', trick], ['play', play], ['board', board], ['end', end]];
+function draw(t) {
+  ctx = main; ctx.setTransform(1, 0, 0, 1, 0, 0); ctx.globalAlpha = 1;
+  ctx.fillStyle = C.paper; ctx.fillRect(0, 0, W, H);
+  for (const [id, fn] of SCENES) {
+    const [a, b] = SC[id]; if (t < a || t >= b && id !== 'end') continue;
+    const out = id === 'end' ? 1 : 1 - prog(t, b - .3, b);
+    if (out >= 1) { ctx.save(); fn(t - a); ctx.restore(); continue; }
+    ctx = lctx; ctx.setTransform(1, 0, 0, 1, 0, 0); ctx.globalAlpha = 1; ctx.clearRect(0, 0, W, H); ctx.save(); fn(t - a); ctx.restore();
+    ctx = main; ctx.save(); ctx.globalAlpha = out; ctx.drawImage(layer, 0, 0); ctx.restore();
+  }
+  // thin frame line, like a newspaper page
+  ctx.strokeStyle = C.rule; ctx.lineWidth = 2; ctx.strokeRect(36, 36, W - 72, H - 72);
+}
+window.frame = (t, q = .95) => { draw(t); return cv.toDataURL('image/jpeg', q); };
+
+// ---------- sound cues for render.mjs (absolute seconds)
+const CUES = [
+  ['pop', .25], ['pop', .55], ['pop', .9], ['swipe', 1.7],
+  ['whoosh', 3.2], ['pop', 3.4], ['swipe', 4.4], ['pop', 4.6], ['swipe', 5.3], ['pop', 5.55],
+  ...[0, 1, 2, 3, 4, 5].map(i => ['tick', 6.1 + i * .06]), ...[0, 1, 2, 3, 4, 5].map(i => ['shuffle', 6.8 + i * .08]), ['ding', 8.05],
+  ['whoosh', 9.6], ...TYPE.map((_, n) => ['key', 9.6 + T0 + n * DT]), ['chime', 9.6 + SOLVED], ['count', 9.6 + SOLVED + .4],
+  ['whoosh', 15.4], ...[0, 1, 2, 3].map(i => ['pop', 15.7 + i * .07]), ['rise', 16.4], ['ding', 17.3],
+  ['whoosh', 18.8], ['logo', 18.95], ['pop', 20.2],
+].map(([type, t]) => ({ type, t }));
+window.CUES = CUES; window.DUR = DUR;
+
+window.ready = (async () => {
+  for (const [f, u, w] of [['Fraunces', '../../game/assets/fonts/Fraunces.ttf', '100 900'], ['Nunito', '../../game/assets/fonts/Nunito.ttf', '200 1000']]) {
+    const ff = new FontFace(f, `url(${u})`, { weight: w }); await ff.load(); document.fonts.add(ff);
+    try { const it = new FontFace(f, `url(${u})`, { weight: w, style: 'italic' }); await it.load(); document.fonts.add(it); } catch (e) { }
+  }
+  if (!logo.complete) await new Promise(r => { logo.onload = logo.onerror = r; });
+})();
+
+// live preview
+(async () => {
+  await window.ready;
+  const q = new URLSearchParams(location.search);
+  if (q.has('render')) { document.getElementById('bar').remove(); return; }
+  const scrub = document.getElementById('scrub'), tl = document.getElementById('tl'), pp = document.getElementById('pp');
+  let t = q.has('t') ? +q.get('t') : 0, playing = !q.has('t'), last = performance.now();
+  pp.onclick = () => { playing = !playing; pp.textContent = playing ? 'Pause' : 'Play'; };
+  scrub.oninput = () => { t = +scrub.value; };
+  (function loop(now) { if (playing) { t = (t + (now - last) / 1000) % DUR; } last = now; draw(t); scrub.value = t; tl.textContent = t.toFixed(2); requestAnimationFrame(loop); })(last);
+})();
+</script>
+</body></html>
