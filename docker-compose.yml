@@ -1,0 +1,10 @@
+# For a single server (VPS):  docker compose up -d --build
+# Put HTTPS in front (Caddy, nginx, or the host's proxy) and point it at port 8080.
+services:
+  hze-games:
+    build: .
+    ports: ["8080:8080"]
+    volumes: ["hze-data:/data"]
+    restart: unless-stopped
+volumes:
+  hze-data:

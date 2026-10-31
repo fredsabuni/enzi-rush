@@ -10,6 +10,45 @@ PORT=3000 DATA_DIR=/var/hze npm start
 - `/` is the hub, `/safari/` is Delivery Safari, `/safari/crew.html` shows the cast, and `/qr.html?loc=victoria` makes a printable table poster. The `loc` tag is saved with each score so you can tell which branch a player came from.
 - `/safari/?autoplay=1` skips the menu (handy on a laptop). Keys: Space/↑ jump, ←/↓ brake, P pause.
 
+## Deploy
+The image holds only `package.json`, `server/` and `game/` (see `.dockerignore`). There is nothing to install and no build step.
+
+**One server (VPS):**
+```
+docker compose up -d --build        # serves on port 8080, data in the "hze-data" volume
+```
+**Railway** (settings are in `railway.json`: Dockerfile build, one copy, health check):
+1. New Project → Deploy from GitHub repo → pick this repo.
+2. Add a **volume** to the service, mount path **`/data`**.
+3. Variables: **`RAILWAY_RUN_UID=0`** (Railway volumes belong to root; without this the server can't write to `/data`) and **`ADMIN_TOKEN`** = a long random string (`openssl rand -hex 24`), kept secret.
+4. Settings → Networking → **Generate Domain** (HTTPS), or add your own domain.
+5. Bring the current players over, once, from your laptop:
+   ```
+   curl -X POST -H "Authorization: Bearer $ADMIN_TOKEN" -H 'content-type: application/json' \
+     --data-binary @server/data/db.json https://<your-domain>/api/admin/import
+   ```
+   This only works while the live server has no players, so it can't overwrite real data by accident (`?replace=1` forces it).
+6. Back up whenever you like: `curl -H "Authorization: Bearer $ADMIN_TOKEN" https://<your-domain>/api/admin/export > hze-backup.json`
+
+**Any other host that runs a Dockerfile** (Render, Fly.io…): point it at this repo, expose port 8080 and attach a **persistent disk at `/data`**. The admin import/export above works there too once `ADMIN_TOKEN` is set.
+
+Things that matter:
+- **Run one copy only.** Players and scores live in one file, `/data/db.json`. Two copies would each have their own file and overwrite each other. Don't turn on autoscaling or multiple instances.
+- **Keep `/data` on a persistent disk.** Without it, every deploy wipes all players and scores. Back up `db.json` now and then (copy the file; it is plain JSON).
+- **Serve it over HTTPS** with the host's proxy, or Caddy/nginx in front on a VPS. The server reads the player's address from `X-Forwarded-For` for rate limiting, so keep it behind that proxy, not open on its own port.
+- **Restarts are safe.** On SIGTERM the server writes any pending data before exiting.
+- **Health check:** `GET /api/health` → `{"ok":true}` (already wired into the Dockerfile).
+- **Crossword puzzles are built into the image** (`server/puzzles/cryptic/`), so new puzzles need a redeploy. To add them without redeploying, set `PUZZLE_DIR=/data/puzzles` and copy the files there instead.
+- **Moving existing players over:** copy your local `server/data/db.json` into the `/data` volume before the first start.
+- After deploying, print the table posters from `https://<your-domain>/qr.html?loc=<branch>`.
+
+| setting | default | what |
+|---|---|---|
+| `PORT` | 8080 | port to listen on |
+| `DATA_DIR` | `server/data` (`/data` in Docker) | where `db.json` is kept |
+| `PUZZLE_DIR` | `server/puzzles/cryptic` | crossword puzzle files |
+| `ADMIN_TOKEN` | not set (admin links off) | password for `/api/admin/export` and `/api/admin/import`, 16+ characters |
+
 ## Players
 - **Sign in on the hub:** nickname + 4-digit PIN. A new name creates the player; a known name + the right PIN signs them in on this phone.
 - **Same phone:** the name and a secret token are kept in the browser, so returning players see "Karibu tena, NAME!" and go straight to the games. "Si wewe?" switches name.

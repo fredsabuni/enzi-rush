@@ -31,10 +31,16 @@ fs.mkdirSync(DATA_DIR, { recursive: true });
 let db = { players: {}, scores: [] };
 try { db = JSON.parse(fs.readFileSync(DB_FILE, 'utf8')); } catch (e) { }
 // older data: one token per player and no game tag on scores
-for (const p of Object.values(db.players)) if (p.tokenHash) { p.tokens = [p.tokenHash]; delete p.tokenHash; }
-for (const s of db.scores) s.game ||= 'safari';
+function upgrade(d) {
+  for (const p of Object.values(d.players)) if (p.tokenHash) { p.tokens = [p.tokenHash]; delete p.tokenHash; }
+  for (const s of d.scores) s.game ||= 'safari';
+}
+upgrade(db);
 let saveTimer = null;
-function save() { clearTimeout(saveTimer); saveTimer = setTimeout(() => { const tmp = DB_FILE + '.tmp'; fs.writeFileSync(tmp, JSON.stringify(db)); fs.renameSync(tmp, DB_FILE); }, 300); }
+function writeDb() { saveTimer = null; const tmp = DB_FILE + '.tmp'; fs.writeFileSync(tmp, JSON.stringify(db)); fs.renameSync(tmp, DB_FILE); }
+function save() { clearTimeout(saveTimer); saveTimer = setTimeout(writeDb, 300); }
+// on a restart or deploy, write anything still waiting before the process exits
+for (const sig of ['SIGTERM', 'SIGINT']) process.on(sig, () => { if (saveTimer) { clearTimeout(saveTimer); writeDb(); } console.log(`${sig}: data saved, bye`); process.exit(0); });
 const hash = s => crypto.createHash('sha256').update(String(s)).digest('hex');
 const pinHash = (pin, salt) => crypto.scryptSync(pin, salt, 32).toString('hex');
 const hasToken = (p, token) => !!token && p.tokens.includes(hash(token));
@@ -64,8 +70,9 @@ const cryptic = makeCryptic({ db, save, send: (...a) => send(...a), body: r => b
 const msako = makeMsako({ db, save, send: (...a) => send(...a), body: r => body(r), limited: (k, m) => limited(k, m),
   auth: (name, token) => { const key = String(name || '').toLowerCase(), p = db.players[key]; return p && hasToken(p, token) ? key : null; } });
 
-function send(res, code, obj) { res.writeHead(code, { 'content-type': 'application/json', 'cache-control': 'no-store' }); res.end(JSON.stringify(obj)); }
-function body(req) { return new Promise((ok, bad) => { let s = ''; req.on('data', c => { s += c; if (s.length > 4096) { bad(new Error('too big')); req.destroy(); } }); req.on('end', () => { try { ok(JSON.parse(s || '{}')); } catch (e) { bad(e); } }); }); }
+const SECURITY = { 'x-content-type-options': 'nosniff', 'referrer-policy': 'strict-origin-when-cross-origin', 'x-frame-options': 'SAMEORIGIN' };
+function send(res, code, obj) { res.writeHead(code, { ...SECURITY, 'content-type': 'application/json', 'cache-control': 'no-store' }); res.end(JSON.stringify(obj)); }
+function body(req, max = 4096) { return new Promise((ok, bad) => { let s = ''; req.on('data', c => { s += c; if (s.length > max) { bad(new Error('too big')); req.destroy(); } }); req.on('end', () => { try { ok(JSON.parse(s || '{}')); } catch (e) { bad(e); } }); }); }
 
 async function api(req, res, url) {
   const ip = (req.headers['x-forwarded-for'] || req.socket.remoteAddress || '').split(',')[0].trim();
@@ -74,6 +81,7 @@ async function api(req, res, url) {
   if (url.pathname.startsWith('/api/cryptic/')) return cryptic(req, res, url);
   if (url.pathname.startsWith('/api/msako/')) return msako(req, res, url);
   if (req.method === 'POST' && limited(ip)) return send(res, 429, { error: 'slow down' });
+  if (url.pathname.startsWith('/api/admin/')) return admin(req, res, url, ip);
 
   // Sign in or sign up with one call: { name, pin } or { name, token }.
   //  new name + pin       → creates the player
@@ -135,6 +143,41 @@ async function api(req, res, url) {
 }
 const clamp = (v, a, b) => Math.max(a, Math.min(b, v));
 
+// ---- admin: back up and move the data file. Off unless ADMIN_TOKEN is set (16+ characters).
+//   curl -H "Authorization: Bearer $ADMIN_TOKEN" https://<host>/api/admin/export > backup.json
+//   curl -X POST -H "Authorization: Bearer $ADMIN_TOKEN" -H 'content-type: application/json' --data-binary @server/data/db.json https://<host>/api/admin/import
+// Import only works while the server has no players, unless ?replace=1 is added.
+const ADMIN_TOKEN = process.env.ADMIN_TOKEN || '';
+function isAdmin(req) {
+  const got = Buffer.from(String(req.headers.authorization || '').replace(/^Bearer /, '')), want = Buffer.from(ADMIN_TOKEN);
+  return ADMIN_TOKEN.length >= 16 && got.length === want.length && crypto.timingSafeEqual(got, want);
+}
+async function admin(req, res, url, ip) {
+  if (!ADMIN_TOKEN) return send(res, 404, { error: 'not found' });
+  if (limited('admin:' + ip, 10)) return send(res, 429, { error: 'slow down' });
+  if (!isAdmin(req)) return send(res, 401, { error: 'wrong token' });
+  const route = url.pathname.slice('/api/admin/'.length);
+  if (req.method === 'GET' && route === 'export') {
+    res.writeHead(200, { ...SECURITY, 'content-type': 'application/json', 'cache-control': 'no-store', 'content-disposition': `attachment; filename="hze-db-${new Date().toISOString().slice(0, 10)}.json"` });
+    return res.end(JSON.stringify(db));
+  }
+  if (req.method === 'POST' && route === 'import') {
+    const d = await body(req, 50e6);
+    if (!d || typeof d.players !== 'object' || !Array.isArray(d.scores)) return send(res, 400, { error: 'not a db.json file' });
+    const have = Object.keys(db.players).length;
+    if (have && url.searchParams.get('replace') !== '1') return send(res, 409, { error: `server already has ${have} players; add ?replace=1 to overwrite them` });
+    upgrade(d);
+    // the crossword and word hunt keep references to their session objects, so fill those in place
+    const fill = (into, from) => { for (const k of Object.keys(into)) delete into[k]; Object.assign(into, from || {}); };
+    fill(db.players, d.players); db.scores.length = 0; db.scores.push(...d.scores);
+    fill(db.cryptic.sessions, d.cryptic?.sessions); fill(db.msako.sessions, d.msako?.sessions);
+    clearTimeout(saveTimer); writeDb();
+    console.log(`[admin] imported ${Object.keys(db.players).length} players, ${db.scores.length} scores`);
+    return send(res, 200, { ok: true, players: Object.keys(db.players).length, scores: db.scores.length });
+  }
+  send(res, 404, { error: 'not found' });
+}
+
 const TYPES = { '.html': 'text/html; charset=utf-8', '.js': 'text/javascript', '.css': 'text/css', '.svg': 'image/svg+xml', '.ttf': 'font/ttf', '.png': 'image/png', '.json': 'application/json', '.ico': 'image/x-icon' };
 function serveStatic(req, res, url) {
   let p = decodeURIComponent(url.pathname); if (p.endsWith('/')) p += 'index.html';
@@ -144,7 +187,7 @@ function serveStatic(req, res, url) {
     if (!err && st.isDirectory()) { res.writeHead(301, { location: url.pathname + '/' + url.search }); return res.end(); }
     if (err || !st.isFile()) { res.writeHead(404, { 'content-type': 'text/plain' }); return res.end('not found'); }
     const ext = path.extname(file);
-    res.writeHead(200, { 'content-type': TYPES[ext] || 'application/octet-stream', 'cache-control': ext === '.ttf' || ext === '.svg' ? 'public, max-age=604800' : 'no-cache' });
+    res.writeHead(200, { ...SECURITY, 'content-type': TYPES[ext] || 'application/octet-stream', 'cache-control': ext === '.ttf' || ext === '.svg' ? 'public, max-age=604800' : 'no-cache' });
     fs.createReadStream(file).pipe(res);
   });
 }
@@ -153,4 +196,4 @@ http.createServer(async (req, res) => {
   const url = new URL(req.url, 'http://x');
   try { if (url.pathname.startsWith('/api/')) await api(req, res, url); else serveStatic(req, res, url); }
   catch (e) { send(res, 400, { error: 'bad request' }); }
-}).listen(PORT, () => console.log(`HZE Games → http://localhost:${PORT}`));
+}).listen(PORT, () => console.log(`HZE Games → http://localhost:${PORT} (data in ${DATA_DIR})`));
