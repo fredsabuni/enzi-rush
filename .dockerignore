@@ -1,0 +1,17 @@
+# only package.json, server/ and game/ go into the image
+.git
+.DS_Store
+**/.DS_Store
+server/data
+node_modules
+out
+promo
+js
+fonts
+index.html
+render.mjs
+audio.py
+logo.svg
+*.mp4
+*.wav
+events.json
