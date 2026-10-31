@@ -17,6 +17,15 @@
     "teaser": "api/cryptic/teaser"
   },
   {
+    "id": "msako",
+    "name": "Msako wa Maneno",
+    "tagline": "Tafuta maneno ya mada ya leo · Daily word hunt",
+    "href": "msako/",
+    "icon": "msako/icon.svg",
+    "status": "live",
+    "teaser": "api/msako/teaser"
+  },
+  {
     "id": "next",
     "name": "Mchezo Mpya",
     "tagline": "Inakuja hivi karibuni · Coming soon",

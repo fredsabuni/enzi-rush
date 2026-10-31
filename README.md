@@ -37,6 +37,15 @@ node server/cryptic/validate.js server/puzzles/cryptic/*.json
 ```
 The checker prints the filled grid and catches clashing letters, wrong numbering, enumerations that don't add up, a definition that isn't at the start or end of the clue, and grids that aren't symmetric or have too many unchecked letters. The server picks up new files within 30 s, no restart needed, and skips (and logs) any file that fails the check. A puzzle goes live on its `date`. If no new Quick is dated for today, yesterday's stays up, so keep a week or two queued.
 
+## Msako wa Maneno (`/msako/`)
+A daily themed word hunt. Every day at 05:00 EAT there is a new 8×8 grid on one theme (Fruits, Dar neighbourhoods, Wanyama…) with 7–10 hidden words. Players swipe across the letters, or tap the first letter and then the last, to find words in any straight line, including backwards and diagonally.
+
+- **Neno la siri:** the letters no word uses spell a Swahili phrase (read left to right, top to bottom). Guessing it before finishing earns +300; 3 tries, −50 for each wrong one.
+- **Score:** 1000, plus 4 points a second under 4 minutes, plus 200 for no hints, plus the secret-phrase bonus, minus hints (first letter −60, reveal a word −150). Solves under 25 s stay off the board. Time only counts while the page is open and in use, same as the crossword.
+- **No puzzle files to write.** Each day's grid is built from the date (`server/msako/api.js`), so everyone gets the same one and the server can rebuild it at any time. The phone gets letters and word lengths only; each swipe is checked on the server.
+- **Adding themes or phrases:** edit `server/msako/themes.js` (words A–Z, 3–8 letters, at least 10 per theme). Restart the server. Changing the lists changes upcoming grids, and today's too, so do it before 05:00 if people are mid-game.
+- `/msako/#jana` shows yesterday's grid with all the answers.
+
 ## How Delivery Safari plays
 - **Tap** to jump (hold for higher), **tap again in the air** to kickflip (double jump). **Hold SIMAMA** to brake.
 - Each level is one order. **JOTO** (heat) drains as you ride, and a hotter cup earns a bigger delivery bonus (300 + heat × 10, plus 500 for no hits or fines).
@@ -58,6 +67,8 @@ The checker prints the filled grid and catches clashing letters, wrong numbering
 | `server/server.js` | Static files + player/leaderboard API (JSON file in `server/data/`) |
 | `cryptic/` | Cryptic Crossword: `app.js` (grid, typing, hints, screens), `cryptic.css` |
 | `server/cryptic/` | Crossword API (`api.js`) and puzzle checker (`validate.js`) |
+| `msako/` | Msako wa Maneno: `app.js` (board, swipes, hints, secret phrase), `msako.css` |
+| `server/msako/` | Word hunt API and daily grid builder (`api.js`), word lists (`themes.js`) |
 | `server/puzzles/cryptic/` | Crossword puzzles, one JSON file each |
 
 **Tuning:** physics feel is `PHYS` in `game.js`. Point values are `SCORE` in `levels.js`. Difficulty is per-level `speed`, `len` and `mix`.

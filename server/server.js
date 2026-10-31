@@ -7,6 +7,7 @@ import path from 'node:path';
 import crypto from 'node:crypto';
 import { fileURLToPath } from 'node:url';
 import { makeCryptic } from './cryptic/api.js';
+import { makeMsako } from './msako/api.js';
 
 const HERE = path.dirname(fileURLToPath(import.meta.url));
 const ROOT = path.resolve(HERE, '../game');
@@ -60,6 +61,9 @@ function ranking(game, from) {
 const cryptic = makeCryptic({ db, save, send: (...a) => send(...a), body: r => body(r), limited: (k, m) => limited(k, m), dir: process.env.PUZZLE_DIR || path.join(HERE, 'puzzles/cryptic'),
   auth: (name, token) => { const key = String(name || '').toLowerCase(), p = db.players[key]; return p && hasToken(p, token) ? key : null; } });
 
+const msako = makeMsako({ db, save, send: (...a) => send(...a), body: r => body(r), limited: (k, m) => limited(k, m),
+  auth: (name, token) => { const key = String(name || '').toLowerCase(), p = db.players[key]; return p && hasToken(p, token) ? key : null; } });
+
 function send(res, code, obj) { res.writeHead(code, { 'content-type': 'application/json', 'cache-control': 'no-store' }); res.end(JSON.stringify(obj)); }
 function body(req) { return new Promise((ok, bad) => { let s = ''; req.on('data', c => { s += c; if (s.length > 4096) { bad(new Error('too big')); req.destroy(); } }); req.on('end', () => { try { ok(JSON.parse(s || '{}')); } catch (e) { bad(e); } }); }); }
 
@@ -68,6 +72,7 @@ async function api(req, res, url) {
   if (url.pathname === '/api/health') return send(res, 200, { ok: true });
   // the crossword saves progress every few seconds, so it is limited per player instead of per café Wi-Fi address
   if (url.pathname.startsWith('/api/cryptic/')) return cryptic(req, res, url);
+  if (url.pathname.startsWith('/api/msako/')) return msako(req, res, url);
   if (req.method === 'POST' && limited(ip)) return send(res, 429, { error: 'slow down' });
 
   // Sign in or sign up with one call: { name, pin } or { name, token }.

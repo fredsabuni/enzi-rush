@@ -1,0 +1,15 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256">
+  <rect width="256" height="256" rx="56" fill="#291810"/>
+  <rect x="28" y="28" width="200" height="200" rx="28" fill="#fff6e6"/>
+  <g stroke-linecap="round" fill="none" stroke-width="34" opacity=".55">
+    <line x1="62" y1="62" x2="194" y2="62" stroke="#E87E3A"/>
+    <line x1="62" y1="106" x2="150" y2="194" stroke="#2BA796"/>
+    <line x1="194" y1="106" x2="194" y2="194" stroke="#E0B252"/>
+  </g>
+  <g font-family="'Lilita One',Impact,sans-serif" font-size="34" text-anchor="middle" fill="#2a170e">
+    <text x="62" y="74">M</text><text x="106" y="74">E</text><text x="150" y="74">N</text><text x="194" y="74">O</text>
+    <text x="62" y="118">S</text><text x="106" y="118">K</text><text x="150" y="118">J</text><text x="194" y="118">C</text>
+    <text x="62" y="162">Z</text><text x="106" y="162">A</text><text x="150" y="162">L</text><text x="194" y="162">H</text>
+    <text x="62" y="206">R</text><text x="106" y="206">T</text><text x="150" y="206">O</text><text x="194" y="206">I</text>
+  </g>
+</svg>

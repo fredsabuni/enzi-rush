@@ -1,0 +1,95 @@
+<!doctype html>
+<html lang="sw"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#291810"><meta name="apple-mobile-web-app-capable" content="yes">
+<title>Msako wa Maneno</title>
+<link rel="icon" href="icon.svg">
+<link rel="stylesheet" href="../style.css">
+<link rel="stylesheet" href="msako.css">
+</head>
+<body>
+
+<!-- HOME -->
+<section class="screen" id="sHome"><div class="wrap">
+  <div class="topline"><a class="back" href="../">← Michezo yote</a><span id="who"></span></div>
+  <img class="hero" src="icon.svg" alt="">
+  <h1 class="title">MSAKO WA MANENO<small>DAILY WORD HUNT</small></h1>
+  <button class="today" id="todayCard">
+    <span class="lbl">Leo · Today <b id="tNum"></b></span>
+    <b class="theme" id="tTheme">…</b>
+    <span class="sub" id="tSub"></span>
+    <span class="bar"><i id="tBar" style="width:0"></i></span>
+    <span class="btn" id="tGo">CHEZA<small>Play</small></span>
+  </button>
+  <div class="row">
+    <button class="btn ghost" data-go="board">Ubao<small>Leaderboard</small></button>
+    <button class="btn ghost" data-go="jana">Jana<small>Yesterday's answers</small></button>
+  </div>
+  <div class="how">
+    <b>Jinsi ya kucheza · How to play</b><br>
+    Kila siku kuna mada mpya. Tafuta maneno yote ya mada kwa kuburuta kidole juu ya herufi: kulia, kushoto, juu, chini au kwa mshazari.<br>
+    <b>Swipe</b> across the letters to find every word on today's theme, in any straight line, even backwards. Or tap the first letter, then the last.<br>
+    <b>Neno la siri:</b> the letters no word uses spell a Swahili phrase. Guess it before you finish for <b>+300</b> (3 tries, −50 for a wrong one).<br>
+    <b>Score:</b> 1000, plus 4 a second under 4 minutes, plus 200 if you use no hints. New grid every day at 05:00.
+  </div>
+  <p class="note" id="homeNote"></p>
+</div></section>
+
+<!-- PLAY -->
+<section class="screen" id="sPlay">
+  <div class="pbar">
+    <button class="ib" id="backBtn" aria-label="Back">←</button>
+    <div class="t"><small id="pNum"></small><b id="pTheme"></b></div>
+    <span class="timer" id="pTime">0:00</span>
+    <button class="ib hint" id="hintBtn">💡</button>
+  </div>
+  <div class="sel" id="selText" aria-live="polite"></div>
+  <div class="boardwrap" id="boardWrap">
+    <div class="grid" id="grid" role="application" aria-label="Letter grid"><svg id="marks" viewBox="0 0 8 8" preserveAspectRatio="none"></svg></div>
+  </div>
+  <div class="lower">
+    <div class="slots" id="slots"></div>
+    <button class="secret" id="secretBtn"></button>
+  </div>
+</section>
+
+<!-- LEADERBOARD -->
+<section class="screen" id="sBoard"><div class="wrap">
+  <div class="topline"><a class="back" href="#">← Rudi · Back</a><span></span></div>
+  <h1 class="title" style="font-size:36px">UBAO<small id="bTitle">LEADERBOARD</small></h1>
+  <div class="tabs" id="bTabs"><button data-d="today" class="on">Leo · Today</button><button data-d="yesterday">Jana · Yesterday</button></div>
+  <ol class="board" id="bRows"></ol>
+  <p class="note" id="bNote"></p>
+</div></section>
+
+<!-- YESTERDAY -->
+<section class="screen" id="sJana"><div class="wrap">
+  <div class="topline"><a class="back" href="#">← Rudi · Back</a><span></span></div>
+  <h1 class="title" style="font-size:36px">JANA<small id="jTitle">YESTERDAY</small></h1>
+  <div class="grid static" id="jGrid"><svg viewBox="0 0 8 8" preserveAspectRatio="none"></svg></div>
+  <div class="slots" id="jWords"></div>
+  <div class="phrase" id="jPhrase"></div>
+</div></section>
+
+<!-- sheets -->
+<div class="sheet" id="hintSheet"><div class="in">
+  <h3>Msaada · Hints</h3>
+  <p class="sub">Kila msaada unapunguza alama na unaondoa bonasi ya +200. · Each hint costs points and the no-hint bonus.</p>
+  <button class="opt" data-hint="first"><span>Herufi ya kwanza<small>Show where a word starts</small></span><i id="costFirst"></i></button>
+  <button class="opt" data-hint="reveal"><span>Fichua neno<small>Reveal one word</small></span><i id="costReveal"></i></button>
+  <button class="close" data-close>Funga · Close</button>
+</div></div>
+<div class="sheet" id="guessSheet"><div class="in">
+  <h3>Neno la siri · Secret phrase</h3>
+  <p class="sub" id="guessSub"></p>
+  <input class="name" id="guessIn" autocomplete="off" autocapitalize="characters" spellcheck="false" placeholder="mf. KARIBU TENA">
+  <div class="hint" id="guessHint"></div>
+  <button class="btn alt" id="guessBtn">KISIA<small>Guess</small></button>
+  <button class="close" data-close>Funga · Close</button>
+</div></div>
+<div class="sheet" id="doneSheet"><div class="in" id="doneBody"></div></div>
+<div class="toast" id="toast"></div>
+
+<script src="../shared/api.js" data-game="msako"></script>
+<script src="app.js"></script>
+</body></html>
