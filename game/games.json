@@ -26,6 +26,15 @@
     "teaser": "api/msako/teaser"
   },
   {
+    "id": "kahawa",
+    "name": "Kahawa Iko Wapi?",
+    "tagline": "Tafuta mifuko ya kahawa · Daily hidden coffee hunt",
+    "href": "kahawa/",
+    "icon": "kahawa/icon.svg",
+    "status": "live",
+    "teaser": "api/kahawa/teaser"
+  },
+  {
     "id": "next",
     "name": "Mchezo Mpya",
     "tagline": "Inakuja hivi karibuni · Coming soon",

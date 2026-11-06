@@ -8,6 +8,7 @@ import crypto from 'node:crypto';
 import { fileURLToPath } from 'node:url';
 import { makeCryptic } from './cryptic/api.js';
 import { makeMsako } from './msako/api.js';
+import { makeKahawa } from './kahawa/api.js';
 
 const HERE = path.dirname(fileURLToPath(import.meta.url));
 const ROOT = path.resolve(HERE, '../game');
@@ -70,6 +71,9 @@ const cryptic = makeCryptic({ db, save, send: (...a) => send(...a), body: r => b
 const msako = makeMsako({ db, save, send: (...a) => send(...a), body: r => body(r), limited: (k, m) => limited(k, m),
   auth: (name, token) => { const key = String(name || '').toLowerCase(), p = db.players[key]; return p && hasToken(p, token) ? key : null; } });
 
+const kahawa = makeKahawa({ db, save, send: (...a) => send(...a), body: r => body(r), limited: (k, m) => limited(k, m), scenesDir: process.env.KAHAWA_SCENES || path.join(HERE, 'kahawa/scenes'),
+  auth: (name, token) => { const key = String(name || '').toLowerCase(), p = db.players[key]; return p && hasToken(p, token) ? key : null; } });
+
 const SECURITY = { 'x-content-type-options': 'nosniff', 'referrer-policy': 'strict-origin-when-cross-origin', 'x-frame-options': 'SAMEORIGIN' };
 function send(res, code, obj) { res.writeHead(code, { ...SECURITY, 'content-type': 'application/json', 'cache-control': 'no-store' }); res.end(JSON.stringify(obj)); }
 function body(req, max = 4096) { return new Promise((ok, bad) => { let s = ''; req.on('data', c => { s += c; if (s.length > max) { bad(new Error('too big')); req.destroy(); } }); req.on('end', () => { try { ok(JSON.parse(s || '{}')); } catch (e) { bad(e); } }); }); }
@@ -80,6 +84,7 @@ async function api(req, res, url) {
   // the crossword saves progress every few seconds, so it is limited per player instead of per café Wi-Fi address
   if (url.pathname.startsWith('/api/cryptic/')) return cryptic(req, res, url);
   if (url.pathname.startsWith('/api/msako/')) return msako(req, res, url);
+  if (url.pathname.startsWith('/api/kahawa/')) return kahawa(req, res, url);
   if (req.method === 'POST' && limited(ip)) return send(res, 429, { error: 'slow down' });
   if (url.pathname.startsWith('/api/admin/')) return admin(req, res, url, ip);
 
@@ -167,10 +172,11 @@ async function admin(req, res, url, ip) {
     const have = Object.keys(db.players).length;
     if (have && url.searchParams.get('replace') !== '1') return send(res, 409, { error: `server already has ${have} players; add ?replace=1 to overwrite them` });
     upgrade(d);
-    // the crossword and word hunt keep references to their session objects, so fill those in place
+    // the crossword, word hunt and coffee hunt keep references to their session objects, so fill those in place
     const fill = (into, from) => { for (const k of Object.keys(into)) delete into[k]; Object.assign(into, from || {}); };
     fill(db.players, d.players); db.scores.length = 0; db.scores.push(...d.scores);
     fill(db.cryptic.sessions, d.cryptic?.sessions); fill(db.msako.sessions, d.msako?.sessions);
+    for (const k of ['sessions', 'days', 'totals']) fill(db.kahawa[k], d.kahawa?.[k]);
     clearTimeout(saveTimer); writeDb();
     console.log(`[admin] imported ${Object.keys(db.players).length} players, ${db.scores.length} scores`);
     return send(res, 200, { ok: true, players: Object.keys(db.players).length, scores: db.scores.length });
@@ -178,7 +184,7 @@ async function admin(req, res, url, ip) {
   send(res, 404, { error: 'not found' });
 }
 
-const TYPES = { '.html': 'text/html; charset=utf-8', '.js': 'text/javascript', '.css': 'text/css', '.svg': 'image/svg+xml', '.ttf': 'font/ttf', '.png': 'image/png', '.json': 'application/json', '.ico': 'image/x-icon' };
+const TYPES = { '.html': 'text/html; charset=utf-8', '.js': 'text/javascript', '.mjs': 'text/javascript', '.css': 'text/css', '.svg': 'image/svg+xml', '.ttf': 'font/ttf', '.png': 'image/png', '.jpg': 'image/jpeg', '.jpeg': 'image/jpeg', '.webp': 'image/webp', '.json': 'application/json', '.ico': 'image/x-icon' };
 function serveStatic(req, res, url) {
   let p = decodeURIComponent(url.pathname); if (p.endsWith('/')) p += 'index.html';
   const file = path.resolve(ROOT, '.' + p);

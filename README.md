@@ -85,6 +85,16 @@ A daily themed word hunt. Every day at 05:00 EAT there is a new 8×8 grid on one
 - **Adding themes or phrases:** edit `server/msako/themes.js` (words A–Z, 3–8 letters, at least 10 per theme). Restart the server. Changing the lists changes upcoming grids, and today's too, so do it before 05:00 if people are mid-game.
 - `/msako/#jana` shows yesterday's grid with all the answers.
 
+## Kahawa Iko Wapi? (`/kahawa/`)
+A daily hidden-object hunt. Every day at 05:00 EAT everyone gets the same black-and-white line drawing with 12 coffee bags hidden on it. Tapping a bag colours it in HZE orange; one bag a day is golden. Pinch or use the + / − buttons to zoom, drag to look around.
+
+- **Score:** 100 a bag, 300 for the golden bag. Finding all 12 adds +300, plus 2 points a second under 5 minutes, plus 200 for no hints. A wrong tap costs 10, and 3 wrong taps within 5 s pause tapping for 3 s. A hint circles the area around one bag for −100. Finishing under 30 s keeps the day off the boards.
+- **Points add up.** Bags count as soon as they're found, so a half-finished day still scores. The boards are Today, This month and All-time (totals kept in `db.kahawa.totals`, so they outlive the 30 days of saved sessions).
+- **The phone never gets the bag list.** It shows the outlines as one picture (`/api/kahawa/bags.svg`), sends each tap, and the server checks it (`server/kahawa/api.js`). Someone who downloads and reads that picture could still find the bags, which is why very fast finishes are kept off the boards.
+- **Scenes:** a scene is a drawing in `game/kahawa/scenes/` plus a file in `server/kahawa/scenes/<id>.json` with its name, size and hiding spots (12 minimum, 30+ is better). Each day takes the scene shown longest ago and places 12 bags on randomly picked spots, with different shapes, sizes and tilts, so a scene looks different each time it returns. The day's pick is saved, so adding a scene never changes a day already played.
+- **Adding a scene:** open `/kahawa/spots.html`, choose the drawing, click every place a bag could hide, and download the scene file. Put both files where the page says and restart the server. The three starter scenes (Kariakoo street, a coffee farm, the café) are drawn by `node server/kahawa/starter-scenes.mjs`.
+- `/kahawa/#jana` shows yesterday's drawing with every bag coloured in.
+
 ## How Delivery Safari plays
 - **Tap** to jump (hold for higher), **tap again in the air** to kickflip (double jump). **Hold SIMAMA** to brake.
 - Each level is one order. **JOTO** (heat) drains as you ride, and a hotter cup earns a bigger delivery bonus (300 + heat × 10, plus 500 for no hits or fines).

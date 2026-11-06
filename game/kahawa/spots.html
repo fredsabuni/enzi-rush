@@ -1,0 +1,169 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Kahawa Scene Maker</title>
+<link rel="icon" href="icon.svg">
+<link rel="stylesheet" href="../style.css">
+<style>
+/* style.css locks page scrolling for the Safari game; this page scrolls normally */
+html,body{height:auto;overscroll-behavior-y:auto}html{overflow-y:auto}body{overflow:visible}
+.tool{display:grid;grid-template-columns:320px 1fr;min-height:100vh}
+.side{background:#291810;padding:16px;display:flex;flex-direction:column;gap:12px;position:sticky;top:0;height:100vh;overflow-y:auto}
+.side h1{font:400 26px Lilita;margin:0;color:#fff}
+.side p,.side li{font-size:13px;line-height:1.45;color:#cdb9a6;margin:0}
+.side ol{margin:0;padding-left:18px;display:flex;flex-direction:column;gap:4px}
+.side code{color:var(--gold-l);font-size:12px}
+.f{display:flex;flex-direction:column;gap:4px}
+.f span{font:900 11px Nunito;letter-spacing:1px;text-transform:uppercase;color:var(--gold-l)}
+.f input[type=text]{min-width:0;width:100%;font:700 14px Nunito;padding:8px 10px;border-radius:10px;border:2px solid #5b3826;background:#fffaf2;color:#291810}
+.f input[type=range]{width:100%}
+.two{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.box{background:#3a2216;border-radius:14px;padding:12px;display:flex;flex-direction:column;gap:8px}
+.box[hidden]{display:none}
+.b{border:0;border-radius:12px;padding:10px 12px;font:400 17px Lilita;cursor:pointer;color:#fff;background:var(--orange)}
+.b.alt{background:var(--teal)}.b.ghost{background:transparent;border:2px solid #5b3826;color:var(--gold-l)}.b.red{background:var(--red)}
+.b:disabled{opacity:.45;cursor:default}
+.count{font:400 22px Lilita;color:#fff}.count small{font:700 12px Nunito;color:#cdb9a6}
+.main{background:#efe6d8;overflow:auto;padding:16px}
+.wrap2{position:relative;margin:0 auto;box-shadow:0 0 0 2px #c9b394;background:#fff;cursor:crosshair;user-select:none}
+.wrap2 img{display:block;width:100%;height:auto;pointer-events:none}
+.wrap2 svg{position:absolute;inset:0;width:100%;height:100%}
+.empty2{font:800 16px Nunito;color:#7a5a44;text-align:center;padding:120px 20px}
+.spot{cursor:move}
+.spot circle{fill:rgba(196,81,14,.12);stroke:#C4510E}
+.spot.sel circle{fill:rgba(43,122,110,.18);stroke:#2B7A6E}
+.err{color:#ff8a7a;font-weight:800}
+</style>
+</head>
+<body>
+<div class="tool">
+  <aside class="side">
+    <h1>Kahawa scene maker</h1>
+    <p>Add a new drawing to <b>Kahawa Iko Wapi?</b> by marking the places a coffee bag could hide.</p>
+    <ol>
+      <li>Pick a black-and-white line drawing (PNG, JPG, WEBP or SVG, portrait works best, about 1200 px wide or more).</li>
+      <li>Click the drawing wherever a bag could sit: on a roof, a shelf, a cloud, in a bush. Drag to move, use the sliders to size and tilt. Mark <b>at least 30</b>: the game uses 12 a day and picks different ones each time.</li>
+      <li>Download the scene file. Put the picture in <code>game/kahawa/scenes/</code> and the <code>.json</code> in <code>server/kahawa/scenes/</code>, then restart the server.</li>
+    </ol>
+
+    <div class="box">
+      <label class="f"><span>Drawing</span><input type="file" id="imgFile" accept="image/*"></label>
+      <label class="f"><span>Or open a saved scene (.json)</span><input type="file" id="jsonFile" accept=".json,application/json"></label>
+      <p id="imgInfo"></p>
+    </div>
+
+    <div class="box">
+      <label class="f"><span>Scene id (file name, a–z)</span><input type="text" id="sid" placeholder="coco-beach"></label>
+      <div class="two">
+        <label class="f"><span>Name (Swahili)</span><input type="text" id="nsw" placeholder="Ufukwe wa Coco"></label>
+        <label class="f"><span>Name (English)</span><input type="text" id="nen" placeholder="Coco Beach"></label>
+      </div>
+      <label class="f"><span>Line thickness of the drawing: <b id="lineV"></b> px</span><input type="range" id="line" min="1" max="12" step=".5" value="3"></label>
+    </div>
+
+    <div class="box">
+      <div class="count" id="count">0 <small>hiding spots</small></div>
+      <label class="f"><span>Show as</span>
+        <select id="mode"><option value="bags">Coffee bags (as players see them)</option><option value="color">Coloured bags</option><option value="rings">Circles only</option></select>
+      </label>
+    </div>
+
+    <div class="box" id="selBox" hidden>
+      <div class="f"><span>Selected spot</span></div>
+      <label class="f"><span>Size: <b id="sizeV"></b> px tall</span><input type="range" id="size" min="24" max="240" step="1"></label>
+      <label class="f"><span>Tilt: <b id="tiltV"></b>°</span><input type="range" id="tilt" min="-60" max="60" step="1"></label>
+      <button class="b red" id="del">Delete spot (Del)</button>
+    </div>
+
+    <button class="b alt" id="save" disabled>Download scene file</button>
+    <p id="msg"></p>
+  </aside>
+  <main class="main">
+    <div class="wrap2" id="board" hidden><img id="pic" alt=""><svg id="ov"></svg></div>
+    <div class="empty2" id="empty">Choose a drawing on the left to start.</div>
+  </main>
+</div>
+
+<script type="module">
+import { bagSvg } from './bags.mjs';
+const $ = id => document.getElementById(id);
+const S = { w: 0, h: 0, image: '', ext: '', spots: [], sel: -1, size: 70 };
+const ov = $('ov'), board = $('board');
+
+function fitBoard() { if (!S.w) return; const avail = board.parentElement.clientWidth - 32; board.style.width = Math.min(avail, S.w, 900 * S.w / S.h) + 'px'; }
+window.addEventListener('resize', fitBoard);
+// where the drawing will live on the server: scenes/<id>.<ext>, unless an opened scene file says otherwise
+const imagePath = () => S.ext ? `scenes/${$('sid').value.trim().toLowerCase().replace(/[^a-z0-9-]+/g, '-') || 'scene'}.${S.ext}` : S.image;
+function loadImage(src) {
+  const img = $('pic');
+  img.onload = () => {
+    S.w = img.naturalWidth || 1200; S.h = img.naturalHeight || 1600;
+    ov.setAttribute('viewBox', `0 0 ${S.w} ${S.h}`);
+    board.hidden = false; $('empty').hidden = true; fitBoard(); draw();
+    showInfo();
+  };
+  img.src = src;
+}
+function showInfo() { if (S.w) $('imgInfo').innerHTML = `${S.w} × ${S.h} px · save the drawing as <code>game/kahawa/${imagePath()}</code>`; }
+$('sid').oninput = showInfo;
+$('imgFile').onchange = e => {
+  const f = e.target.files[0]; if (!f) return;
+  const base = f.name.replace(/\.[^.]+$/, '').toLowerCase().replace(/[^a-z0-9-]+/g, '-');
+  if (!$('sid').value) $('sid').value = base;
+  S.ext = (f.name.match(/\.([a-z0-9]+)$/i)?.[1] || 'png').toLowerCase();
+  loadImage(URL.createObjectURL(f));
+};
+$('jsonFile').onchange = async e => {
+  const f = e.target.files[0]; if (!f) return;
+  try {
+    const j = JSON.parse(await f.text());
+    S.spots = j.spots || []; S.image = j.image; S.ext = ''; $('sid').value = j.id || ''; $('nsw').value = j.name?.sw || ''; $('nen').value = j.name?.en || '';
+    $('line').value = j.line || 3; S.sel = -1;
+    // the picture is served next to this page, so a saved scene opens with its drawing
+    loadImage(j.image);
+    $('msg').textContent = `Opened ${f.name}. If the drawing doesn't show, choose it above too.`; $('msg').className = '';
+  } catch (err) { $('msg').textContent = 'That is not a scene file.'; $('msg').className = 'err'; }
+};
+
+function draw() {
+  const mode = $('mode').value, line = +$('line').value;
+  $('lineV').textContent = line;
+  ov.innerHTML = S.spots.map((s, i) => {
+    const bag = { x: s.x, y: s.y, s: s.s, r: s.r || 0, kind: ['pouch', 'sack', 'fold'][i % 3] };
+    const look = mode === 'rings' ? '' : bagSvg(bag, mode === 'color' ? 'color' : 'outline', line);
+    return `<g class="spot${i === S.sel ? ' sel' : ''}" data-i="${i}"><circle cx="${s.x}" cy="${s.y}" r="${s.s * .55}" stroke-width="${Math.max(2, S.w / 400)}" ${mode === 'rings' || i === S.sel ? '' : 'opacity=".35"'}/>${look}</g>`;
+  }).join('');
+  $('count').innerHTML = `${S.spots.length} <small>hiding spot${S.spots.length === 1 ? '' : 's'}${S.spots.length < 12 ? ' · need 12 or more' : S.spots.length < 30 ? ' · 30+ is better' : ' · great'}</small>`;
+  $('save').disabled = S.spots.length < 12 || !S.w;
+  const s = S.spots[S.sel]; $('selBox').hidden = !s;
+  if (s) { $('size').value = s.s; $('sizeV').textContent = s.s; $('tilt').value = s.r || 0; $('tiltV').textContent = s.r || 0; }
+}
+$('mode').onchange = draw; $('line').oninput = draw;
+
+// click empty space to add, click a spot to pick it, drag to move it
+const pt = e => { const r = ov.getBoundingClientRect(); return { x: Math.round((e.clientX - r.left) / r.width * S.w), y: Math.round((e.clientY - r.top) / r.height * S.h) }; };
+let drag = null;
+ov.addEventListener('pointerdown', e => {
+  const g = e.target.closest('.spot'), p = pt(e);
+  if (g) { S.sel = +g.dataset.i; drag = { dx: p.x - S.spots[S.sel].x, dy: p.y - S.spots[S.sel].y }; ov.setPointerCapture(e.pointerId); }
+  else { S.spots.push({ x: p.x, y: p.y, s: S.size, r: 0 }); S.sel = S.spots.length - 1; }
+  draw();
+});
+ov.addEventListener('pointermove', e => { if (!drag) return; const p = pt(e), s = S.spots[S.sel]; s.x = Math.max(0, Math.min(S.w, p.x - drag.dx)); s.y = Math.max(0, Math.min(S.h, p.y - drag.dy)); draw(); });
+ov.addEventListener('pointerup', () => { drag = null; });
+$('size').oninput = e => { const s = S.spots[S.sel]; if (!s) return; s.s = S.size = +e.target.value; draw(); };
+$('tilt').oninput = e => { const s = S.spots[S.sel]; if (!s) return; s.r = +e.target.value; draw(); };
+function del() { if (S.sel < 0) return; S.spots.splice(S.sel, 1); S.sel = -1; draw(); }
+$('del').onclick = del;
+document.addEventListener('keydown', e => { if ((e.key === 'Delete' || e.key === 'Backspace') && !/INPUT|SELECT/.test(document.activeElement.tagName)) { e.preventDefault(); del(); } });
+
+$('save').onclick = () => {
+  const id = $('sid').value.trim().toLowerCase().replace(/[^a-z0-9-]+/g, '-');
+  if (!id) { $('msg').textContent = 'Give the scene an id first.'; $('msg').className = 'err'; return; }
+  if (!$('nsw').value.trim() || !$('nen').value.trim()) { $('msg').textContent = 'Give the scene a Swahili and an English name.'; $('msg').className = 'err'; return; }
+  const out = { id, name: { sw: $('nsw').value.trim(), en: $('nen').value.trim() }, image: imagePath(), w: S.w, h: S.h, line: +$('line').value, spots: S.spots.map(({ x, y, s, r }) => ({ x, y, s, r: r || 0 })) };
+  const a = document.createElement('a'); a.href = URL.createObjectURL(new Blob([JSON.stringify(out, null, 1)], { type: 'application/json' })); a.download = id + '.json'; a.click();
+  $('msg').textContent = `Saved ${id}.json. Put it in server/kahawa/scenes/ and the drawing at game/kahawa/${imagePath()}.`; $('msg').className = '';
+};
+</script>
+</body></html>
