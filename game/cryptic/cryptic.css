@@ -50,7 +50,9 @@ h2.sec{font:700 22px Fraunces,Georgia,serif;margin:22px 0 10px}
 .link[disabled]{opacity:.5;cursor:default}
 
 /* play screen */
-#sPlay.on{display:flex;flex-direction:column;height:100dvh;overflow:hidden}
+/* The play screen scrolls when the grid, clue and keyboard don't all fit (sideways phones, small screens).
+   The keyboard stays pinned to the bottom so typing always works. */
+#sPlay.on{display:flex;flex-direction:column;height:100dvh;overflow-x:hidden;overflow-y:auto;overscroll-behavior-y:contain}
 .pbar{display:flex;align-items:center;gap:6px;padding:max(8px,env(safe-area-inset-top)) 10px 8px;border-bottom:1px solid var(--rule)}
 .pbar .t{flex:1;min-width:0;font:700 17px Fraunces,Georgia,serif;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .pbar .t small{font:600 12px Nunito;color:var(--muted);margin-left:6px}
@@ -59,9 +61,9 @@ h2.sec{font:700 22px Fraunces,Georgia,serif;margin:22px 0 10px}
 .timer{font:800 15px Nunito;font-variant-numeric:tabular-nums;min-width:52px;text-align:center}
 .pen{font:800 12px Nunito;color:var(--wrong)}
 
-.body{flex:1;min-height:0;display:flex;gap:16px;padding:10px}
-.left{flex:1;min-width:0;display:flex;flex-direction:column;gap:8px;min-height:0}
-.board-wrap{flex:1;min-height:0;display:flex;align-items:center;justify-content:center}
+.body{flex:1 0 auto;display:flex;gap:16px;padding:10px}
+.left{flex:1;min-width:0;display:flex;flex-direction:column;gap:8px}
+.board-wrap{flex:1 0 auto;display:flex;align-items:center;justify-content:center}
 .right{display:none}
 
 /* grid */
@@ -93,7 +95,7 @@ h2.sec{font:700 22px Fraunces,Georgia,serif;margin:22px 0 10px}
 .explain{display:block;margin-top:4px;font:600 13px/1.35 Nunito;color:var(--muted)}
 
 /* on-screen keyboard (touch devices) */
-.kbd{display:flex;flex-direction:column;gap:6px;padding:6px 4px max(8px,env(safe-area-inset-bottom));background:var(--paper)}
+.kbd{display:flex;flex-direction:column;gap:6px;padding:6px 4px max(8px,env(safe-area-inset-bottom));background:var(--paper);position:sticky;bottom:0;z-index:2;border-top:1px solid var(--rule)}
 .kbd div{display:flex;gap:5px;justify-content:center}
 .kbd button{flex:1;max-width:44px;height:48px;border:0;border-radius:8px;background:var(--card);box-shadow:0 1px 0 var(--rule),0 0 0 1px var(--rule) inset;font:800 18px Nunito;cursor:pointer;touch-action:manipulation}
 .kbd button.wide{max-width:66px;flex:1.5;font-size:15px}
@@ -109,7 +111,7 @@ h2.sec{font:700 22px Fraunces,Georgia,serif;margin:22px 0 10px}
 
 /* wide screens: grid left, clues right, no on-screen keyboard unless it's a touch screen */
 @media (min-width:900px){
-  .right{display:block;width:min(420px,38vw);overflow-y:auto;padding-right:4px}
+  .right{display:block;width:min(420px,38vw);overflow-y:auto;padding-right:4px;max-height:calc(100dvh - 80px);position:sticky;top:0}
   #cluesBtn{display:none}
 }
 @media (hover:hover) and (pointer:fine){.kbd{display:none}}
