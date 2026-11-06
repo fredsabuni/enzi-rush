@@ -1,0 +1,99 @@
+<!doctype html>
+<html lang="sw"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#291810"><meta name="apple-mobile-web-app-capable" content="yes">
+<title>Kahawa Iko Wapi?</title>
+<link rel="icon" href="icon.svg">
+<link rel="stylesheet" href="../style.css">
+<link rel="stylesheet" href="kahawa.css">
+</head>
+<body>
+
+<!-- HOME -->
+<section class="screen" id="sHome"><div class="wrap">
+  <div class="topline"><a class="back" href="../">← Michezo yote</a><span id="who"></span></div>
+  <img class="hero" src="icon.svg" alt="">
+  <h1 class="title">KAHAWA IKO WAPI?<small>WHERE'S THE COFFEE?</small></h1>
+  <button class="today" id="todayCard">
+    <span class="lbl">Leo · Today <b id="tNum"></b></span>
+    <b class="theme" id="tName">…</b>
+    <span class="sub" id="tSub"></span>
+    <span class="bar"><i id="tBar" style="width:0"></i></span>
+    <span class="btn" id="tGo">CHEZA<small>Play</small></span>
+  </button>
+  <div class="totals">
+    <div><small>Mwezi huu · This month</small><b id="tMonth">–</b></div>
+    <div><small>Jumla · All-time</small><b id="tAll">–</b></div>
+  </div>
+  <div class="row">
+    <button class="btn ghost" data-go="board">Ubao<small>Leaderboard</small></button>
+    <button class="btn ghost" data-go="jana">Jana<small>Yesterday's bags</small></button>
+  </div>
+  <div class="how">
+    <b>Jinsi ya kucheza · How to play</b><br>
+    Kila siku kuna picha mpya yenye mifuko 12 ya kahawa iliyofichwa. Gusa kila mfuko uupake rangi.<br>
+    <b>Find the 12 coffee bags</b> hidden in today's drawing and tap each one to colour it in. Pinch or use <b>+</b> to zoom, drag to look around.<br>
+    <b>Points:</b> 100 a bag, 300 for the one <b>golden bag</b>. Find them all for +300, plus up to +600 for speed and +200 with no hints. A wrong tap costs 10.<br>
+    Points add up every day for the <b>month</b> and <b>all-time</b> boards. New picture every day at 05:00.
+  </div>
+  <p class="note" id="homeNote"></p>
+</div></section>
+
+<!-- PLAY -->
+<section class="screen" id="sPlay">
+  <div class="pbar">
+    <button class="ib" id="backBtn" aria-label="Back">←</button>
+    <div class="t"><small id="pNum"></small><b id="pName"></b></div>
+    <span class="timer" id="pTime">0:00</span>
+    <button class="ib hint" id="hintBtn" aria-label="Hint">💡</button>
+  </div>
+  <div class="status">
+    <div class="count" id="foundCount"></div>
+    <div class="pips" id="pips"></div>
+    <div class="pts" id="pScore"></div>
+  </div>
+  <div class="stage" id="pic">
+    <div class="world" id="world">
+      <img class="bg" id="bg" alt="" draggable="false">
+      <img class="bags" id="bagsImg" alt="" draggable="false">
+      <svg class="fx" id="fx"></svg>
+    </div>
+    <div class="zoom">
+      <button class="ib" id="zIn" aria-label="Zoom in">+</button>
+      <button class="ib" id="zOut" aria-label="Zoom out">−</button>
+      <button class="ib" id="zFit" aria-label="Whole picture">⤢</button>
+    </div>
+    <div class="cool" id="cool">Pole pole! · Slow down</div>
+  </div>
+</section>
+
+<!-- LEADERBOARD -->
+<section class="screen" id="sBoard"><div class="wrap">
+  <div class="topline"><a class="back" href="#">← Rudi · Back</a><span></span></div>
+  <h1 class="title" style="font-size:36px">UBAO<small id="bTitle">LEADERBOARD</small></h1>
+  <div class="tabs" id="bTabs"><button data-p="today" class="on">Leo<small>Today</small></button><button data-p="month">Mwezi<small>Month</small></button><button data-p="all">Jumla<small>All-time</small></button></div>
+  <ol class="board" id="bRows"></ol>
+  <p class="note" id="bNote"></p>
+</div></section>
+
+<!-- YESTERDAY -->
+<section class="screen" id="sJana"><div class="wrap">
+  <div class="topline"><a class="back" href="#">← Rudi · Back</a><span></span></div>
+  <h1 class="title" style="font-size:36px">JANA<small id="jTitle">YESTERDAY</small></h1>
+  <div class="jpic" id="jPic"><img alt=""><svg></svg></div>
+  <p class="note" id="jNote"></p>
+</div></section>
+
+<!-- sheets -->
+<div class="sheet" id="hintSheet"><div class="in">
+  <h3>Msaada · Hint</h3>
+  <p class="sub">Tutazungushia eneo lenye mfuko mmoja. · We'll circle the area around one bag. It costs <b id="hintCost"></b> points and the +200 no-hint bonus.</p>
+  <button class="btn" id="hintGo">ONYESHA<small>Show me</small></button>
+  <button class="close" data-close>Funga · Close</button>
+</div></div>
+<div class="sheet" id="doneSheet"><div class="in" id="doneBody"></div></div>
+<div class="toast" id="toast"></div>
+
+<script src="../shared/api.js" data-game="kahawa"></script>
+<script type="module" src="app.js"></script>
+</body></html>

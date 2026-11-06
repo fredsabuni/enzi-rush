@@ -90,13 +90,13 @@ function slotsHtml(words) {
 let fresh = null, syncedMs = 0, syncedAt = 0, lastInput = 0;
 async function openPuzzle() {
   show('sPlay');
-  $('pTheme').textContent = 'Inapakia…'; $('pNum').textContent = ''; $('slots').innerHTML = ''; $('secretBtn').innerHTML = '';
+  $('pTheme').textContent = 'Inapakia…'; $('pNum').textContent = ''; $('slots').innerHTML = ''; $('foundCount').textContent = ''; $('secretBtn').innerHTML = '';
   try {
     const j = await mx('open');
     P = j.puzzle; fresh = null; anchor = null;
     $('pNum').textContent = `Msako #${P.num} · ${P.theme.en}`; $('pTheme').textContent = P.theme.sw;
     $('costFirst').textContent = '−' + P.hints.first; $('costReveal').textContent = '−' + P.hints.reveal;
-    buildGrid($('grid'), P.grid); sizeBoard(); apply(j.session);
+    buildGrid($('grid'), P.grid); apply(j.session); sizeBoard();
     lastInput = Date.now();
     if (S.done) showDone();
   } catch (e) { if (e.status !== 401 && e.status !== 410) { $('pTheme').textContent = 'Hakuna mtandao · No connection'; } }
@@ -105,6 +105,8 @@ function apply(s) {
   S = s; syncedMs = s.activeMs; syncedAt = Date.now();
   $('marks').innerHTML = strokes(S.words, fresh) + '<line id="pend" class="mark pend" x1="0" y1="0" x2="0" y2="0" visibility="hidden"/>';
   $('slots').innerHTML = slotsHtml(S.words);
+  const got = S.words.filter(w => w.word).length;
+  $('foundCount').innerHTML = `Umepata · Found <b>${got} / ${S.words.length}</b>`;
   const spare = new Set(S.secret.cells || []), firsts = new Set(S.words.filter(w => w.first).map(w => w.first.cell));
   for (const c of $('grid').querySelectorAll('.c')) { const i = +c.dataset.i; c.classList.toggle('spare', spare.has(i)); c.classList.toggle('anchor', i === anchor); if (!firsts.has(i)) c.classList.remove('first'); }
   renderSecret(); tick();
@@ -220,7 +222,12 @@ async function submit(a, b) {
 
 function sizeBoard() {
   if (!playing) return;
-  const w = $('boardWrap').getBoundingClientRect(), size = Math.floor(Math.min(w.width - 8, w.height - 8, 520));
+  // Fit the grid in the screen height left after the top bar (and, upright, the word list).
+  // Never go below a playable size: if it doesn't fit, the screen scrolls instead.
+  const h = el => el.getBoundingClientRect().height, side = matchMedia('(orientation:landscape) and (min-width:560px)').matches;
+  const room = $('sPlay').clientHeight - h(document.querySelector('#sPlay .pbar')) - h($('selText')) - (side ? 0 : h(document.querySelector('#sPlay .lower'))) - 12;
+  const width = $('boardWrap').clientWidth - 8 - 24;
+  const size = Math.floor(Math.min(width, 520, Math.max(room, 280)));
   grid.style.width = size + 'px'; grid.style.setProperty('--cell', size / N + 'px');
 }
 window.addEventListener('resize', sizeBoard);

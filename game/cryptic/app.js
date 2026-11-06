@@ -160,6 +160,8 @@ function select(i, dir = sel.dir) {
   if (!white(i)) return;
   if (!L.per[i][dir]) dir = dir === 'across' ? 'down' : 'across';
   sel = { i, dir }; paint();
+  // on a screen that scrolls (sideways phone), keep the chosen square out from under the keyboard
+  const s = $('sPlay'); if (s.scrollHeight > s.clientHeight) els[i].scrollIntoView({ block: 'nearest' });
 }
 function selectEntry(e) { if (!e) return; select(e.cells.find(i => !cells[i]) ?? e.cells[0], e.dir); }
 
@@ -184,10 +186,15 @@ function renderLists() {
   paint();
 }
 function fit() {
-  if (!P) return; const w = $('boardWrap');
-  sizeGrid($('grid'), P.cols, P.rows, w.clientWidth, w.clientHeight, P.cols > 9 ? 48 : 64);
+  if (!P) return; const w = $('boardWrap'), h = el => el.getBoundingClientRect().height;
+  // Height left after the top bar, clue bar and keyboard. Never shrink below a playable size:
+  // if it doesn't fit, the screen scrolls instead.
+  const room = $('sPlay').clientHeight - h(document.querySelector('#sPlay .pbar')) - h(document.querySelector('#sPlay .cluebar')) - h($('kbd')) - 36;
+  $('sPlay').style.scrollPaddingBottom = h($('kbd')) + 8 + 'px';
+  sizeGrid($('grid'), P.cols, P.rows, w.clientWidth, Math.max(room, Math.min(w.clientWidth, 300)), P.cols > 9 ? 48 : 64);
 }
 new ResizeObserver(() => playing && fit()).observe($('boardWrap'));
+window.addEventListener('resize', () => playing && fit());
 
 // ---------- typing
 function changed() { lastInput = Date.now(); localSave(); renderListsSoon(); }
